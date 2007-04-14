@@ -1,0 +1,204 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-04-14 11:12+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/wifi_panel.c:590 ../src/wifi_panel.c:592
+#, c-format
+msgid "%d dBm"
+msgstr "%d dBm"
+
+#: ../src/wifi_panel.c:588
+#, c-format
+msgid "%d%%"
+msgstr "%d%%"
+
+#: ../src/wifi_panel.c:49
+msgid "Activate"
+msgstr "Activé"
+
+#: ../src/wifi_panel.h:21
+msgid "Ad-hoc"
+msgstr "Ad-hoc"
+
+#: ../src/wifi_panel.c:351
+msgid "Address: "
+msgstr "Adresse: "
+
+#: ../src/wifi_panel.c:375
+msgid "Bit rates: "
+msgstr "Bit rates: "
+
+#: ../src/eth_panel.c:80 ../src/wifi_panel.c:497 ../src/wifi_panel.c:544
+msgid "Broadcast: "
+msgstr "Broadcast: "
+
+#: ../src/wifi_panel.c:367
+msgid "Channel: "
+msgstr "Channel: "
+
+#: ../src/wifi_panel.c:100
+msgid "Connection"
+msgstr "Connexion: "
+
+#: ../src/wifi_panel.c:95
+msgid "Current conf."
+msgstr "Conf. actuelle: "
+
+#: ../src/wifi_panel.c:84
+msgid "Current network: "
+msgstr "Réseau actuel: "
+
+#: ../src/eth_panel.c:43 ../src/wifi_panel.c:428
+msgid "DHCP (Automatic configuration)"
+msgstr "DHCP (configuration automatique)"
+
+#: ../src/general_panel.c:50
+msgid "DNS list"
+msgstr "Liste des DNS"
+
+#: ../src/wifi_panel.c:50
+msgid "Disactivate"
+msgstr "Désactivé"
+
+#: ../src/wifi_panel.c:66
+msgid "Encryption"
+msgstr "Cryptage"
+
+#: ../src/wifi_panel.c:478
+msgid "Encryption mode: "
+msgstr "Mode de cryptage: "
+
+#: ../src/wifi_panel.c:371
+msgid "Encryption: "
+msgstr "Cryptage: "
+
+#: ../src/wifi_panel.c:70
+msgid "Essid"
+msgstr "Essid"
+
+#: ../src/wifi_panel.c:355 ../src/wifi_panel.c:469 ../src/wifi_panel.c:532
+msgid "Essid: "
+msgstr "Essid: "
+
+#: ../src/main_window.c:11
+msgid "Exalt: network manager"
+msgstr "Exalt: gestionnaire réseau"
+
+#: ../src/eth_panel.c:84 ../src/wifi_panel.c:501 ../src/wifi_panel.c:548
+msgid "Gateway: "
+msgstr "Paserelle: "
+
+#: ../src/main_window.c:40 ../src/main_window.c:155
+msgid "General"
+msgstr "Général"
+
+#: ../src/general_panel.c:10
+msgid "General configuration"
+msgstr "Configuration général"
+
+#: ../src/wifi_panel.c:98
+msgid "Informations"
+msgstr "Informations"
+
+#: ../src/main_window.c:26
+msgid "Interfaces"
+msgstr "Interfaces"
+
+#: ../src/eth_panel.c:72 ../src/wifi_panel.c:489 ../src/wifi_panel.c:536
+msgid "Ip address: "
+msgstr "Adresse ip: "
+
+#: ../src/wifi_panel.h:22
+msgid "Managed"
+msgstr "Managed"
+
+#: ../src/wifi_panel.c:34
+msgid "Maybe you have disable the card with a key (bindings)"
+msgstr ""
+"Peut être que vous désactivé la carte réseau avec une combinaison clavier"
+
+#: ../src/wifi_panel.c:363 ../src/wifi_panel.c:473
+msgid "Mode: "
+msgstr "Mode: "
+
+#: ../src/eth_panel.c:139
+#, c-format
+msgid "Network card: %s"
+msgstr "Carte réseau: %s"
+
+#: ../src/eth_panel.c:76 ../src/wifi_panel.c:493 ../src/wifi_panel.c:540
+msgid "Network mask: "
+msgstr "Masque réseau: "
+
+#: ../src/wifi_panel.c:387
+msgid "Noise level: "
+msgstr "Bruit: "
+
+#: ../src/wifi_panel.c:482
+msgid "Password: "
+msgstr "Mot de passe: "
+
+#: ../src/wifi_panel.c:359
+msgid "Protocol: "
+msgstr "Protocol: "
+
+#: ../src/wifi_panel.c:68
+msgid "Quality"
+msgstr "Qualité"
+
+#: ../src/wifi_panel.c:379
+msgid "Quality: "
+msgstr "Qualité: "
+
+#: ../src/wifi_panel.c:383
+msgid "Signal level: "
+msgstr "Signal: "
+
+#: ../src/eth_panel.c:41 ../src/wifi_panel.c:427
+msgid "Static address"
+msgstr "Adresse static: "
+
+#: ../src/general_panel.c:20
+msgid "The default interface: "
+msgstr "Interface par défaut: "
+
+#: ../src/wifi_panel.c:32
+msgid "The wireless card is not activated"
+msgstr "La carte sans fil n'est pas activée"
+
+#: ../src/exalt.h:25
+#, fuzzy
+msgid "Updating interface configuration ..."
+msgstr "Configuration général"
+
+#: ../src/wifi_panel.h:19
+msgid "WEP (10 or 26 hexadecimals characters)"
+msgstr "WEP (10 ou 26 caractères hexadécimaux)"
+
+#: ../src/wifi_panel.h:18
+msgid "WEP (ASCII)"
+msgstr "WEP (ASCII)"
+
+#: ../src/wifi_panel.c:229
+#, c-format
+msgid "Wireless card: %s"
+msgstr "Carte sans fil: %s"
+
+#: ../src/wifi_panel.c:86 ../src/wifi_panel.c:247 ../src/wifi_panel.c:249
+#: ../src/wifi_panel.h:17
+msgid "none"
+msgstr "vide"
