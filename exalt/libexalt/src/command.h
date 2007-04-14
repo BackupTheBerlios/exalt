@@ -29,8 +29,8 @@
 
 #define COMMAND_DHCLIENT "dhclient3"
 
-#define IWLIST_LIST "/home/watchwolf/Projects/C/iwlist/iwlist"
-//#define IWLIST_LIST "/sbin/iwlist"
+//#define IWLIST_LIST "/home/watchwolf/Projects/C/iwlist/iwlist"
+#define IWLIST_LIST "/sbin/iwlist"
 
 #define DNS_GET_LIST "grep nameserver /etc/resolv.conf | cut -d' ' -f2"
 #define DNS_ADD "echo \"nameserver %s\" >> /etc/resolv.conf"
