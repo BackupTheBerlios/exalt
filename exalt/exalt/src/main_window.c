@@ -87,14 +87,14 @@ void mainWindow_load_eth_lst(main_window* win)
 	char eth_img_not_activate[] = PACKAGE_DATA_DIR ICONS_ETHERNET_NOT_ACTIVATE;
 
 	
-	for(i=0;i<eth_get_size();i++)
+	for(i=0;i<exalt_eth_get_size();i++)
 	{
-		ethernet* eth =  eth_get_ethernet_bypos(i);
-		char* img = (eth_is_wifi(eth)?(eth_is_activate(eth) && wifi_raddiobutton_ison(eth->wifi)?
+		exalt_ethernet* eth =  exalt_eth_get_ethernet_bypos(i);
+		char* img = (exalt_eth_is_wifi(eth)?(exalt_eth_is_activate(eth) && exalt_wifi_raddiobutton_ison(eth->wifi)?
 			    wifi_img:wifi_img_not_activate)
-			    :(eth_is_activate(eth)?eth_img:eth_img_not_activate));
+			    :(exalt_eth_is_activate(eth)?eth_img:eth_img_not_activate));
 		etk_tree_row_append(ETK_TREE(win->eth_list), NULL,
-    			win->eth_col0,img,NULL,eth_get_name(eth) ,
+    			win->eth_col0,img,NULL,exalt_eth_get_name(eth) ,
         		NULL);
 	}
 
@@ -105,7 +105,7 @@ int mainWindow_eth_state_timer(void* data)
 	main_window* win = (main_window*)data;
 	Etk_Tree_Row *row;
 	char* row_name;
-	ethernet* eth;
+	exalt_ethernet* eth;
 
 	row = etk_tree_first_row_get(ETK_TREE(win->eth_list));
 	//the first row is "General", we can jump it
@@ -113,21 +113,21 @@ int mainWindow_eth_state_timer(void* data)
 	while(row!=NULL)
 	{
 		etk_tree_row_fields_get(row, win->eth_col0, NULL, NULL, &row_name, NULL);
-		eth=eth_get_ethernet_byname(row_name);
+		eth=exalt_eth_get_ethernet_byname(row_name);
 		if(eth)
 		{
-			if(eth_is_wifi(eth))
+			if(exalt_eth_is_wifi(eth))
 			{
 				short radio;
-				wifi_load_radio_button(eth);
-				radio = wifi_raddiobutton_ison(eth_get_wifi(eth));
-				if(radio && eth_is_activate(eth))
+				exalt_wifi_load_radio_button(eth);
+				radio = exalt_wifi_raddiobutton_ison(exalt_eth_get_wifi(eth));
+				if(radio && exalt_eth_is_activate(eth))
 					etk_tree_row_fields_set(row, 0, win->eth_col0,PACKAGE_DATA_DIR ICONS_WIFI_ACTIVATE,NULL,row_name, NULL);
 				else
 					etk_tree_row_fields_set(row, 0, win->eth_col0,PACKAGE_DATA_DIR ICONS_WIFI_NOT_ACTIVATE,NULL,row_name, NULL);
 			}
 			else
-				if(eth_is_activate(eth))
+				if(exalt_eth_is_activate(eth))
 					etk_tree_row_fields_set(row, 0, win->eth_col0,PACKAGE_DATA_DIR ICONS_ETHERNET_ACTIVATE,NULL,row_name, NULL);
 				else
 					etk_tree_row_fields_set(row, 0, win->eth_col0,PACKAGE_DATA_DIR ICONS_ETHERNET_NOT_ACTIVATE,NULL,row_name, NULL);
@@ -143,7 +143,7 @@ void mainWindow_ethList_row_clicked_cb(Etk_Object *object, Etk_Tree_Row *row, Et
 	Etk_Tree *tree;
 	char *row_name;
 	main_window* win;
-	ethernet* eth;
+	exalt_ethernet* eth;
 
 	if (!(tree = ETK_TREE(object)) || !row || !event || !data)
 		return;
@@ -161,8 +161,8 @@ void mainWindow_ethList_row_clicked_cb(Etk_Object *object, Etk_Tree_Row *row, Et
 	}
 	else
 	{
-		eth = eth_get_ethernet_byname(row_name);
-		if(!eth_is_wifi(eth))
+		eth = exalt_eth_get_ethernet_byname(row_name);
+		if(!exalt_eth_is_wifi(eth))
 		{
 			ethpanel_set_eth(win->eth_panel,eth);
 			wifipanel_hide(win->wifi_panel);

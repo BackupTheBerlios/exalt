@@ -16,21 +16,21 @@ EXTRA_DIST =
 
 ENIGMAHEADERS = \
 libexalt.h \
-command.h \
-dns.h \
-ethernet.h \
-regexp.h \
-save_load.h \
-wifi.h 
+exalt_command.h \
+exalt_dns.h \
+exalt_ethernet.h \
+exalt_regexp.h \
+exalt_save_load.h \
+exalt_wifi.h 
 
 libexalt_la_SOURCES = \
 libexalt.c \
-command.c \
-dns.c \
-ethernet.c \
-regexp.c \
-save_load.c \
-wifi.c \
+exalt_command.c \
+exalt_dns.c \
+exalt_ethernet.c \
+exalt_regexp.c \
+exalt_save_load.c \
+exalt_wifi.c \
 $(EXALTHEADERS)
 
 installed_headersdir = $(prefix)/include/exalt

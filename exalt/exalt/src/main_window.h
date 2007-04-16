@@ -9,10 +9,6 @@
 typedef struct _main_window main_window;
 
 #include "exalt.h"
-#include "ethernet.h"
-#include "wifi.h"
-
-
 #include "eth_panel.h"
 #include "wifi_panel.h"
 #include "general_panel.h"

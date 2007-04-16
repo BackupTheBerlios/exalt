@@ -8,8 +8,6 @@
 typedef struct _general_panel general_panel;
 
 #include "exalt.h"
-#include "ethernet.h"
-#include "dns.h"
 
 
 struct _general_panel

@@ -126,27 +126,27 @@ void wifipanel_set_boxbutton(wifi_panel* pnl)
 		return ;
 	}
 
-	if(!eth_is_wifi(pnl->eth))
+	if(!exalt_eth_is_wifi(pnl->eth))
 	{
 	 	fprintf(stderr,"wifipanel_set_boxbutton(): pnl->eth->wifi==null ! \n");
 		return ;
 	}
 
-	wifi_reload(pnl->eth);
-	if(wifi_raddiobutton_ison(pnl->eth->wifi))
+	exalt_wifi_reload(pnl->eth);
+	if(exalt_wifi_raddiobutton_ison(pnl->eth->wifi))
 	{
 		etk_widget_hide_all(pnl->box_button_off);
 		etk_widget_show_all(pnl->box_button_on);
  	 	etk_widget_hide(pnl->hbox_pbar);
 
 		//scan networks
-                wifi_scan_execute(pnl->eth);
+                exalt_wifi_scan_execute(pnl->eth);
 		
 		DELETE_TIMER(pnl->radio_button_isoff_timer)
 		DELETE_TIMER(pnl->scan_networks_timer)
 		pnl->radio_button_isoff_timer = ecore_timer_add(WIFI_UPDATE_TIME_BUTTON,radio_button_isoff_cb,pnl);
 		pnl->scan_networks_timer = ecore_timer_add(WIFI_UPDATE_TIME_SCAN ,scan_networks_cb,pnl);
-		if(!eth_is_activate(pnl->eth))
+		if(!exalt_eth_is_activate(pnl->eth))
 			wifipanel_disabled_widget_activate(pnl,ETK_TRUE);
 		else
 			wifipanel_disabled_widget_activate(pnl,ETK_FALSE);
@@ -221,12 +221,12 @@ void wifipanel_hide(wifi_panel* pnl)
 	etk_widget_hide_all(pnl->frame);
 }
 
-void wifipanel_set_eth(wifi_panel* pnl, ethernet* eth)
+void wifipanel_set_eth(wifi_panel* pnl, exalt_ethernet* eth)
 {
 	if(pnl && eth)
 	{
 		char name[100];
-		sprintf(name,_("Wireless card: %s"),eth_get_name(eth));
+		sprintf(name,_("Wireless card: %s"),exalt_eth_get_name(eth));
 		pnl->eth = eth;
 		etk_frame_label_set(ETK_FRAME(pnl->frame),name);
 	 	wifipanel_update_current_conf(pnl);	
@@ -243,19 +243,19 @@ void wifipanel_update_current_conf(wifi_panel* pnl)
 		return ;
 	}
 	
-	a=wifi_get_current_essid(eth_get_wifi(pnl->eth));
+	a=exalt_wifi_get_current_essid(exalt_eth_get_wifi(pnl->eth));
 	if(!a) a=_("none");
-	b=eth_get_ip(pnl->eth);
+	b=exalt_eth_get_ip(pnl->eth);
 	if(!b) b=_("none");
 
 	sprintf(essid_ip,"%s (%s)",a,b);
 	etk_label_set(ETK_LABEL(pnl->lbl_essid_ip), essid_ip);
 
-	etk_entry_text_set(ETK_ENTRY(pnl->entry_current_essid),wifi_get_current_essid(eth_get_wifi(pnl->eth)));
-	etk_entry_text_set(ETK_ENTRY(pnl->entry_current_ip),eth_get_ip(pnl->eth));
-	etk_entry_text_set(ETK_ENTRY(pnl->entry_current_mask),eth_get_netmask(pnl->eth));
-	etk_entry_text_set(ETK_ENTRY(pnl->entry_current_broadcast),eth_get_broadcast(pnl->eth));
-	etk_entry_text_set(ETK_ENTRY(pnl->entry_current_gateway),eth_get_gateway(pnl->eth));
+	etk_entry_text_set(ETK_ENTRY(pnl->entry_current_essid),exalt_wifi_get_current_essid(exalt_eth_get_wifi(pnl->eth)));
+	etk_entry_text_set(ETK_ENTRY(pnl->entry_current_ip),exalt_eth_get_ip(pnl->eth));
+	etk_entry_text_set(ETK_ENTRY(pnl->entry_current_mask),exalt_eth_get_netmask(pnl->eth));
+	etk_entry_text_set(ETK_ENTRY(pnl->entry_current_broadcast),exalt_eth_get_broadcast(pnl->eth));
+	etk_entry_text_set(ETK_ENTRY(pnl->entry_current_gateway),exalt_eth_get_gateway(pnl->eth));
 }
 
 void wifipanel_load_scan(wifi_panel* pnl)
@@ -276,7 +276,7 @@ void wifipanel_load_scan(wifi_panel* pnl)
 
 		//execute a scan
 		if(pnl->eth->wifi->f_scan==NULL)
-			wifi_scan_execute(pnl->eth);
+			exalt_wifi_scan_execute(pnl->eth);
 		else
 		{
 			
@@ -285,17 +285,17 @@ void wifipanel_load_scan(wifi_panel* pnl)
 			if(row)
 				etk_tree_row_fields_get(row , etk_tree_nth_col_get(ETK_TREE(pnl->scan_list), 2),  &row_name, NULL);
 
-			wifi_scan_load(pnl->eth);
-			wifi_scan_free(pnl->eth->wifi);
+			exalt_wifi_scan_load(pnl->eth);
+			exalt_wifi_scan_free(pnl->eth->wifi);
 			etk_tree_clear (ETK_TREE(pnl->scan_list));
 
-			for(i=0;i<wifi_get_nb_networks(pnl->eth);i++)
+			for(i=0;i<exalt_wifi_get_nb_networks(pnl->eth);i++)
 			{
-				wifi_info* w = wifi_get_networkinfo(pnl->eth,i);
+				exalt_wifi_info* w = exalt_wifi_get_networkinfo(pnl->eth,i);
 				etk_tree_row_append(ETK_TREE(pnl->scan_list), NULL,
-						pnl->scan_quality,img[(wifi_get_quality(w))/25],NULL,
-						pnl->scan_encryption,(strcmp(wifi_get_encryption(w),"on")==0?encryption:NULL),NULL,
-						pnl->scan_essid,wifi_get_essid(w),NULL);
+						pnl->scan_quality,img[(exalt_wifi_get_quality(w))/25],NULL,
+						pnl->scan_encryption,(strcmp(exalt_wifi_get_encryption(w),"on")==0?encryption:NULL),NULL,
+						pnl->scan_essid,exalt_wifi_get_essid(w),NULL);
 
 			}
 
@@ -560,8 +560,8 @@ void wifipanel_scanlist_row_clicked_cb(Etk_Object *object, Etk_Tree_Row *row, Et
 	Etk_Tree *tree;
 	char *row_name;
 	wifi_panel* pnl;
-	ethernet* eth;
-	wifi_info * w;
+	exalt_ethernet* eth;
+	exalt_wifi_info * w;
 
 	if (!(tree = ETK_TREE(object)) || !row || !event || !data)
 		return;
@@ -570,26 +570,26 @@ void wifipanel_scanlist_row_clicked_cb(Etk_Object *object, Etk_Tree_Row *row, Et
 
 	etk_tree_row_fields_get(row, etk_tree_nth_col_get(tree, 2),  &row_name, NULL);
 	eth = pnl->eth;
-	w=wifi_get_networkinfo_by_essid(eth,row_name);
+	w=exalt_wifi_get_networkinfo_by_essid(eth,row_name);
 	if(w)
 	{
 		char buf[1024];
-		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_addr),wifi_get_addr(w));
-		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_essid),wifi_get_essid(w));
-		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_protocol),wifi_get_protocol(w));
-		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_mode),wifi_get_mode(w));
-		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_channel),wifi_get_channel(w));
-		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_encryption),wifi_get_encryption(w));
-		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_bitrates),wifi_get_bitrates(w));
+		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_addr),exalt_wifi_get_addr(w));
+		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_essid),exalt_wifi_get_essid(w));
+		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_protocol),exalt_wifi_get_protocol(w));
+		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_mode),exalt_wifi_get_mode(w));
+		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_channel),exalt_wifi_get_channel(w));
+		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_encryption),exalt_wifi_get_encryption(w));
+		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_bitrates),exalt_wifi_get_bitrates(w));
 
- 	 	etk_entry_text_set(ETK_ENTRY(pnl->entry_conn_essid),wifi_get_essid(w));
+ 	 	etk_entry_text_set(ETK_ENTRY(pnl->entry_conn_essid),exalt_wifi_get_essid(w));
 
 
-		sprintf(buf,_("%d%%"),wifi_get_quality(w));
+		sprintf(buf,_("%d%%"),exalt_wifi_get_quality(w));
 		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_quality),buf);
-		sprintf(buf,_("%d dBm"),wifi_get_signallvl(w));
+		sprintf(buf,_("%d dBm"),exalt_wifi_get_signallvl(w));
 		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_signallvl),buf);
-		sprintf(buf,_("%d dBm"),wifi_get_noiselvl(w));
+		sprintf(buf,_("%d dBm"),exalt_wifi_get_noiselvl(w));
 		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_noiselvl),buf);
 
 
@@ -599,7 +599,7 @@ void wifipanel_scanlist_row_clicked_cb(Etk_Object *object, Etk_Tree_Row *row, Et
 int radio_button_ison_cb(void* data)
 {
 	wifi_panel* pnl = (wifi_panel*)data;
-	if(wifi_raddiobutton_ison(eth_get_wifi(pnl->eth)))
+	if(exalt_wifi_raddiobutton_ison(exalt_eth_get_wifi(pnl->eth)))
 	{
 		//the button radio is on
 		DELETE_TIMER(pnl->radio_button_ison_timer)
@@ -611,7 +611,7 @@ int radio_button_ison_cb(void* data)
 int radio_button_isoff_cb(void * data)
 {
 	wifi_panel* pnl = (wifi_panel*)data;
-	if(!wifi_raddiobutton_ison(eth_get_wifi(pnl->eth)))
+	if(!exalt_wifi_raddiobutton_ison(exalt_eth_get_wifi(pnl->eth)))
 	{
 		//the button radio is off
 		DELETE_TIMER(pnl->radio_button_isoff_timer)
@@ -647,7 +647,7 @@ void wifipanel_btn_disactivate_clicked_cb(void *data)
 	}
 
 	pnl = (wifi_panel*)data;
-	eth_desactivate(pnl->eth);
+	exalt_eth_desactivate(pnl->eth);
 	wifipanel_show(pnl);
 }
 
@@ -661,7 +661,7 @@ void wifipanel_btn_activate_clicked_cb(void *data)
 	}
 
 	pnl = (wifi_panel*)data;
-	eth_activate(pnl->eth);
+	exalt_eth_activate(pnl->eth);
 	wifipanel_show(pnl);
 }
 
@@ -711,34 +711,34 @@ void wifipanel_btn_apply_clicked_cb(void *data)
 	
 	if(etk_toggle_button_active_get(ETK_TOGGLE_BUTTON(pnl->check_static)))
 	{
-		eth_set_dhcp(pnl->eth,0);
+		exalt_eth_set_dhcp(pnl->eth,0);
 		//static mode
-		eth_set_ip(pnl->eth,etk_entry_text_get(ETK_ENTRY(pnl->entry_conn_ip)));
-		eth_set_netmask(pnl->eth,etk_entry_text_get(ETK_ENTRY(pnl->entry_conn_mask)));
-		eth_set_broadcast(pnl->eth,etk_entry_text_get(ETK_ENTRY(pnl->entry_conn_broadcast)));
-		eth_set_gateway(pnl->eth,etk_entry_text_get(ETK_ENTRY(pnl->entry_conn_gateway)));
+		exalt_eth_set_ip(pnl->eth,etk_entry_text_get(ETK_ENTRY(pnl->entry_conn_ip)));
+		exalt_eth_set_netmask(pnl->eth,etk_entry_text_get(ETK_ENTRY(pnl->entry_conn_mask)));
+		exalt_eth_set_broadcast(pnl->eth,etk_entry_text_get(ETK_ENTRY(pnl->entry_conn_broadcast)));
+		exalt_eth_set_gateway(pnl->eth,etk_entry_text_get(ETK_ENTRY(pnl->entry_conn_gateway)));
 	}
 	else
-		eth_set_dhcp(pnl->eth,1);
+		exalt_eth_set_dhcp(pnl->eth,1);
 
 
 	//save wifi information (essid, channel, passwd, passwd mode)
-	wifi_set_current_essid(eth_get_wifi(pnl->eth),etk_entry_text_get(ETK_ENTRY(pnl->entry_conn_essid)));
+	exalt_wifi_set_current_essid(exalt_eth_get_wifi(pnl->eth),etk_entry_text_get(ETK_ENTRY(pnl->entry_conn_essid)));
 
  	//get the mode
 	if (!(active_item = etk_combobox_active_item_get(ETK_COMBOBOX(pnl->cmbox_encryption))))
 		return;
 	mode = etk_combobox_item_data_get(active_item);
 
-	wifi_set_current_mode(eth_get_wifi(pnl->eth),*mode);
+	exalt_wifi_set_current_mode(exalt_eth_get_wifi(pnl->eth),*mode);
  	
 	//get the passwd mode
 	if (!(active_item = etk_combobox_active_item_get(ETK_COMBOBOX(pnl->cmbox_encryption))))
 		return;
 	encryption = etk_combobox_item_data_get(active_item);
-	wifi_set_current_passwd_mode(eth_get_wifi(pnl->eth),*encryption);
+	exalt_wifi_set_current_passwd_mode(exalt_eth_get_wifi(pnl->eth),*encryption);
 	if(*encryption>WIFI_ENCRYPTION_NONE)
-	 	wifi_set_current_passwd(eth_get_wifi(pnl->eth),etk_entry_text_get(ETK_ENTRY(pnl->entry_conn_pwd)));
+	 	exalt_wifi_set_current_passwd(exalt_eth_get_wifi(pnl->eth),etk_entry_text_get(ETK_ENTRY(pnl->entry_conn_pwd)));
  	
 	etk_widget_show(pnl->hbox_pbar);
 	f=fork();
@@ -749,7 +749,7 @@ void wifipanel_btn_apply_clicked_cb(void *data)
 	}
 	else if(f==0)
 	{
-		eth_apply_conf(pnl->eth);
+		exalt_eth_apply_conf(pnl->eth);
 		exit(1);
 	}
 	wifipanel_disabled_widget_activate(pnl,ETK_TRUE);
@@ -826,11 +826,11 @@ int wifipanel_dhcp_timer(void* data)
 		DELETE_TIMER(pnl->dhcp_timer)
 
 		//update the configuration
-		eth_load_configuration_byeth(pnl->eth,0);
+		exalt_eth_load_configuration_byeth(pnl->eth,0);
 		wifipanel_update_current_conf(pnl);
 
 		//save the configuration
-		eth_save_byeth(pnl->eth);
+		exalt_eth_save_byeth(pnl->eth);
 	}
 	return 1;
 }

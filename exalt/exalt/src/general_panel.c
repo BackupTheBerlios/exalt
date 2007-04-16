@@ -31,10 +31,10 @@ general_panel* generalpanel_create()
 	int i;
 	wifi_img = etk_image_new_from_file(PACKAGE_DATA_DIR ICONS_WIFI_ACTIVATE,"hehe");
 	eth_img = etk_image_new_from_file(PACKAGE_DATA_DIR ICONS_ETHERNET_ACTIVATE,"haha");
-	for(i=0;i<eth_get_size();i++)
+	for(i=0;i<exalt_eth_get_size();i++)
 	{
-		ethernet* eth =  eth_get_ethernet_bypos(i);
-		etk_combobox_item_append(ETK_COMBOBOX(pnl->cmbox_ethernet),(eth_is_wifi(eth)?wifi_img:eth_img) ,eth_get_name(eth) );
+		exalt_ethernet* eth =  exalt_eth_get_ethernet_bypos(i);
+		etk_combobox_item_append(ETK_COMBOBOX(pnl->cmbox_ethernet),(exalt_eth_is_wifi(eth)?wifi_img:eth_img) ,exalt_eth_get_name(eth) );
 	}
 
 	//#######################
@@ -85,11 +85,11 @@ void generalpanel_load_dns_list(general_panel* pnl)
 	char** t;
 
 	etk_tree_clear(ETK_TREE(pnl->dns_list));
-	t = dns_get_list(&nb_dns);
+	t = exalt_dns_get_list(&nb_dns);
 	for(i=0;i<nb_dns;i++)
 		etk_tree_row_append(ETK_TREE(pnl->dns_list), NULL,
 		    pnl->dns_col,t[i],NULL);
-	dns_free_list(t,nb_dns);	
+	exalt_dns_free_list(t,nb_dns);	
 }
 
 
@@ -113,7 +113,7 @@ void generalpanel_btn_dns_add_clicked_cb(void *data)
 		return ;
 	}
 	general_panel* pnl = (general_panel*)data;
-	dns_add(etk_entry_text_get(ETK_ENTRY(pnl->entry_dns)));
+	exalt_dns_add(etk_entry_text_get(ETK_ENTRY(pnl->entry_dns)));
 	etk_entry_text_set(ETK_ENTRY(pnl->entry_dns),"");
 	//load the dns list
 	ENM_FREE(pnl->select_dns);
@@ -127,7 +127,7 @@ void generalpanel_btn_dns_modify_clicked_cb(void *data)
 		return ;
 	}
 	general_panel* pnl = (general_panel*)data;
-	dns_replace(pnl->select_dns,etk_entry_text_get(ETK_ENTRY(pnl->entry_dns)));
+	exalt_dns_replace(pnl->select_dns,etk_entry_text_get(ETK_ENTRY(pnl->entry_dns)));
 	etk_entry_text_set(ETK_ENTRY(pnl->entry_dns),"");
 	//load the dns list
 	ENM_FREE(pnl->select_dns);
@@ -144,7 +144,7 @@ void generalpanel_btn_dns_delete_clicked_cb(void *data)
 	general_panel* pnl = (general_panel*)data;
 	if(pnl->select_dns)
 	{
-		dns_delete(pnl->select_dns);
+		exalt_dns_delete(pnl->select_dns);
 		etk_entry_text_set(ETK_ENTRY(pnl->entry_dns),"");
 		//load the dns list
 		generalpanel_load_dns_list(pnl);

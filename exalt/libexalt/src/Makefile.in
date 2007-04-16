@@ -56,8 +56,9 @@ am__installdirs = "$(DESTDIR)$(libdir)" \
 	"$(DESTDIR)$(installed_headersdir)"
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
-am_libexalt_la_OBJECTS = libexalt.lo command.lo dns.lo ethernet.lo \
-	regexp.lo save_load.lo wifi.lo
+am_libexalt_la_OBJECTS = libexalt.lo exalt_command.lo exalt_dns.lo \
+	exalt_ethernet.lo exalt_regexp.lo exalt_save_load.lo \
+	exalt_wifi.lo
 libexalt_la_OBJECTS = $(am_libexalt_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -191,21 +192,21 @@ lib_LTLIBRARIES = libexalt.la
 EXTRA_DIST = 
 ENIGMAHEADERS = \
 libexalt.h \
-command.h \
-dns.h \
-ethernet.h \
-regexp.h \
-save_load.h \
-wifi.h 
+exalt_command.h \
+exalt_dns.h \
+exalt_ethernet.h \
+exalt_regexp.h \
+exalt_save_load.h \
+exalt_wifi.h 
 
 libexalt_la_SOURCES = \
 libexalt.c \
-command.c \
-dns.c \
-ethernet.c \
-regexp.c \
-save_load.c \
-wifi.c \
+exalt_command.c \
+exalt_dns.c \
+exalt_ethernet.c \
+exalt_regexp.c \
+exalt_save_load.c \
+exalt_wifi.c \
 $(EXALTHEADERS)
 
 installed_headersdir = $(prefix)/include/exalt
@@ -282,13 +283,13 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/command.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/dns.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ethernet.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exalt_command.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exalt_dns.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exalt_ethernet.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exalt_regexp.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exalt_save_load.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exalt_wifi.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libexalt.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/regexp.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/save_load.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/wifi.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	if $(COMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \

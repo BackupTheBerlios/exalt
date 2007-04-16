@@ -9,14 +9,11 @@
 
 typedef struct _eth_panel eth_panel;
 
-#include "main_window.h"
-#include "ethernet.h"
-#include "save_load.h"
-
+#include "exalt.h"
 
 struct _eth_panel
 {
-	ethernet* eth;
+	exalt_ethernet* eth;
 	
 	main_window* win;
 	Etk_Widget *frame;
@@ -51,7 +48,7 @@ struct _eth_panel
 eth_panel* ethpanel_create(main_window* win);
 void ethpanel_show(eth_panel* pnl);
 void ethpanel_hide(eth_panel* pnl);
-void ethpanel_set_eth(eth_panel* pnl, ethernet* eth);
+void ethpanel_set_eth(eth_panel* pnl, exalt_ethernet* eth);
 void ethpanel_disabled_set(eth_panel* pnl,Etk_Bool b);
 void ethpanel_disabled_entry_set(eth_panel* pnl, Etk_Bool b);
 

@@ -74,22 +74,22 @@ eth_panel.o eth_panel.o: eth_panel.c eth_panel.h \
   /opt/e17/include/etk/etk_tree.h /opt/e17/include/Ecore_Job.h \
   /opt/e17/include/etk/etk_tree_model.h \
   /opt/e17/include/etk/etk_viewport.h /usr/include/sys/wait.h \
-  /usr/include/sys/resource.h /usr/include/bits/resource.h main_window.h \
-  exalt.h config.h wifi_panel.h /usr/include/pthread.h \
-  /usr/include/sched.h /usr/include/bits/sched.h \
-  /usr/include/bits/setjmp.h /usr/local/include/exalt/ethernet.h \
-  /usr/local/include/exalt/libexalt.h /usr/local/include/exalt/ethernet.h \
-  /usr/local/include/exalt/wifi.h /usr/local/include/exalt/command.h \
-  /usr/local/include/exalt/dns.h /usr/include/string.h \
+  /usr/include/sys/resource.h /usr/include/bits/resource.h exalt.h \
+  config.h /usr/local/include/exalt/libexalt.h \
+  /usr/local/include/exalt/exalt_ethernet.h \
+  /usr/local/include/exalt/libexalt.h \
+  /usr/local/include/exalt/exalt_wifi.h \
+  /usr/local/include/exalt/exalt_command.h \
+  /usr/local/include/exalt/exalt_dns.h /usr/include/string.h \
   /usr/include/bits/string.h /usr/include/bits/string2.h \
-  /usr/local/include/exalt/save_load.h /usr/include/sys/stat.h \
+  /usr/local/include/exalt/exalt_save_load.h /usr/include/sys/stat.h \
   /usr/include/bits/stat.h /usr/include/fcntl.h /usr/include/bits/fcntl.h \
   /usr/include/bits/uio.h /usr/include/unistd.h \
   /usr/include/bits/posix_opt.h /usr/include/bits/environments.h \
   /usr/include/bits/confname.h /usr/include/getopt.h \
-  /usr/local/include/exalt/regexp.h /usr/include/regex.h general_panel.h \
-  /usr/local/include/exalt/dns.h /usr/local/include/exalt/wifi.h \
-  /usr/local/include/exalt/save_load.h
+  /usr/local/include/exalt/exalt_regexp.h /usr/include/regex.h \
+  main_window.h wifi_panel.h /usr/include/pthread.h /usr/include/sched.h \
+  /usr/include/bits/sched.h /usr/include/bits/setjmp.h general_panel.h
 
 eth_panel.h:
 
@@ -361,33 +361,21 @@ eth_panel.h:
 
 /usr/include/bits/resource.h:
 
-main_window.h:
-
 exalt.h:
 
 config.h:
 
-wifi_panel.h:
+/usr/local/include/exalt/libexalt.h:
 
-/usr/include/pthread.h:
-
-/usr/include/sched.h:
-
-/usr/include/bits/sched.h:
-
-/usr/include/bits/setjmp.h:
-
-/usr/local/include/exalt/ethernet.h:
+/usr/local/include/exalt/exalt_ethernet.h:
 
 /usr/local/include/exalt/libexalt.h:
 
-/usr/local/include/exalt/ethernet.h:
+/usr/local/include/exalt/exalt_wifi.h:
 
-/usr/local/include/exalt/wifi.h:
+/usr/local/include/exalt/exalt_command.h:
 
-/usr/local/include/exalt/command.h:
-
-/usr/local/include/exalt/dns.h:
+/usr/local/include/exalt/exalt_dns.h:
 
 /usr/include/string.h:
 
@@ -395,7 +383,7 @@ wifi_panel.h:
 
 /usr/include/bits/string2.h:
 
-/usr/local/include/exalt/save_load.h:
+/usr/local/include/exalt/exalt_save_load.h:
 
 /usr/include/sys/stat.h:
 
@@ -417,14 +405,20 @@ wifi_panel.h:
 
 /usr/include/getopt.h:
 
-/usr/local/include/exalt/regexp.h:
+/usr/local/include/exalt/exalt_regexp.h:
 
 /usr/include/regex.h:
 
+main_window.h:
+
+wifi_panel.h:
+
+/usr/include/pthread.h:
+
+/usr/include/sched.h:
+
+/usr/include/bits/sched.h:
+
+/usr/include/bits/setjmp.h:
+
 general_panel.h:
-
-/usr/local/include/exalt/dns.h:
-
-/usr/local/include/exalt/wifi.h:
-
-/usr/local/include/exalt/save_load.h:

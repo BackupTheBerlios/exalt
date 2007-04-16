@@ -4,29 +4,40 @@ exalt.o exalt.o: exalt.c exalt.h config.h /usr/include/libintl.h \
   /usr/include/gnu/stubs-32.h \
   /usr/lib/gcc/i486-linux-gnu/4.1.2/include/stddef.h \
   /usr/include/locale.h /usr/include/bits/locale.h /usr/include/xlocale.h \
-  main_window.h /opt/e17/include/etk/Etk.h \
-  /opt/e17/include/etk/etk_argument.h /opt/e17/include/etk/etk_types.h \
+  /usr/local/include/exalt/libexalt.h \
+  /usr/local/include/exalt/exalt_ethernet.h \
+  /usr/local/include/exalt/libexalt.h \
+  /usr/local/include/exalt/exalt_wifi.h /usr/include/stdio.h \
+  /usr/include/bits/types.h /usr/include/bits/typesizes.h \
+  /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h \
+  /usr/include/bits/wchar.h /usr/include/gconv.h \
   /usr/lib/gcc/i486-linux-gnu/4.1.2/include/stdarg.h \
-  /opt/e17/include/etk/etk_config.h /opt/e17/include/Eet.h \
+  /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+  /usr/include/bits/stdio.h /usr/local/include/exalt/exalt_command.h \
   /usr/include/stdlib.h /usr/include/bits/waitflags.h \
   /usr/include/bits/waitstatus.h /usr/include/endian.h \
-  /usr/include/bits/endian.h /usr/include/sys/types.h \
-  /usr/include/bits/types.h /usr/include/bits/typesizes.h \
-  /usr/include/time.h /usr/include/sys/select.h \
-  /usr/include/bits/select.h /usr/include/bits/sigset.h \
-  /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
-  /usr/include/bits/pthreadtypes.h /usr/include/alloca.h \
+  /usr/include/bits/endian.h /usr/include/sys/types.h /usr/include/time.h \
+  /usr/include/sys/select.h /usr/include/bits/select.h \
+  /usr/include/bits/sigset.h /usr/include/bits/time.h \
+  /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
+  /usr/include/alloca.h /usr/local/include/exalt/exalt_dns.h \
+  /usr/include/string.h /usr/include/bits/string.h \
+  /usr/include/bits/string2.h /usr/local/include/exalt/exalt_save_load.h \
+  /usr/include/sys/stat.h /usr/include/bits/stat.h /usr/include/fcntl.h \
+  /usr/include/bits/fcntl.h /usr/include/bits/uio.h /usr/include/unistd.h \
+  /usr/include/bits/posix_opt.h /usr/include/bits/environments.h \
+  /usr/include/bits/confname.h /usr/include/getopt.h \
+  /usr/local/include/exalt/exalt_regexp.h /usr/include/regex.h \
+  main_window.h /opt/e17/include/etk/Etk.h \
+  /opt/e17/include/etk/etk_argument.h /opt/e17/include/etk/etk_types.h \
+  /opt/e17/include/etk/etk_config.h /opt/e17/include/Eet.h \
   /opt/e17/include/etk/etk_main.h /opt/e17/include/Evas.h \
   /opt/e17/include/etk/etk_marshallers.h \
   /opt/e17/include/etk/etk_object.h /opt/e17/include/etk/etk_type.h \
   /opt/e17/include/etk/etk_property.h \
   /opt/e17/include/etk/etk_signal_callback.h \
   /opt/e17/include/etk/etk_signal.h /opt/e17/include/etk/etk_string.h \
-  /opt/e17/include/etk/etk_utils.h /usr/include/stdio.h \
-  /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h \
-  /usr/include/bits/wchar.h /usr/include/gconv.h \
-  /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
-  /usr/include/bits/stdio.h /usr/include/math.h \
+  /opt/e17/include/etk/etk_utils.h /usr/include/math.h \
   /usr/include/bits/huge_val.h /usr/include/bits/huge_valf.h \
   /usr/include/bits/huge_vall.h /usr/include/bits/inf.h \
   /usr/include/bits/nan.h /usr/include/bits/mathdef.h \
@@ -74,23 +85,10 @@ exalt.o exalt.o: exalt.c exalt.h config.h /usr/include/libintl.h \
   /opt/e17/include/etk/etk_toolbar.h /opt/e17/include/etk/etk_tooltips.h \
   /opt/e17/include/etk/etk_tree.h /opt/e17/include/Ecore_Job.h \
   /opt/e17/include/etk/etk_tree_model.h \
-  /opt/e17/include/etk/etk_viewport.h /usr/local/include/exalt/ethernet.h \
-  /usr/local/include/exalt/libexalt.h /usr/local/include/exalt/ethernet.h \
-  /usr/local/include/exalt/wifi.h /usr/local/include/exalt/command.h \
-  /usr/local/include/exalt/dns.h /usr/include/string.h \
-  /usr/include/bits/string.h /usr/include/bits/string2.h \
-  /usr/local/include/exalt/save_load.h /usr/include/sys/stat.h \
-  /usr/include/bits/stat.h /usr/include/fcntl.h /usr/include/bits/fcntl.h \
-  /usr/include/bits/uio.h /usr/include/unistd.h \
-  /usr/include/bits/posix_opt.h /usr/include/bits/environments.h \
-  /usr/include/bits/confname.h /usr/include/getopt.h \
-  /usr/local/include/exalt/regexp.h /usr/include/regex.h \
-  /usr/local/include/exalt/wifi.h eth_panel.h /usr/include/sys/wait.h \
-  /usr/include/sys/resource.h /usr/include/bits/resource.h \
-  /usr/local/include/exalt/save_load.h wifi_panel.h \
+  /opt/e17/include/etk/etk_viewport.h eth_panel.h /usr/include/sys/wait.h \
+  /usr/include/sys/resource.h /usr/include/bits/resource.h wifi_panel.h \
   /usr/include/pthread.h /usr/include/sched.h /usr/include/bits/sched.h \
-  /usr/include/bits/setjmp.h general_panel.h \
-  /usr/local/include/exalt/dns.h
+  /usr/include/bits/setjmp.h general_panel.h
 
 exalt.h:
 
@@ -116,19 +114,39 @@ config.h:
 
 /usr/include/xlocale.h:
 
-main_window.h:
+/usr/local/include/exalt/libexalt.h:
 
-/opt/e17/include/etk/Etk.h:
+/usr/local/include/exalt/exalt_ethernet.h:
 
-/opt/e17/include/etk/etk_argument.h:
+/usr/local/include/exalt/libexalt.h:
 
-/opt/e17/include/etk/etk_types.h:
+/usr/local/include/exalt/exalt_wifi.h:
+
+/usr/include/stdio.h:
+
+/usr/include/bits/types.h:
+
+/usr/include/bits/typesizes.h:
+
+/usr/include/libio.h:
+
+/usr/include/_G_config.h:
+
+/usr/include/wchar.h:
+
+/usr/include/bits/wchar.h:
+
+/usr/include/gconv.h:
 
 /usr/lib/gcc/i486-linux-gnu/4.1.2/include/stdarg.h:
 
-/opt/e17/include/etk/etk_config.h:
+/usr/include/bits/stdio_lim.h:
 
-/opt/e17/include/Eet.h:
+/usr/include/bits/sys_errlist.h:
+
+/usr/include/bits/stdio.h:
+
+/usr/local/include/exalt/exalt_command.h:
 
 /usr/include/stdlib.h:
 
@@ -141,10 +159,6 @@ main_window.h:
 /usr/include/bits/endian.h:
 
 /usr/include/sys/types.h:
-
-/usr/include/bits/types.h:
-
-/usr/include/bits/typesizes.h:
 
 /usr/include/time.h:
 
@@ -161,6 +175,52 @@ main_window.h:
 /usr/include/bits/pthreadtypes.h:
 
 /usr/include/alloca.h:
+
+/usr/local/include/exalt/exalt_dns.h:
+
+/usr/include/string.h:
+
+/usr/include/bits/string.h:
+
+/usr/include/bits/string2.h:
+
+/usr/local/include/exalt/exalt_save_load.h:
+
+/usr/include/sys/stat.h:
+
+/usr/include/bits/stat.h:
+
+/usr/include/fcntl.h:
+
+/usr/include/bits/fcntl.h:
+
+/usr/include/bits/uio.h:
+
+/usr/include/unistd.h:
+
+/usr/include/bits/posix_opt.h:
+
+/usr/include/bits/environments.h:
+
+/usr/include/bits/confname.h:
+
+/usr/include/getopt.h:
+
+/usr/local/include/exalt/exalt_regexp.h:
+
+/usr/include/regex.h:
+
+main_window.h:
+
+/opt/e17/include/etk/Etk.h:
+
+/opt/e17/include/etk/etk_argument.h:
+
+/opt/e17/include/etk/etk_types.h:
+
+/opt/e17/include/etk/etk_config.h:
+
+/opt/e17/include/Eet.h:
 
 /opt/e17/include/etk/etk_main.h:
 
@@ -181,24 +241,6 @@ main_window.h:
 /opt/e17/include/etk/etk_string.h:
 
 /opt/e17/include/etk/etk_utils.h:
-
-/usr/include/stdio.h:
-
-/usr/include/libio.h:
-
-/usr/include/_G_config.h:
-
-/usr/include/wchar.h:
-
-/usr/include/bits/wchar.h:
-
-/usr/include/gconv.h:
-
-/usr/include/bits/stdio_lim.h:
-
-/usr/include/bits/sys_errlist.h:
-
-/usr/include/bits/stdio.h:
 
 /usr/include/math.h:
 
@@ -360,52 +402,6 @@ main_window.h:
 
 /opt/e17/include/etk/etk_viewport.h:
 
-/usr/local/include/exalt/ethernet.h:
-
-/usr/local/include/exalt/libexalt.h:
-
-/usr/local/include/exalt/ethernet.h:
-
-/usr/local/include/exalt/wifi.h:
-
-/usr/local/include/exalt/command.h:
-
-/usr/local/include/exalt/dns.h:
-
-/usr/include/string.h:
-
-/usr/include/bits/string.h:
-
-/usr/include/bits/string2.h:
-
-/usr/local/include/exalt/save_load.h:
-
-/usr/include/sys/stat.h:
-
-/usr/include/bits/stat.h:
-
-/usr/include/fcntl.h:
-
-/usr/include/bits/fcntl.h:
-
-/usr/include/bits/uio.h:
-
-/usr/include/unistd.h:
-
-/usr/include/bits/posix_opt.h:
-
-/usr/include/bits/environments.h:
-
-/usr/include/bits/confname.h:
-
-/usr/include/getopt.h:
-
-/usr/local/include/exalt/regexp.h:
-
-/usr/include/regex.h:
-
-/usr/local/include/exalt/wifi.h:
-
 eth_panel.h:
 
 /usr/include/sys/wait.h:
@@ -413,8 +409,6 @@ eth_panel.h:
 /usr/include/sys/resource.h:
 
 /usr/include/bits/resource.h:
-
-/usr/local/include/exalt/save_load.h:
 
 wifi_panel.h:
 
@@ -427,5 +421,3 @@ wifi_panel.h:
 /usr/include/bits/setjmp.h:
 
 general_panel.h:
-
-/usr/local/include/exalt/dns.h:

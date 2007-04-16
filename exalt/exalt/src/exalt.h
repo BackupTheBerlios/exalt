@@ -4,9 +4,9 @@
 #include "config.h"
 #include <libintl.h>
 #include <locale.h>
+#include <libexalt.h>
 
-
-#define _(STRING)    gettext(STRING)
+//#define _(STRING)    gettext(STRING)
 
 #define ICONS_NETWORK_CONFIG "/icons/network-config.png"
 #define ICONS_ETHERNET_ACTIVATE "/icons/ethernet.png"
@@ -26,6 +26,7 @@
 
 
 #define DELETE_TIMER(a) if(a) {ecore_timer_del(a); a=NULL; }
+
 
 #include "main_window.h"
 #include "eth_panel.h"

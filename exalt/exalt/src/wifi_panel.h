@@ -9,7 +9,6 @@
 typedef struct _wifi_panel wifi_panel;
 
 #include "exalt.h"
-#include "ethernet.h"
 
 #define WIFI_UPDATE_TIME_BUTTON 0.3
 #define WIFI_UPDATE_TIME_SCAN 2
@@ -24,7 +23,7 @@ typedef struct _wifi_panel wifi_panel;
 struct _wifi_panel
 {
 	main_window* win;
-	ethernet* eth;
+	exalt_ethernet* eth;
 
 	Ecore_Timer* radio_button_ison_timer;
 	Ecore_Timer* radio_button_isoff_timer;
@@ -102,7 +101,7 @@ wifi_panel* wifipanel_create(main_window* win);
 void wifipanel_show(wifi_panel* pnl);
 void wifipanel_hide(wifi_panel* pnl);
 void wifipanel_hide_cb(Etk_Object *object, void *data);
-void wifipanel_set_eth(wifi_panel* pnl, ethernet* eth);
+void wifipanel_set_eth(wifi_panel* pnl, exalt_ethernet* eth);
 void wifipanel_load_scan(wifi_panel* pnl);
 void wifipanel_set_boxbutton(wifi_panel* pnl);
 

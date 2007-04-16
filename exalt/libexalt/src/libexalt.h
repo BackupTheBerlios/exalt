@@ -6,12 +6,12 @@
 #define ENM_PCLOSE(p) if(p){pclose(p); p=NULL;}
 
 
-#include "ethernet.h"
-#include "wifi.h"
-#include "command.h"
-#include "dns.h"
-#include "save_load.h"
-#include "regexp.h"
+#include "exalt_ethernet.h"
+#include "exalt_wifi.h"
+#include "exalt_command.h"
+#include "exalt_dns.h"
+#include "exalt_save_load.h"
+#include "exalt_regexp.h"
 
 
 short exalt_is_address(const char* ip);

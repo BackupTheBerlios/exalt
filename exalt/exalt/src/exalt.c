@@ -17,8 +17,8 @@ int main(int argc,char**argv)
      	textdomain( "exalt" );
 	
 	//load interfaces
-	eth_init();
-	eth_load();
+	exalt_eth_init();
+	exalt_eth_load();
 
 
 	//eth_printf();
