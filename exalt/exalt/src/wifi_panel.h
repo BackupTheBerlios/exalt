@@ -16,7 +16,8 @@ typedef struct _wifi_panel wifi_panel;
 #define WIFI_ENCRYPTION_TEXT_NONE _("none")
 #define WIFI_ENCRYPTION_TEXT_WEP_ASCII _("WEP (ASCII)")
 #define WIFI_ENCRYPTION_TEXT_WEP_HEXA _("WEP (10 or 26 hexadecimals characters)")
-
+#define WIFI_ENCRYPTION_TEXT_WPA_PSK_ASCII _("WPA PSK (1-26 characters)")
+#define WIFI_ENCRYPTION_TEXT_WPA_PSK_TKIP_ASCII ("WPA PSK-TKIP (1-26 characters)")
 #define WIFI_MODE_TEXT_ADHOC _("Ad-hoc")
 #define WIFI_MODE_TEXT_MANAGED _("Managed")
 

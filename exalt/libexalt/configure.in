@@ -52,6 +52,8 @@ else
   AC_DEFINE_UNQUOTED(PACKAGE_LIB_DIR, "${libdir}", [Installation Directory for Libraries])
 fi
 
+
+
 dnl Set PACKAGE_SOURCE_DIR in config.h.
 packagesrcdir=`cd $srcdir && pwd`
 AC_DEFINE_UNQUOTED(PACKAGE_SOURCE_DIR, "${packagesrcdir}", [Source Code Directory])
@@ -59,6 +61,33 @@ AC_DEFINE_UNQUOTED(PACKAGE_SOURCE_DIR, "${packagesrcdir}", [Source Code Director
 requirements=""
 
 
+dnl detecting the linux distribution
+dnl C_ARG_WITH(distro, AS_HELP_STRING([--with-distro=DISTRO],[Specify the Linux distribution to target: One of debian, gentoo, archlinux or none]))
+if test "z$with_distro" = "z"; then
+dnl	 	AC_CHECK_FILE(/etc/SuSE-release,with_distro="suse")
+dnl	 	AC_CHECK_FILE(/etc/gentoo-release,with_distro="gentoo")
+dnl	 	AC_CHECK_FILE(/etc/arch-release,with_distro="archlinux")
+ 	 	AC_CHECK_FILE(/etc/debian_version,with_distro="debian")
+fi
+
+with_distro=`echo ${with_distro} | tr '[[:upper:]]' '[[:lower:]]' `
+
+if test "z$with_distro" = "z"; then
+ 	 	AC_MSG_ERROR([Linux distribution autodetection failed, you must specify the distribution to target using --with-distro=DISTRO, set DISTRO to none if your distribution is not supported.])
+	 	exit 1
+else
+	 	case $with_distro in
+	 	debian|none) dnl|gentoo|archlinux|suse|none)
+	 	;;
+	 	*)
+ 	 	AC_MSG_ERROR([Your distribution (${with_distro}) is not yet supported, you will not save your configuration! (patches welcome), you can specify --with-distro=none to skip this check])
+	 	;;
+esac
+fi
+
+if test "x$with_distro" = 'xdebian'; then
+ 	AC_DEFINE_UNQUOTED(DIST_DEBIAN,"debian", [Debian distribution])
+fi
 
 AC_SUBST(requirements)
  

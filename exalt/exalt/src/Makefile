@@ -101,7 +101,7 @@ ECHO_N = -n
 ECHO_T = 
 EGREP = /bin/grep -E
 EXALT_CFLAGS = -I/opt/e17/include -I/opt/e17/include/etk -I/usr/local/include -I/usr/local/include/exalt  
-EXALT_LIBS = -L/opt/e17/lib -L/usr/local/lib -letk -lecore_file -ledje -lecore_x -lcurl -lgssapi_krb5 -lkrb5 -lk5crypto -lkrb5support -lcom_err -lresolv -lidn -ldl -lssl -lcrypto -lz -levas -lecore_txt -lecore -lexalt  
+EXALT_LIBS = -L/opt/e17/lib -L/usr/local/lib -letk -lecore_file -ledje -lecore_x -lcurl -lgssapi_krb5 -lkrb5 -lk5crypto -lcom_err -lkrb5support -lresolv -lidn -ldl -lssl -lcrypto -lz -levas -lecore_txt -lecore -lexalt  
 EXEEXT = 
 F77 = 
 FFLAGS = 
@@ -140,7 +140,7 @@ PKG_CONFIG = /usr/bin/pkg-config
 POSUB = po
 RANLIB = ranlib
 SET_MAKE = 
-SHELL = /bin/sh
+SHELL = /bin/bash
 STRIP = strip
 USE_NLS = yes
 VERSION = 0.0.1
@@ -215,7 +215,7 @@ general_panel.c     \
 wifi_panel.c 
 
 exalt_LDFLAGS = -export-dynamic
-exalt_LDADD = -L/opt/e17/lib -L/usr/local/lib -letk -lecore_file -ledje -lecore_x -lcurl -lgssapi_krb5 -lkrb5 -lk5crypto -lkrb5support -lcom_err -lresolv -lidn -ldl -lssl -lcrypto -lz -levas -lecore_txt -lecore -lexalt   
+exalt_LDADD = -L/opt/e17/lib -L/usr/local/lib -letk -lecore_file -ledje -lecore_x -lcurl -lgssapi_krb5 -lkrb5 -lk5crypto -lcom_err -lkrb5support -lresolv -lidn -ldl -lssl -lcrypto -lz -levas -lecore_txt -lecore -lexalt   
 MAINTAINERCLEANFILES = Makefile.in
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am

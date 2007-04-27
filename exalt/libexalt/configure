@@ -21091,6 +21091,8 @@ _ACEOF
 
 fi
 
+
+
 packagesrcdir=`cd $srcdir && pwd`
 
 cat >>confdefs.h <<_ACEOF
@@ -21101,6 +21103,55 @@ _ACEOF
 requirements=""
 
 
+if test "z$with_distro" = "z"; then
+ 	 	{ echo "$as_me:$LINENO: checking for /etc/debian_version" >&5
+echo $ECHO_N "checking for /etc/debian_version... $ECHO_C" >&6; }
+if test "${ac_cv_file__etc_debian_version+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  test "$cross_compiling" = yes &&
+  { { echo "$as_me:$LINENO: error: cannot check for file existence when cross compiling" >&5
+echo "$as_me: error: cannot check for file existence when cross compiling" >&2;}
+   { (exit 1); exit 1; }; }
+if test -r "/etc/debian_version"; then
+  ac_cv_file__etc_debian_version=yes
+else
+  ac_cv_file__etc_debian_version=no
+fi
+fi
+{ echo "$as_me:$LINENO: result: $ac_cv_file__etc_debian_version" >&5
+echo "${ECHO_T}$ac_cv_file__etc_debian_version" >&6; }
+if test $ac_cv_file__etc_debian_version = yes; then
+  with_distro="debian"
+fi
+
+fi
+
+with_distro=`echo ${with_distro} | tr '[:upper:]' '[:lower:]' `
+
+if test "z$with_distro" = "z"; then
+ 	 	{ { echo "$as_me:$LINENO: error: Linux distribution autodetection failed, you must specify the distribution to target using --with-distro=DISTRO, set DISTRO to none if your distribution is not supported." >&5
+echo "$as_me: error: Linux distribution autodetection failed, you must specify the distribution to target using --with-distro=DISTRO, set DISTRO to none if your distribution is not supported." >&2;}
+   { (exit 1); exit 1; }; }
+	 	exit 1
+else
+	 	case $with_distro in
+	 	debian|none) 	 	;;
+	 	*)
+ 	 	{ { echo "$as_me:$LINENO: error: Your distribution (${with_distro}) is not yet supported, you will not save your configuration! (patches welcome), you can specify --with-distro=none to skip this check" >&5
+echo "$as_me: error: Your distribution (${with_distro}) is not yet supported, you will not save your configuration! (patches welcome), you can specify --with-distro=none to skip this check" >&2;}
+   { (exit 1); exit 1; }; }
+	 	;;
+esac
+fi
+
+if test "x$with_distro" = 'xdebian'; then
+
+cat >>confdefs.h <<_ACEOF
+#define DIST_DEBIAN "debian"
+_ACEOF
+
+fi
 
 
 

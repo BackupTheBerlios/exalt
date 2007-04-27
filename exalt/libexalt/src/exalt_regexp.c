@@ -1,5 +1,19 @@
+/** @file exalt_regexp.h */
 #include "./exalt_regexp.h"
 
+/**
+ * @addgroup Exalt_regexp
+ *@{
+ */
+
+// {{{  exalt_regex* exalt_regex_create(char* str_request, char* str_regex, short debug)
+/**
+ * @brief create a new regex
+ * @param str_request the request string
+ * @param str_regex the regular expression
+ * @debug 1 if you want use the debug mode, else 0
+ * @return Return a exalt_regex structure
+ */
 exalt_regex* exalt_regex_create(char* str_request, char* str_regex, short debug)
 {
     exalt_regex *r = (exalt_regex*)malloc((unsigned int)sizeof(exalt_regex)); 
@@ -17,27 +31,51 @@ exalt_regex* exalt_regex_create(char* str_request, char* str_regex, short debug)
 
     return r;
 }
+// }}}
 
+// {{{ void exalt_regex_set_request(exalt_regex* r,char* str_request)
+/**
+ * @brief change the request string
+ * @param r the exalt_regex
+ * @param str_request the new request string
+ */
 void exalt_regex_set_request(exalt_regex* r,char* str_request)
 {
-    if(r->str_request)
-	free(r->str_request);
+    EXALT_FREE(r->str_request);
     r->str_request = strdup(str_request);
 }
+// }}}
 
+// {{{ void exalt_regex_set_regex(exalt_regex* r,char* str_regex)
+/**
+ * @brief change the regular expression
+ * @param r the exalt_regex
+ * @param str_regex the new regular expression
+ */
 void exalt_regex_set_regex(exalt_regex* r,char* str_regex)
 {
-    if(r->str_regex)
-	free(r->str_regex);
+    EXALT_FREE(r->str_regex);
     r->str_regex = strdup(str_regex);
 }
+// }}}
 
+// {{{ void exalt_regex_set_debug(exalt_regex *r, short debug)
+/**
+ * @brief set the debug mode
+ * @param r the exalt_regex
+ * @param debug the new debig mode, 0 or 1
+ */
 void exalt_regex_set_debug(exalt_regex *r, short debug)
 {
     r->debug = debug;
 }
+// }}}
 
-
+// {{{ void exalt_regex_clear_result(exalt_regex* r)
+/*
+ * @brief clear the current result
+ * @param r the exalt_regex
+ */
 void exalt_regex_clear_result(exalt_regex* r)
 {
     if(r!= NULL && r->res!=NULL)
@@ -53,8 +91,13 @@ void exalt_regex_clear_result(exalt_regex* r)
 	r->nmatch = 0;
     }
 }
+// }}}
 
-
+// {{{ void exalt_regex_free(exalt_regex **r)
+/*
+ * @brief free tje regex
+ * @param r the exalt_regex
+ */
 void exalt_regex_free(exalt_regex **r)
 {
     if(r!=NULL && *r!=NULL)
@@ -70,7 +113,14 @@ void exalt_regex_free(exalt_regex **r)
 	r=NULL;
     }
 }
+// }}}
 
+// {{{ int exalt_regex_execute(exalt_regex* r)
+/*
+ * @brief execute a regular expression
+ * @param r the exalt_regex
+ * @return Return 1 if the regular expression is found int the request string, else 0
+ */
 int exalt_regex_execute(exalt_regex* r)
 {
     int err;
@@ -157,5 +207,7 @@ int exalt_regex_execute(exalt_regex* r)
         return 0;
     }
 }
+// }}}
 
+/** @} */
 

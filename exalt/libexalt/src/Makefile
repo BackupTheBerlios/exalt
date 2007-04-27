@@ -58,7 +58,7 @@ libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
 am_libexalt_la_OBJECTS = libexalt.lo exalt_command.lo exalt_dns.lo \
 	exalt_ethernet.lo exalt_regexp.lo exalt_save_load.lo \
-	exalt_wifi.lo
+	exalt_wifi.lo exalt_wifi_info.lo
 libexalt_la_OBJECTS = $(am_libexalt_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -129,7 +129,7 @@ PACKAGE_VERSION =
 PATH_SEPARATOR = :
 RANLIB = ranlib
 SET_MAKE = 
-SHELL = /bin/sh
+SHELL = /bin/bash
 STRIP = strip
 VERSION = 0.0.1
 ac_ct_CC = gcc
@@ -197,7 +197,8 @@ exalt_dns.h \
 exalt_ethernet.h \
 exalt_regexp.h \
 exalt_save_load.h \
-exalt_wifi.h 
+exalt_wifi.h \
+exalt_wifi_info.h
 
 libexalt_la_SOURCES = \
 libexalt.c \
@@ -207,6 +208,7 @@ exalt_ethernet.c \
 exalt_regexp.c \
 exalt_save_load.c \
 exalt_wifi.c \
+exalt_wifi_info.c \
 $(EXALTHEADERS)
 
 installed_headersdir = $(prefix)/include/exalt
@@ -289,6 +291,7 @@ include ./$(DEPDIR)/exalt_ethernet.Plo
 include ./$(DEPDIR)/exalt_regexp.Plo
 include ./$(DEPDIR)/exalt_save_load.Plo
 include ./$(DEPDIR)/exalt_wifi.Plo
+include ./$(DEPDIR)/exalt_wifi_info.Plo
 include ./$(DEPDIR)/libexalt.Plo
 
 .c.o:

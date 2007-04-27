@@ -340,8 +340,6 @@ int ethpanel_dhcp_timer(void* data)
 		exalt_eth_load_configuration_byeth(pnl->eth,0);
 		ethpanel_set_eth(pnl,pnl->eth);
 
-		//save the configuration
-		exalt_eth_save_byeth(pnl->eth);
 	}
 	return 1;
 }

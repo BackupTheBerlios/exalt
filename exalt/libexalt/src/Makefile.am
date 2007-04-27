@@ -21,7 +21,8 @@ exalt_dns.h \
 exalt_ethernet.h \
 exalt_regexp.h \
 exalt_save_load.h \
-exalt_wifi.h 
+exalt_wifi.h \
+exalt_wifi_info.h
 
 libexalt_la_SOURCES = \
 libexalt.c \
@@ -31,6 +32,7 @@ exalt_ethernet.c \
 exalt_regexp.c \
 exalt_save_load.c \
 exalt_wifi.c \
+exalt_wifi_info.c \
 $(EXALTHEADERS)
 
 installed_headersdir = $(prefix)/include/exalt

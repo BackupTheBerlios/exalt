@@ -1,5 +1,17 @@
-
+/** @file exalt_dns.c */
 #include "exalt_dns.h"
+
+/**
+ * @addtogroup Exalt_dns
+ * @{
+ */
+
+// {{{ char** exalt_dns_get_list(int* nb_dns)
+/**
+ * @brief get the dns list
+ * @param nb_dns the number of dns
+ * @return Return the dns list
+ */
 char** exalt_dns_get_list(int* nb_dns)
 {
 	FILE* f;
@@ -29,10 +41,17 @@ char** exalt_dns_get_list(int* nb_dns)
 		tab[*nb_dns][strlen(tab[*nb_dns])-1] = '\0';
 		(*nb_dns)++;
 	}
-	pclose(f);
+	EXALT_PCLOSE(f);
 	return tab;
 }
+// }}}
 
+// {{{ void exalt_dns_free_list(char** t, int nb_dns)
+/**
+ * @brief free the dns list
+ * @param t the dns list
+ * @param nb_dns the number of dns
+ */
 void exalt_dns_free_list(char** t, int nb_dns)
 {
 	int i;
@@ -41,11 +60,17 @@ void exalt_dns_free_list(char** t, int nb_dns)
 		fprintf(stderr,"dns_free_list(): t == null !\n");
 	}
 	for(i=0;i<nb_dns;i++)
-		ENM_FREE(t[i]);
-	ENM_FREE(t);
+		EXALT_FREE(t[i]);
+	EXALT_FREE(t);
 }
+// }}}
 
-
+// {{{ int exalt_dns_add(const char* dns)
+/**
+ * @brief add a dns
+ * @param dns the news dns
+ * @return Return 1 if the dns is add, else -1
+ */
 int exalt_dns_add(const char* dns)
 {
 	char buf[1024];
@@ -68,7 +93,14 @@ int exalt_dns_add(const char* dns)
 		;
 	return 1;
 }
+// }}}
 
+// {{{ int exalt_dns_delete(const char* dns)
+/**
+ * @brief delete a dns
+ * @param dns the dns
+ * @return Return 1 if the dns is delet, else -1
+ */
 int exalt_dns_delete(const char* dns)
 {
 	char buf[1024];
@@ -83,10 +115,18 @@ int exalt_dns_delete(const char* dns)
 	f = exalt_execute_command(buf);
 	while(fgets(buf,1024,f))
 		;
-	pclose(f);
+	EXALT_PCLOSE(f);
 	return 1;
 }
+// }}}
 
+// {{{ int exalt_dns_replace(const char* old_dns, const char* new_dns)
+/**
+ * @brief replace a dns by a new
+ * @param old_dns the old dns
+ * @param new_dns the new dns
+ * return Return 1 if the dns is repalce, else -1
+ */
 int exalt_dns_replace(const char* old_dns, const char* new_dns)
 {
 	char buf[1024];
@@ -107,11 +147,15 @@ int exalt_dns_replace(const char* old_dns, const char* new_dns)
 	f = exalt_execute_command(buf);
 	while(fgets(buf,1024,f))
 		;
-	pclose(f);
+	EXALT_PCLOSE(f);
 	return 1;
 }
+// }}}
 
-
+// {{{ void exalt_dns_printf()
+/**
+ * @brief print the dns list in the standard output
+ */
 void exalt_dns_printf()
 {
 	int nb_dns;
@@ -122,3 +166,7 @@ void exalt_dns_printf()
 		printf("%s\n",t[i]);
 	exalt_dns_free_list(t,nb_dns);
 }
+// }}}
+
+/** @} */
+

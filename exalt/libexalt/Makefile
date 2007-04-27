@@ -40,7 +40,7 @@ DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
 	$(srcdir)/exalt.pc.in $(top_srcdir)/configure \
 	$(top_srcdir)/debian/changelog.in AUTHORS COPYING ChangeLog \
-	INSTALL NEWS config.guess config.sub depcomp install-sh \
+	INSTALL NEWS TODO config.guess config.sub depcomp install-sh \
 	ltmain.sh missing
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -134,7 +134,7 @@ PACKAGE_VERSION =
 PATH_SEPARATOR = :
 RANLIB = ranlib
 SET_MAKE = 
-SHELL = /bin/sh
+SHELL = /bin/bash
 STRIP = strip
 VERSION = 0.0.1
 ac_ct_CC = gcc

@@ -58,7 +58,7 @@ libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
 am_libexalt_la_OBJECTS = libexalt.lo exalt_command.lo exalt_dns.lo \
 	exalt_ethernet.lo exalt_regexp.lo exalt_save_load.lo \
-	exalt_wifi.lo
+	exalt_wifi.lo exalt_wifi_info.lo
 libexalt_la_OBJECTS = $(am_libexalt_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -197,7 +197,8 @@ exalt_dns.h \
 exalt_ethernet.h \
 exalt_regexp.h \
 exalt_save_load.h \
-exalt_wifi.h 
+exalt_wifi.h \
+exalt_wifi_info.h
 
 libexalt_la_SOURCES = \
 libexalt.c \
@@ -207,6 +208,7 @@ exalt_ethernet.c \
 exalt_regexp.c \
 exalt_save_load.c \
 exalt_wifi.c \
+exalt_wifi_info.c \
 $(EXALTHEADERS)
 
 installed_headersdir = $(prefix)/include/exalt
@@ -289,6 +291,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exalt_regexp.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exalt_save_load.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exalt_wifi.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exalt_wifi_info.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libexalt.Plo@am__quote@
 
 .c.o:

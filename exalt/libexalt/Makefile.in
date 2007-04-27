@@ -40,7 +40,7 @@ DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
 	$(srcdir)/exalt.pc.in $(top_srcdir)/configure \
 	$(top_srcdir)/debian/changelog.in AUTHORS COPYING ChangeLog \
-	INSTALL NEWS config.guess config.sub depcomp install-sh \
+	INSTALL NEWS TODO config.guess config.sub depcomp install-sh \
 	ltmain.sh missing
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4

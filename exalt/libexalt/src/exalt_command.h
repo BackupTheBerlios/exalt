@@ -20,6 +20,8 @@
 #define IFCONFIG_PARAM_BROADCAST "broadcast"
 #define IFCONFIG_PARAM_NETMASK "netmask"
 
+#define COMMAND_WPA_RELOAD "wpa_cli -i%s reconfigure"
+
 #define IWCONFIG_CONN_ESSID COMMAND_IWCONFIG " %s essid \"%s\""
 #define IWCONFIG_CONN_MODE COMMAND_IWCONFIG " %s mode %s"
 #define IWCONFIG_CONN_MODE_MANAGED " managed"

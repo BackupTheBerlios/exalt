@@ -1,12 +1,23 @@
+/** @file exalt_ethernet.h */
 #ifndef ETHERNET_H
 #define ETHERNET_H
 
-typedef struct _exalt_ethernet exalt_ethernet;
+typedef struct exalt_ethernet exalt_ethernet;
 
 #include "libexalt.h"
 #include "exalt_wifi.h"
 
-struct _exalt_ethernet 
+/**
+ * @defgroup Exalt_ethernet
+ * @brief the exalt_ethernet contains all informations about all cards. It's the main structure
+ * @{
+ */
+
+/**
+ * @brief informations about a card
+ * @structinfo
+ */
+struct exalt_ethernet 
 {
 	char* name; //eth0, eth1...
 	short activate;
@@ -18,7 +29,10 @@ struct _exalt_ethernet
 	exalt_wifi* wifi; //if null, the interface is not wireless
 };
 
-
+/** 
+ * @brief all cards
+ * @structinfo
+ */
 typedef struct
 {
 	exalt_ethernet* ethernets;
@@ -74,6 +88,7 @@ int exalt_eth_apply_gateway(exalt_ethernet *eth);
 int exalt_eth_apply_dhcp(exalt_ethernet* eth);
 int exalt_eth_apply_static(exalt_ethernet *eth);
 
+/** @} */
 
 #endif
 

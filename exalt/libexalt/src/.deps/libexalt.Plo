@@ -8,18 +8,19 @@ libexalt.lo libexalt.o: libexalt.c libexalt.h exalt_ethernet.h \
   /usr/include/bits/wchar.h /usr/include/gconv.h \
   /usr/lib/gcc/i486-linux-gnu/4.1.2/include/stdarg.h \
   /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
-  /usr/include/bits/stdio.h exalt_command.h /usr/include/stdlib.h \
-  /usr/include/sys/types.h /usr/include/time.h /usr/include/endian.h \
-  /usr/include/bits/endian.h /usr/include/sys/select.h \
-  /usr/include/bits/select.h /usr/include/bits/sigset.h \
-  /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
-  /usr/include/bits/pthreadtypes.h /usr/include/alloca.h exalt_dns.h \
-  /usr/include/string.h /usr/include/bits/string.h \
-  /usr/include/bits/string2.h exalt_save_load.h /usr/include/sys/stat.h \
-  /usr/include/bits/stat.h /usr/include/fcntl.h /usr/include/bits/fcntl.h \
-  /usr/include/unistd.h /usr/include/bits/posix_opt.h \
-  /usr/include/bits/confname.h /usr/include/getopt.h exalt_regexp.h \
-  libexalt.h /usr/include/regex.h ../config.h
+  /usr/include/bits/stdio.h exalt_wifi_info.h exalt_command.h \
+  /usr/include/stdlib.h /usr/include/sys/types.h /usr/include/time.h \
+  /usr/include/endian.h /usr/include/bits/endian.h \
+  /usr/include/sys/select.h /usr/include/bits/select.h \
+  /usr/include/bits/sigset.h /usr/include/bits/time.h \
+  /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
+  /usr/include/alloca.h exalt_dns.h /usr/include/string.h \
+  /usr/include/bits/string.h /usr/include/bits/string2.h \
+  exalt_save_load.h /usr/include/sys/stat.h /usr/include/bits/stat.h \
+  /usr/include/fcntl.h /usr/include/bits/fcntl.h /usr/include/unistd.h \
+  /usr/include/bits/posix_opt.h /usr/include/bits/confname.h \
+  /usr/include/getopt.h exalt_regexp.h libexalt.h /usr/include/regex.h \
+  ../config.h
 
 libexalt.h:
 
@@ -62,6 +63,8 @@ exalt_wifi.h:
 /usr/include/bits/sys_errlist.h:
 
 /usr/include/bits/stdio.h:
+
+exalt_wifi_info.h:
 
 exalt_command.h:
 
