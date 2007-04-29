@@ -762,6 +762,9 @@ int exalt_wifi_apply_conf(exalt_ethernet* eth)
 	 	;
 	EXALT_PCLOSE(f)
 
+ 	//save the configuration of the current network
+	exalt_wifi_save_byeth(eth);
+
  	return 1;
 }
 // }}}

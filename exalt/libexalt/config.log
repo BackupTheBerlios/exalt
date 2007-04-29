@@ -28,6 +28,8 @@ uname -v = #2 SMP Sun Apr 15 07:36:31 UTC 2007
 /bin/universe          = unknown
 
 PATH: /opt/e17/bin
+PATH: /opt/e17/bin
+PATH: /home/watchwolf/bin
 PATH: /usr/local/sbin
 PATH: /usr/local/bin
 PATH: /usr/sbin

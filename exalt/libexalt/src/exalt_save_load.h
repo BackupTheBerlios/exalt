@@ -9,25 +9,22 @@
 
 #include "libexalt.h"
 
-#define CONF_FILE_HEADER "#Exalt config file! \n" \
+#define EXALT_CONF_FILE_HEADER "#Exalt config file! \n" \
 			"#by Atton Jonathan (watchwolf@watchwolf.fr) for the E17 project. \n" \
-			"#Examples:\n" \
-			"#eth0={ip;netmask;broadcast;gateway}\n" \
-			"#eth0={192.168.0.2;255.255.255.0;192.168.0.255;192.168.0.254}\n" \
-			"#eth99={DHCP}\n"
+			"#Example:\n" \
+			"#essid_Watchwolf{\n" \
+			"#address_mode=static\n" \
+			"#ip=192.168.0.1\n" \
+			"#mask=255.255.255.0\n" \
+			"#gatewaty=192.168.0.254\n" \
+			"#mode=Ad-hoc\n" \
+			"#encryption_mode=WPA-PSK-TKIP-ASCII\n" \
+			"#key=hehe\n" \
+			"#}\n"
 
-#define COMMAND_SAVE "echo \"%s\" >> %s"
-#define COMMAND_SAVE_LOAD "sed -n '/^ *%s=/p' %s"
-
-#define REGEXP_SAVE_IS_DHCP "DHCP"
-#define REGEXP_SAVE_STATIC "\\{([0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+);" \
-				"([0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+);" \
-				"([0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+);" \
-				"([0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)\\}"
-
-//eth1={DHCP}
-//eth0={192.168.0.1;255.255.255.0;192.168.0.255;192.168.0.254}
-//eth1_wireless={Watchwolf;WEP;123456}
+#define EXALT_CONF_FILE PACKAGE_DATA_DIR "/exalt.conf"
+#define REGEXP_SAVE_WIFI_IS_ESSIDCONF "essid_%s\\{"
+#define FILE_TEMP "/tmp/exalt_tmp"
 
 int exalt_eth_save();
 int exalt_eth_save_byeth(exalt_ethernet* eth);
