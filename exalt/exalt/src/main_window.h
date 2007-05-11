@@ -4,7 +4,7 @@
 
 #include <Etk.h>
 #include <stdio.h>
-
+#include <Ecore_Data.h>
 
 typedef struct _main_window main_window;
 
@@ -19,8 +19,6 @@ struct _main_window
 {
 	Etk_Widget *win;
 	
-	Ecore_Timer* eth_state_timer;
-
 	Etk_Widget* eth_list;
 	Etk_Tree_Col* eth_col0;
 
@@ -34,9 +32,9 @@ main_window* mainwindow_create();
 Etk_Bool mainWindow_free(main_window** win);
 Etk_Bool mainWindow_close(Etk_Object *object, void *data);
 
-int mainWindow_eth_state_timer(void* data);
-
-void mainWindow_load_eth_lst(main_window* win);
+void mainWindow_eth_cb(exalt_ethernet* eth, int action, void* user_data);
 void mainWindow_ethList_row_clicked_cb(Etk_Object *object, Etk_Tree_Row *row, Etk_Event_Mouse_Up *event, void *data);
+Etk_Tree_Row * mainWindow_findrow(main_window* win, exalt_ethernet* eth);
+
 
 #endif

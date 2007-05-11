@@ -89,6 +89,12 @@ if test "x$with_distro" = 'xdebian'; then
  	AC_DEFINE_UNQUOTED(DIST_DEBIAN,"debian", [Debian distribution])
 fi
 
+
+PKG_CHECK_MODULES(LIBEXALT, [
+		ecore >= 0.9.9.037,
+		ecore-config >= 0.9.9.038
+		])
+
 AC_SUBST(requirements)
  
 AC_SUBST(packagesrcdir)

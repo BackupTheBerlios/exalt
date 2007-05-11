@@ -10,9 +10,6 @@ typedef struct _wifi_panel wifi_panel;
 
 #include "exalt.h"
 
-#define WIFI_UPDATE_TIME_BUTTON 0.3
-#define WIFI_UPDATE_TIME_SCAN 2
-
 #define WIFI_ENCRYPTION_TEXT_NONE _("none")
 #define WIFI_ENCRYPTION_TEXT_WEP_ASCII _("WEP (ASCII)")
 #define WIFI_ENCRYPTION_TEXT_WEP_HEXA _("WEP (10 or 26 hexadecimals characters)")
@@ -25,10 +22,6 @@ struct _wifi_panel
 {
 	main_window* win;
 	exalt_ethernet* eth;
-
-	Ecore_Timer* radio_button_ison_timer;
-	Ecore_Timer* radio_button_isoff_timer;
-	Ecore_Timer* scan_networks_timer;
 
 	Etk_Widget *frame;
 	Etk_Widget *box_button_on; //the main frame, list of network, configure ...
@@ -70,11 +63,9 @@ struct _wifi_panel
 	Etk_Widget *entry_conn_ip;
 	Etk_Widget *entry_conn_mask;
 	Etk_Widget *entry_conn_gateway;
-	Etk_Widget *entry_conn_broadcast;
 	Etk_Widget *check_static;
 	Etk_Widget *check_dhcp;
 	Etk_Widget *cmbox_encryption;
-	Etk_Widget *cmbox_mode;
 	Etk_Widget *btn_apply;
  	//pbar pannel
 	pid_t pid_dhcp_process;
@@ -88,20 +79,14 @@ struct _wifi_panel
 	Etk_Widget *entry_current_essid;
 	Etk_Widget *entry_current_ip;
 	Etk_Widget *entry_current_mask;
-	Etk_Widget *entry_current_broadcast;
 	Etk_Widget *entry_current_gateway;
 };
 
-//call by when the button radio come from off to on
-int radio_button_ison_cb(void* data);
-int radio_button_isoff_cb(void* data);
-//scan networks
-int scan_networks_cb(void* data);
+void wifipanel_scan_networks_cb(exalt_wifi_info* wi, int action, void* data);
 
 wifi_panel* wifipanel_create(main_window* win);
 void wifipanel_show(wifi_panel* pnl);
 void wifipanel_hide(wifi_panel* pnl);
-void wifipanel_hide_cb(Etk_Object *object, void *data);
 void wifipanel_set_eth(wifi_panel* pnl, exalt_ethernet* eth);
 void wifipanel_load_scan(wifi_panel* pnl);
 void wifipanel_set_boxbutton(wifi_panel* pnl);

@@ -61,7 +61,7 @@ char *str_remove (const char *s, const char *ct)
 {
    char *new_s = NULL;
    char* start = strstr(s,ct);
-   char* end_s = s + strlen(s);
+   char* end_s = s + strlen(s)+1;
    char* c_new_s;
    if (s && ct && start)
    {

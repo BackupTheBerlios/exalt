@@ -56,9 +56,10 @@ am__installdirs = "$(DESTDIR)$(libdir)" \
 	"$(DESTDIR)$(installed_headersdir)"
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
+am__objects_1 =
 am_libexalt_la_OBJECTS = libexalt.lo exalt_command.lo exalt_dns.lo \
 	exalt_ethernet.lo exalt_regexp.lo exalt_save_load.lo \
-	exalt_wifi.lo exalt_wifi_info.lo
+	exalt_wifi.lo exalt_wifi_info.lo $(am__objects_1)
 libexalt_la_OBJECTS = $(am_libexalt_la_OBJECTS)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -113,6 +114,8 @@ INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = ${SHELL} $(install_sh) -c -s
 LDFLAGS = 
+LIBEXALT_CFLAGS = -I/opt/e17/include  
+LIBEXALT_LIBS = -L/opt/e17/lib -lecore_config -lecore -leet  
 LIBOBJS = 
 LIBS = 
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
@@ -127,6 +130,7 @@ PACKAGE_STRING =
 PACKAGE_TARNAME = 
 PACKAGE_VERSION = 
 PATH_SEPARATOR = :
+PKG_CONFIG = /usr/bin/pkg-config
 RANLIB = ranlib
 SET_MAKE = 
 SHELL = /bin/bash
@@ -186,11 +190,11 @@ target_alias =
 MAINTAINERCLEANFILES = Makefile.in
 AUTOMAKE_OPTIONS = 1.4 foreign
 INCLUDES = \
- -Wall -g
+ -Wall -g -I/opt/e17/include  
 
 lib_LTLIBRARIES = libexalt.la
 EXTRA_DIST = 
-ENIGMAHEADERS = \
+EXALTHEADERS = \
 libexalt.h \
 exalt_command.h \
 exalt_dns.h \
@@ -212,8 +216,8 @@ exalt_wifi_info.c \
 $(EXALTHEADERS)
 
 installed_headersdir = $(prefix)/include/exalt
-installed_headers_DATA = $(ENIGMAHEADERS)
-libexalt_la_LIBADD = 
+installed_headers_DATA = $(EXALTHEADERS)
+libexalt_la_LIBADD = -L/opt/e17/lib -lecore_config -lecore -leet  
 libexalt_la_DEPENDENCIES = 
 libexalt_la_LDFLAGS = -version-info 1:0:0
 all: all-am

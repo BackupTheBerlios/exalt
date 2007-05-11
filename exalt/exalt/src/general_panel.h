@@ -14,8 +14,6 @@ struct _general_panel
 {
 	Etk_Widget *frame;
 	
-	Etk_Widget *cmbox_ethernet;
-	
 	Etk_Widget *dns_list;
 	Etk_Tree_Col* dns_col;
 	Etk_Widget* hbox_dns_conf;

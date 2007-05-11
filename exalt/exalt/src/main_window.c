@@ -2,7 +2,7 @@
 #include "main_window.h"
 
 main_window* mainwindow_create()
-{
+{/*{{{*/
 	Etk_Widget *hbox,*scroll;
 	main_window* win;
 	win=(main_window*)malloc((unsigned int)sizeof(main_window));
@@ -35,11 +35,12 @@ main_window* mainwindow_create()
 	etk_signal_connect("row-clicked", ETK_OBJECT(win->eth_list),ETK_CALLBACK(mainWindow_ethList_row_clicked_cb), win);
 
 
-	//load the the card list
+	//add the general panel in the list
 	etk_tree_row_append(ETK_TREE(win->eth_list), NULL,
     		win->eth_col0,PACKAGE_DATA_DIR ICONS_NETWORK_CONFIG,NULL,_("General") , NULL);
-	
-	mainWindow_load_eth_lst(win);
+
+	//attach the add callback function to exalt
+	exalt_eth_set_cb(mainWindow_eth_cb, win);
 
 	etk_widget_show_all(win->win);
 
@@ -52,15 +53,14 @@ main_window* mainwindow_create()
 	win->general_panel = generalpanel_create();
 	etk_box_append(ETK_BOX(hbox),win->general_panel->frame , ETK_BOX_START, ETK_BOX_EXPAND_FILL, 0);
 
-	//launch the timer to update the network sate
-	win->eth_state_timer = ecore_timer_add(MAINWINDOW_ETH_STATE_TIME_MAX ,mainWindow_eth_state_timer,win);
+	//launch the timer to update the network state
+	//win->eth_state_timer = ecore_timer_add(MAINWINDOW_ETH_STATE_TIME_MAX ,mainWindow_eth_state_timer,win);
 	
 	return win;
-}
-
+}/*}}}*/
 
 Etk_Bool mainWindow_free(main_window** win)
-{
+{/*{{{*/
 	if(win && *win)
 	{
 		etk_object_destroy(ETK_OBJECT((*win)->win));
@@ -69,39 +69,106 @@ Etk_Bool mainWindow_free(main_window** win)
 	}
 	else
 		return 0;
-}
+}/*}}}*/
 
 Etk_Bool mainWindow_close(Etk_Object *object, void *data)
-{
+{/*{{{*/
 	main_window* win = (main_window*)data;
 	etk_object_destroy(ETK_OBJECT(win->win));
 	exit(1);
-}
+}/*}}}*/
 
-void mainWindow_load_eth_lst(main_window* win)
-{
-	int i;
+void mainWindow_eth_cb(exalt_ethernet* eth, int action, void* user_data)
+{/*{{{*/
 	char wifi_img[] = PACKAGE_DATA_DIR ICONS_WIFI_ACTIVATE;
 	char wifi_img_not_activate[] = PACKAGE_DATA_DIR ICONS_WIFI_NOT_ACTIVATE;
 	char eth_img[] = PACKAGE_DATA_DIR ICONS_ETHERNET_ACTIVATE;
 	char eth_img_not_activate[] = PACKAGE_DATA_DIR ICONS_ETHERNET_NOT_ACTIVATE;
 
-	
-	for(i=0;i<exalt_eth_get_size();i++)
+	main_window* win =  (main_window*) user_data;
+
+	if(action == EXALT_ETH_CB_NEW)
 	{
-		exalt_ethernet* eth =  exalt_eth_get_ethernet_bypos(i);
-		char* img = (exalt_eth_is_wifi(eth)?(exalt_eth_is_activate(eth) && exalt_wifi_raddiobutton_ison(eth->wifi)?
-			    wifi_img:wifi_img_not_activate)
-			    :(exalt_eth_is_activate(eth)?eth_img:eth_img_not_activate));
+	 	char* img;
+	 	if(exalt_eth_is_wifi(eth))
+		{
+		 	if(exalt_eth_is_activate(eth) && exalt_wifi_raddiobutton_ison(exalt_eth_get_wifi(eth)))
+			 	img = wifi_img;
+			else
+			 	img = wifi_img_not_activate;
+		}
+		else if(exalt_eth_is_activate(eth))
+		 	img = eth_img;
+		else 
+		 	img = eth_img_not_activate;
+
 		etk_tree_row_append(ETK_TREE(win->eth_list), NULL,
-    			win->eth_col0,img,NULL,exalt_eth_get_name(eth) ,
-        		NULL);
+				win->eth_col0,img,NULL,exalt_eth_get_name(eth) ,
+				NULL);
+	}
+	else if(action == EXALT_ETH_CB_REMOVE)
+	{
+	 	Etk_Tree_Row* row;
+		row = mainWindow_findrow(win, eth);
+	 	if(row)
+		 	etk_tree_row_delete(row);
+	}
+	else if(action == EXALT_ETH_CB_ACTIVATE || EXALT_ETH_CB_DESACTIVATE || EXALT_ETH_CB_WIFI_RADIO_ON || EXALT_ETH_CB_WIFI_RADIO_OFF)
+	{
+		Etk_Tree_Row *row;
+		row = mainWindow_findrow(win, eth);
+	 	if(row)
+		{
+			if(exalt_eth_is_wifi(eth))
+			{
+				short radio;
+				radio = exalt_wifi_raddiobutton_ison(exalt_eth_get_wifi(eth));
+				if(radio && exalt_eth_is_activate(eth))
+					etk_tree_row_fields_set(row, 0, win->eth_col0,wifi_img,NULL,exalt_eth_get_name(eth), NULL);
+				else
+					etk_tree_row_fields_set(row, 0, win->eth_col0,wifi_img_not_activate,NULL,exalt_eth_get_name(eth), NULL);
+			}
+			else
+				if(exalt_eth_is_activate(eth))
+					etk_tree_row_fields_set(row, 0, win->eth_col0,eth_img,NULL,exalt_eth_get_name(eth), NULL);
+				else
+					etk_tree_row_fields_set(row, 0, win->eth_col0,eth_img_not_activate,NULL,exalt_eth_get_name(eth), NULL);
+		}
+
+		//update the panel
+ 	 	eth_panel* pnl = win->eth_panel;
+		if(pnl->eth == eth)
+		 	ethpanel_set_eth(pnl,eth);
+		//update the wifi panel
+		wifi_panel* wpnl = win->wifi_panel;
+		if(wpnl->eth == eth)
+		 	wifipanel_set_eth(wpnl,eth);
+	}
+}/*}}}*/
+
+
+Etk_Tree_Row * mainWindow_findrow(main_window* win, exalt_ethernet* eth)
+{/*{{{*/
+	Etk_Tree_Row* row;
+	char* row_name;
+
+	row = etk_tree_first_row_get(ETK_TREE(win->eth_list));
+	//the first row is "General", we can jump it
+	row = etk_tree_row_next_get(row);
+	while(row)
+	{
+		etk_tree_row_fields_get(row, win->eth_col0, NULL, NULL, &row_name, NULL);
+		if(strcmp(row_name,exalt_eth_get_name(eth))==0)
+			return row;
+
+		row = etk_tree_row_next_get(row);
 	}
 
-}
+ 	return NULL;
+}/*}}}*/
 
 int mainWindow_eth_state_timer(void* data)
-{
+{/*{{{*/
 	main_window* win = (main_window*)data;
 	Etk_Tree_Row *row;
 	char* row_name;
@@ -131,15 +198,15 @@ int mainWindow_eth_state_timer(void* data)
 					etk_tree_row_fields_set(row, 0, win->eth_col0,PACKAGE_DATA_DIR ICONS_ETHERNET_ACTIVATE,NULL,row_name, NULL);
 				else
 					etk_tree_row_fields_set(row, 0, win->eth_col0,PACKAGE_DATA_DIR ICONS_ETHERNET_NOT_ACTIVATE,NULL,row_name, NULL);
-			row = etk_tree_row_next_get(row);
 		}
+		row = etk_tree_row_next_get(row);
 	}
 	return 1;
-}
+}/*}}}*/
 
 
 void mainWindow_ethList_row_clicked_cb(Etk_Object *object, Etk_Tree_Row *row, Etk_Event_Mouse_Up *event, void *data)
-{
+{/*{{{*/
 	Etk_Tree *tree;
 	char *row_name;
 	main_window* win;
@@ -178,5 +245,5 @@ void mainWindow_ethList_row_clicked_cb(Etk_Object *object, Etk_Tree_Row *row, Et
 		}
 	}
 
-}
+}/*}}}*//*}}}*//*}}}*/
 

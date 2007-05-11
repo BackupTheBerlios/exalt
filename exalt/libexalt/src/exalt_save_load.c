@@ -19,7 +19,7 @@
  	#define REGEXP_SAVE_DEBIAN_IS_AUTO_ETH ".*auto.*%s.*"
  	#define REGEXP_SAVE_DEBIAN_IS_AUTO_ALONE "^[^a-zA-Z0-9]*auto[^a-zA-Z0-9]*$"
 #else
- 	#define CONF_FILE "/exalt.conf"
+ 	#define CONF_FILE ""
 #endif
  	
 
@@ -29,10 +29,19 @@
 // {{{ int exalt_eth_save()
 int exalt_eth_save()
 {
-	int i;
-	for(i=0;i<exalt_eth_get_size();i++)
-		if(!exalt_eth_save(exalt_eth_get_ethernet_bypos(i)))
+	void *data;
+	exalt_ethernet* eth;
+
+	data = ecore_list_goto_first(exalt_eth_interfaces.ethernets);
+	while(data)
+	{
+	 	eth = EXALT_ETHERNET(data);
+		if(!exalt_eth_save(eth))
 			return 0;
+
+		data = ecore_list_next(exalt_eth_interfaces.ethernets);
+	}
+	
 	return 1;
 }
 // }}}
@@ -335,13 +344,12 @@ int exalt_eth_save_autoload(exalt_ethernet* eth)
 			res = str_remove(buf,exalt_eth_get_name(eth));
 			if(res)
 			{
-			 	exalt_regex_set_request(r,res);
+				exalt_regex_set_request(r,res);
 			 	exalt_regex_set_regex(r,REGEXP_SAVE_DEBIAN_IS_AUTO_ALONE);
 			 	if(!exalt_regex_execute(r))
 			  	 	fprintf(fw,res);
 			 	EXALT_FREE(res)
 			  	exalt_regex_set_regex(r,REGEXP_SAVE_DEBIAN_IS_AUTO_ETH);
-
 			}
 	 	}
 		else
@@ -359,6 +367,7 @@ int exalt_eth_save_autoload(exalt_ethernet* eth)
 	return 1;
 }
 // }}}
+
 #else
 
 // {{{ int exalt_eth_save_byeth(exalt_ethernet* eth)
@@ -387,12 +396,10 @@ int exalt_eth_save_autoload(exalt_ethernet* eth)
 
 #endif
 
+// {{{ int exalt_wifi_save_byeth(exalt_ethernet* eth)
 int exalt_wifi_save_byeth(exalt_ethernet* eth)
 {
- 	char buf[1024],regexp[1024];
-	FILE* fr, *fw;
-	short jump;
- 	exalt_regex* r;
+ 	char buf[1024];
 	exalt_wifi* w;
 
 	if(!eth)
@@ -406,82 +413,108 @@ int exalt_wifi_save_byeth(exalt_ethernet* eth)
 	 	fprintf(stderr,"exalt_wifi_save_byeth(): eth is not a wifi card! \n");
 		return -1;
 	}
-
- 	if(!exalt_eth_save_file_exist(EXALT_CONF_FILE))
-	 	if(exalt_eth_save_file_create(EXALT_CONF_FILE,EXALT_CONF_FILE_HEADER)==-1)
-		{
-			fprintf(stderr,"exalt_wifi_save_byeth(): error can't create the file! \n");
-			return -1;
-		}
-
- 	exalt_eth_save_file_create(FILE_TEMP,NULL);
- 	//copy the conf file in the temp file
-	fw = fopen(FILE_TEMP,"w");
-	fr = fopen(EXALT_CONF_FILE,"r");
-	while(fgets(buf,1024,fr))
-	 	 fprintf(fw,buf);
- 	fclose(fw);
-	fclose(fr);
-
-	//remove the current configuration of this wifi
-	fr = fopen(FILE_TEMP,"r");
-	fw = fopen(EXALT_CONF_FILE,"w");
-	jump = 0;
-	r = exalt_regex_create("","",0);
 	w = exalt_eth_get_wifi(eth);
 
-	while(fgets(buf,1024,fr))
+ 	ecore_config_file_load(EXALT_CONF_FILE);
+
+ 	sprintf(buf,"essid_%s",exalt_wifi_get_current_essid(w));
+	if(ecore_config_string_set(buf,exalt_wifi_get_current_essid(w)) != ECORE_CONFIG_ERR_SUCC)
 	{
-		exalt_regex_set_request(r,buf);
-		if(!jump)
-		{
-		 	sprintf(regexp,REGEXP_SAVE_WIFI_IS_ESSIDCONF,exalt_wifi_get_current_essid(w));
-			exalt_regex_set_regex(r,regexp);
-			if(exalt_regex_execute(r))
-				jump = 1;
-			else
-				fprintf(fw,buf);
-		}
-		else //jump
-		{
-		 	
- 	 	 	exalt_regex_set_regex(r,"}");
-			if(exalt_regex_execute(r))
-			 	jump = 0;
-		}
+		fprintf(stderr,"exalt_wifi_save_byeth(): error set essid\n");
+		return -1;
 	}
 
- 	exalt_regex_free(&r);
- 	//add the new essid configuration
-	fprintf(fw,"essid_%s{\n",exalt_wifi_get_current_essid(w));
-	fprintf(fw,"address_mode=%s\n",(exalt_eth_is_dhcp(eth)?"dhcp":"static"));
- 	if(!exalt_eth_is_dhcp(eth))
+	sprintf(buf,"address_mode_%s",exalt_wifi_get_current_essid(w));
+	ecore_config_int_set(buf,exalt_eth_is_dhcp(eth));
+
+	if(!exalt_eth_is_dhcp(eth))
 	{
-	 	fprintf(fw,"ip=%s\n",exalt_eth_get_ip(eth));
-		fprintf(fw,"mask=%s\n",exalt_eth_get_netmask(eth));
-		fprintf(fw,"gateway=%s\n",exalt_eth_get_gateway(eth));
+		sprintf(buf,"ip_%s",exalt_wifi_get_current_essid(w));
+		ecore_config_string_set(buf,exalt_eth_get_ip(eth));
+
+		sprintf(buf,"mask_%s",exalt_wifi_get_current_essid(w));
+		ecore_config_string_set(buf,exalt_eth_get_netmask(eth));
+
+		sprintf(buf,"gateway_%s",exalt_wifi_get_current_essid(w));
+		ecore_config_string_set(buf,exalt_eth_get_gateway(eth));
 	}
-	fprintf(fw,"mode=%s\n",(exalt_wifi_get_current_mode(w)==WIFI_MODE_ADHOC?"Ad-hoc":"Managed"));
-	if(exalt_wifi_get_current_passwd_mode(w)==WIFI_ENCRYPTION_WEP_ASCII)
-	 	fprintf(fw,"encryptoion_mode=WEP-ASCII\n");
-	else if(exalt_wifi_get_current_passwd_mode(w)==WIFI_ENCRYPTION_WEP_HEXA)
-	 	fprintf(fw,"encryption_mode=WEP-HEXA\n");
-	else if(exalt_wifi_get_current_passwd_mode(w)==WIFI_ENCRYPTION_WPA_PSK_ASCII)
-	 	fprintf(fw,"encryption_mode=WPA-PSK-ASCII\n");
-	else if(exalt_wifi_get_current_passwd_mode(w)==WIFI_ENCRYPTION_WPA_PSK_TKIP_ASCII)
-	 	fprintf(fw,"encryption_mode=WPA-PSK-TKIP-ASCII\n");
-	else
-	 	fprintf(fw,"encryption_mode=none\n");
 
-	if(exalt_wifi_get_current_passwd_mode(w)>WIFI_ENCRYPTION_NONE)
-	 	fprintf(fw,"key=%s\n",exalt_wifi_get_current_passwd(w));
+ 	sprintf(buf,"encryption_mode_%s",exalt_wifi_get_current_essid(w));
+	ecore_config_int_set(buf,exalt_wifi_get_current_passwd_mode(w));
+	
+ 	sprintf(buf,"key_%s",exalt_wifi_get_current_essid(w));
+	ecore_config_string_set(buf,exalt_wifi_get_current_passwd(w));
 
- 	fprintf(fw,"}\n");
- 	fclose(fr);
-	fclose(fw);
- 	remove(FILE_TEMP);
+	if(ecore_config_file_save(EXALT_CONF_FILE) != ECORE_CONFIG_ERR_SUCC)
+	{
+	 	fprintf(stderr,"exalt_wifi_save_byeth(): error can't save the config\n");
+		return -1;
+	}
+
+
 	return 1;
 }
+// }}}
+
+// {{{ int exalt_wifi_save_load_bywifiinfo(exalt_wifi_info* wi)
+int exalt_wifi_save_load_bywifiinfo(exalt_wifi_info* wi)
+{
+ 	char buf[1024];
+	char* res;
+	int res_i;
+	if(!wi)
+	{
+	 	fprintf(stderr,"exalt_wifi_save_load_bywifiinfo(): wi == null!\n");
+		return -1;
+	}
+
+
+ 	ecore_config_file_load(EXALT_CONF_FILE);
+
+ 	sprintf(buf,"essid_%s",exalt_wifiinfo_get_essid(wi));
+	if(!ecore_config_string_get(buf))
+		//the network have no configuration in the file
+		return 0;
+
+	sprintf(buf,"address_mode_%s",exalt_wifiinfo_get_essid(wi));
+	res_i = ecore_config_int_get(buf);
+ 	exalt_wifiinfo_set_default_dhcp(wi,res_i);
+
+	if(!res_i)
+	{
+		sprintf(buf,"ip_%s",exalt_wifiinfo_get_essid(wi));
+		res = ecore_config_string_get(buf);
+		exalt_wifiinfo_set_default_ip(wi,res);
+
+		sprintf(buf,"mask_%s",exalt_wifiinfo_get_essid(wi));
+		res = ecore_config_string_get(buf);
+		exalt_wifiinfo_set_default_netmask(wi,res);
+
+		sprintf(buf,"gateway_%s",exalt_wifiinfo_get_essid(wi));
+		res = ecore_config_string_get(buf);
+		exalt_wifiinfo_set_default_gateway(wi,res);
+	}
+
+ 	sprintf(buf,"encryption_mode_%s",exalt_wifiinfo_get_essid(wi));
+	res_i = ecore_config_int_get(buf);
+	exalt_wifiinfo_set_default_passwd_mode(wi,res_i);
+
+ 	sprintf(buf,"key_%s",exalt_wifiinfo_get_essid(wi));
+	res = ecore_config_string_get(buf);
+	exalt_wifiinfo_set_default_passwd(wi,res);
+
+	if(ecore_config_file_save(EXALT_CONF_FILE) != ECORE_CONFIG_ERR_SUCC)
+	{
+	 	fprintf(stderr,"exalt_wifi_save_byeth(): error can't save the config\n");
+		return -1;
+	}
+
+
+	return 1;
+
+
+}
+// }}}
 
 // {{{ int exalt_eth_save_file_create()
 int exalt_eth_save_file_create(char* file,char * header)

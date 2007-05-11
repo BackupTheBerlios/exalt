@@ -2,7 +2,7 @@
 #include "eth_panel.h"
 
 eth_panel* ethpanel_create(main_window* win)
-{
+{/*{{{*/
 	Etk_Widget *hbox,*table,*label;
 	eth_panel* pnl;
 	pnl=(eth_panel*)malloc((unsigned int)sizeof(eth_panel));
@@ -53,15 +53,12 @@ eth_panel* ethpanel_create(main_window* win)
 	etk_entry_clear_button_add(ETK_ENTRY(pnl->entry_ip));
 	pnl->entry_mask = etk_entry_new();
 	etk_entry_clear_button_add(ETK_ENTRY(pnl->entry_mask));
-	pnl->entry_broadcast = etk_entry_new();
-	etk_entry_clear_button_add(ETK_ENTRY(pnl->entry_broadcast));
 	pnl->entry_gateway = etk_entry_new();
 	etk_entry_clear_button_add(ETK_ENTRY(pnl->entry_gateway));
 
 
 	etk_signal_connect("text-changed",ETK_OBJECT(pnl->entry_ip),ETK_CALLBACK(ethpanel_textchanged_entry_cb),pnl);
 	etk_signal_connect("text-changed",ETK_OBJECT(pnl->entry_mask),ETK_CALLBACK(ethpanel_textchanged_entry_cb),pnl);
-	etk_signal_connect("text-changed",ETK_OBJECT(pnl->entry_broadcast),ETK_CALLBACK(ethpanel_textchanged_entry_cb),pnl);
 	etk_signal_connect("text-changed",ETK_OBJECT(pnl->entry_gateway),ETK_CALLBACK(ethpanel_textchanged_entry_cb),pnl);
 
 
@@ -77,13 +74,9 @@ eth_panel* ethpanel_create(main_window* win)
 	etk_table_attach(ETK_TABLE(table), label, 0, 0, 1, 1, 0, 0, ETK_TABLE_HFILL);
 	etk_table_attach_default(ETK_TABLE(table), pnl->entry_mask, 1, 1, 1, 1);
 
-	label = etk_label_new(_("Broadcast: "));
-	etk_table_attach(ETK_TABLE(table), label, 0, 0, 2, 2, 0, 0, ETK_TABLE_HFILL);
-	etk_table_attach_default(ETK_TABLE(table), pnl->entry_broadcast, 1, 1, 2, 2);
-
 	label = etk_label_new(_("Gateway: "));
-	etk_table_attach(ETK_TABLE(table), label, 0, 0, 3, 3, 0, 0, ETK_TABLE_HFILL);
-	etk_table_attach_default(ETK_TABLE(table), pnl->entry_gateway, 1, 1, 3, 3);
+	etk_table_attach(ETK_TABLE(table), label, 0, 0, 2, 2, 0, 0, ETK_TABLE_HFILL);
+	etk_table_attach_default(ETK_TABLE(table), pnl->entry_gateway, 1, 1, 2, 2);
 
 
 	etk_box_append(ETK_BOX(pnl->box_configuration), table, ETK_BOX_START, ETK_BOX_FILL, 0);
@@ -115,21 +108,21 @@ eth_panel* ethpanel_create(main_window* win)
 
 
 	return pnl;
-}
+}/*}}}*/
 
 void ethpanel_show(eth_panel* pnl)
-{
+{/*{{{*/
 	etk_widget_show_all(pnl->frame);
 	etk_widget_hide(pnl->hbox_pbar);
-}
+}/*}}}*/
 
 void ethpanel_hide(eth_panel* pnl)
-{
+{/*{{{*/
 	etk_widget_hide_all(pnl->frame);
-}
+}/*}}}*/
 
 void ethpanel_set_eth(eth_panel* pnl, exalt_ethernet* eth)
-{
+{/*{{{*/
 	if(!pnl || !eth)
 	{
 		fprintf(stderr,"ethpanl_set_eth(): pnl==%p and eth==%p ! \n",pnl,eth);
@@ -142,9 +135,23 @@ void ethpanel_set_eth(eth_panel* pnl, exalt_ethernet* eth)
 	etk_frame_label_set(ETK_FRAME(pnl->frame),name);
 	etk_entry_text_set(ETK_ENTRY(pnl->entry_ip),exalt_eth_get_ip(eth));
 	etk_entry_text_set(ETK_ENTRY(pnl->entry_mask),exalt_eth_get_netmask(eth));
-	etk_entry_text_set(ETK_ENTRY(pnl->entry_broadcast),exalt_eth_get_broadcast(eth));
 	etk_entry_text_set(ETK_ENTRY(pnl->entry_gateway),exalt_eth_get_gateway(eth));
 
+	if(exalt_eth_is_activate(eth))
+	{
+		etk_widget_disabled_set(pnl->btn_disactivate,ETK_FALSE);
+		etk_widget_disabled_set(pnl->btn_activate,ETK_TRUE);
+		ethpanel_disabled_set(pnl,ETK_FALSE);
+ 	 	ethpanel_disabled_entry_set(pnl,ETK_FALSE);
+	}
+	else
+	{
+		etk_widget_disabled_set(pnl->btn_disactivate,ETK_TRUE);
+		etk_widget_disabled_set(pnl->btn_activate,ETK_FALSE);
+		ethpanel_disabled_set(pnl,ETK_TRUE);
+ 	 	ethpanel_disabled_entry_set(pnl,ETK_TRUE);
+	}
+	
 	if(!exalt_eth_is_dhcp(eth))
 	{
 		etk_toggle_button_active_set(ETK_TOGGLE_BUTTON(pnl->check_static),ETK_TRUE);
@@ -156,23 +163,11 @@ void ethpanel_set_eth(eth_panel* pnl, exalt_ethernet* eth)
 		etk_toggle_button_active_set(ETK_TOGGLE_BUTTON(pnl->check_dhcp),ETK_TRUE);
 	}
 
-	if(exalt_eth_is_activate(eth))
-	{
-		etk_widget_disabled_set(pnl->btn_disactivate,ETK_FALSE);
-		etk_widget_disabled_set(pnl->btn_activate,ETK_TRUE);
-		ethpanel_disabled_set(pnl,ETK_FALSE);
-	}
-	else
-	{
-		etk_widget_disabled_set(pnl->btn_disactivate,ETK_TRUE);
-		etk_widget_disabled_set(pnl->btn_activate,ETK_FALSE);
-		ethpanel_disabled_set(pnl,ETK_TRUE);
-	}
 
-}
+}/*}}}*/
 
 void ethpanel_set_static_dhcp_clicked_cb(Etk_Object *object, void *data)
-{
+{/*{{{*/
 	eth_panel* pnl;
 	
 	if(!data)
@@ -196,33 +191,34 @@ void ethpanel_set_static_dhcp_clicked_cb(Etk_Object *object, void *data)
 	//call the function to set the button apply
 	ethpanel_textchanged_entry_cb(NULL,pnl);
 
-}
+}/*}}}*/
 
 void ethpanel_textchanged_entry_cb(Etk_Object *object, void *data)
-{
+{/*{{{*/
 	eth_panel* pnl;
+	char* gateway;
 	if(!data)
 	 	return ;
 	
 	pnl=(eth_panel*) data;
 
+ 	gateway = etk_entry_text_get(ETK_ENTRY(pnl->entry_gateway));
  	//verify if all entry contains a valid address
 	if( etk_toggle_button_active_get(ETK_TOGGLE_BUTTON(pnl->check_dhcp))
 	 	|| (exalt_is_address(etk_entry_text_get(ETK_ENTRY(pnl->entry_ip)))
 	 	&& exalt_is_address(etk_entry_text_get(ETK_ENTRY(pnl->entry_mask)))
-		&& exalt_is_address(etk_entry_text_get(ETK_ENTRY(pnl->entry_broadcast)))
-  	 	&& exalt_is_address(etk_entry_text_get(ETK_ENTRY(pnl->entry_gateway))))
+  	 	&& (exalt_is_address(gateway) || (gateway && strlen(gateway)==0)) )
 	)
 	 	etk_widget_disabled_set(pnl->btn_apply,ETK_FALSE);
 	else
 	 	etk_widget_disabled_set(pnl->btn_apply, ETK_TRUE);
 
 
-}
+}/*}}}*/
 
 
 void ethpanel_btn_disactivate_clicked_cb(void *data)
-{
+{/*{{{*/
 	eth_panel* pnl;
 	if(!data)
 	{
@@ -232,11 +228,10 @@ void ethpanel_btn_disactivate_clicked_cb(void *data)
 
 	pnl = (eth_panel*)data;
 	exalt_eth_desactivate(pnl->eth);
-	ethpanel_set_eth(pnl,pnl->eth);
-}
+}/*}}}*/
 
 void ethpanel_btn_activate_clicked_cb(void *data)
-{
+{/*{{{*/
 	eth_panel* pnl;
 	if(!data)
 	{
@@ -246,11 +241,10 @@ void ethpanel_btn_activate_clicked_cb(void *data)
 
 	pnl = (eth_panel*)data;
 	exalt_eth_activate(pnl->eth);
-	ethpanel_set_eth(pnl,pnl->eth);
-}
+}/*}}}*/
 
 void ethpanel_btn_apply_clicked_cb(void *data)
-{
+{/*{{{*/
 	eth_panel* pnl;
 	pid_t f;
 
@@ -268,7 +262,6 @@ void ethpanel_btn_apply_clicked_cb(void *data)
 		//static mode
 		exalt_eth_set_ip(pnl->eth,etk_entry_text_get(ETK_ENTRY(pnl->entry_ip)));
 		exalt_eth_set_netmask(pnl->eth,etk_entry_text_get(ETK_ENTRY(pnl->entry_mask)));
-		exalt_eth_set_broadcast(pnl->eth,etk_entry_text_get(ETK_ENTRY(pnl->entry_broadcast)));
 		exalt_eth_set_gateway(pnl->eth,etk_entry_text_get(ETK_ENTRY(pnl->entry_gateway)));
 	}
 	else
@@ -290,26 +283,25 @@ void ethpanel_btn_apply_clicked_cb(void *data)
 	etk_widget_disabled_set(pnl->btn_disactivate,ETK_TRUE);
 	pnl->pid_dhcp_process = f;
 	pnl->dhcp_timer = ecore_timer_add(DHCP_TIMER ,ethpanel_dhcp_timer,pnl); 
-}
+}/*}}}*/
 
 void ethpanel_disabled_entry_set(eth_panel* pnl, Etk_Bool b)
-{
+{/*{{{*/
 	etk_widget_disabled_set(pnl->entry_ip,b);
 	etk_widget_disabled_set(pnl->entry_mask,b);
-	etk_widget_disabled_set(pnl->entry_broadcast,b);
 	etk_widget_disabled_set(pnl->entry_gateway,b);
-}
+}/*}}}*/
 
 void ethpanel_disabled_set(eth_panel* pnl,Etk_Bool b)
-{
+{/*{{{*/
 	etk_widget_disabled_set(pnl->check_static,b);
 	etk_widget_disabled_set(pnl->check_dhcp,b);
 	etk_widget_disabled_set(pnl->btn_apply,b);
-}
+}/*}}}*/
 
 
 int ethpanel_dhcp_timer(void* data)
-{
+{/*{{{*/
 	eth_panel* pnl;
 	pid_t res;
 	int status;
@@ -342,5 +334,5 @@ int ethpanel_dhcp_timer(void* data)
 
 	}
 	return 1;
-}
+}/*}}}*/
 

@@ -4,7 +4,7 @@
 
 #define EXALT_FREE(p) if(p){ free(p); p=NULL;} 
 #define EXALT_PCLOSE(p) if(p){pclose(p); p=NULL;}
-
+#define DELETE_TIMER(a) if(a) {ecore_timer_del(a); a=NULL; }
 
 #include "exalt_ethernet.h"
 #include "exalt_wifi_info.h"
@@ -13,6 +13,7 @@
 #include "exalt_dns.h"
 #include "exalt_save_load.h"
 #include "exalt_regexp.h"
+
 
 
 short exalt_is_address(const char* ip);

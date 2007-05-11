@@ -73,8 +73,8 @@ main_window.o main_window.o: main_window.c main_window.h \
   /opt/e17/include/etk/etk_toolbar.h /opt/e17/include/etk/etk_tooltips.h \
   /opt/e17/include/etk/etk_tree.h /opt/e17/include/Ecore_Job.h \
   /opt/e17/include/etk/etk_tree_model.h \
-  /opt/e17/include/etk/etk_viewport.h exalt.h config.h \
-  /usr/local/include/exalt/libexalt.h \
+  /opt/e17/include/etk/etk_viewport.h /opt/e17/include/Ecore_Data.h \
+  exalt.h config.h /usr/local/include/exalt/libexalt.h \
   /usr/local/include/exalt/exalt_ethernet.h \
   /usr/local/include/exalt/libexalt.h \
   /usr/local/include/exalt/exalt_wifi.h \
@@ -87,10 +87,10 @@ main_window.o main_window.o: main_window.c main_window.h \
   /usr/include/bits/uio.h /usr/include/unistd.h \
   /usr/include/bits/posix_opt.h /usr/include/bits/environments.h \
   /usr/include/bits/confname.h /usr/include/getopt.h \
-  /usr/local/include/exalt/exalt_regexp.h /usr/include/regex.h \
-  eth_panel.h /usr/include/sys/wait.h /usr/include/sys/resource.h \
-  /usr/include/bits/resource.h wifi_panel.h /usr/include/pthread.h \
-  /usr/include/sched.h /usr/include/bits/sched.h \
+  /opt/e17/include/Ecore_Config.h /usr/local/include/exalt/exalt_regexp.h \
+  /usr/include/regex.h eth_panel.h /usr/include/sys/wait.h \
+  /usr/include/sys/resource.h /usr/include/bits/resource.h wifi_panel.h \
+  /usr/include/pthread.h /usr/include/sched.h /usr/include/bits/sched.h \
   /usr/include/bits/setjmp.h general_panel.h
 
 main_window.h:
@@ -355,6 +355,8 @@ main_window.h:
 
 /opt/e17/include/etk/etk_viewport.h:
 
+/opt/e17/include/Ecore_Data.h:
+
 exalt.h:
 
 config.h:
@@ -400,6 +402,8 @@ config.h:
 /usr/include/bits/confname.h:
 
 /usr/include/getopt.h:
+
+/opt/e17/include/Ecore_Config.h:
 
 /usr/local/include/exalt/exalt_regexp.h:
 

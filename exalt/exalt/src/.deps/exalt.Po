@@ -14,13 +14,19 @@ exalt.o exalt.o: exalt.c exalt.h config.h /usr/include/libintl.h \
   /usr/lib/gcc/i486-linux-gnu/4.1.2/include/stdarg.h \
   /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
   /usr/include/bits/stdio.h /usr/local/include/exalt/exalt_wifi_info.h \
-  /usr/local/include/exalt/exalt_command.h /usr/include/stdlib.h \
-  /usr/include/bits/waitflags.h /usr/include/bits/waitstatus.h \
-  /usr/include/endian.h /usr/include/bits/endian.h \
-  /usr/include/sys/types.h /usr/include/time.h /usr/include/sys/select.h \
+  /opt/e17/include/Ecore_Data.h /opt/e17/include/Ecore.h \
+  /usr/include/sys/types.h /usr/include/time.h /usr/include/endian.h \
+  /usr/include/bits/endian.h /usr/include/sys/select.h \
   /usr/include/bits/select.h /usr/include/bits/sigset.h \
   /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
-  /usr/include/bits/pthreadtypes.h /usr/include/alloca.h \
+  /usr/include/bits/pthreadtypes.h /usr/include/signal.h \
+  /usr/include/bits/signum.h /usr/include/bits/siginfo.h \
+  /usr/include/bits/sigaction.h /usr/include/bits/sigcontext.h \
+  /usr/include/asm/sigcontext.h /usr/include/asm-i386/sigcontext.h \
+  /usr/include/bits/sigstack.h /usr/include/sys/ucontext.h \
+  /usr/include/bits/sigthread.h /usr/local/include/exalt/exalt_command.h \
+  /usr/include/stdlib.h /usr/include/bits/waitflags.h \
+  /usr/include/bits/waitstatus.h /usr/include/alloca.h \
   /usr/local/include/exalt/exalt_dns.h /usr/include/string.h \
   /usr/include/bits/string.h /usr/include/bits/string2.h \
   /usr/local/include/exalt/exalt_save_load.h /usr/include/sys/stat.h \
@@ -28,12 +34,12 @@ exalt.o exalt.o: exalt.c exalt.h config.h /usr/include/libintl.h \
   /usr/include/bits/uio.h /usr/include/unistd.h \
   /usr/include/bits/posix_opt.h /usr/include/bits/environments.h \
   /usr/include/bits/confname.h /usr/include/getopt.h \
+  /opt/e17/include/Ecore_Config.h /opt/e17/include/Evas.h \
   /usr/local/include/exalt/exalt_regexp.h /usr/include/regex.h \
   main_window.h /opt/e17/include/etk/Etk.h \
   /opt/e17/include/etk/etk_argument.h /opt/e17/include/etk/etk_types.h \
   /opt/e17/include/etk/etk_config.h /opt/e17/include/Eet.h \
-  /opt/e17/include/etk/etk_main.h /opt/e17/include/Evas.h \
-  /opt/e17/include/etk/etk_marshallers.h \
+  /opt/e17/include/etk/etk_main.h /opt/e17/include/etk/etk_marshallers.h \
   /opt/e17/include/etk/etk_object.h /opt/e17/include/etk/etk_type.h \
   /opt/e17/include/etk/etk_property.h \
   /opt/e17/include/etk/etk_signal_callback.h \
@@ -52,17 +58,11 @@ exalt.o exalt.o: exalt.c exalt.h config.h /usr/include/libintl.h \
   /opt/e17/include/etk/etk_toggle_button.h \
   /opt/e17/include/etk/etk_colorpicker.h \
   /opt/e17/include/etk/etk_combobox.h /opt/e17/include/etk/etk_dialog.h \
-  /opt/e17/include/etk/etk_window.h /opt/e17/include/Ecore.h \
-  /usr/include/signal.h /usr/include/bits/signum.h \
-  /usr/include/bits/siginfo.h /usr/include/bits/sigaction.h \
-  /usr/include/bits/sigcontext.h /usr/include/asm/sigcontext.h \
-  /usr/include/asm-i386/sigcontext.h /usr/include/bits/sigstack.h \
-  /usr/include/sys/ucontext.h /usr/include/bits/sigthread.h \
-  /opt/e17/include/etk/etk_toplevel.h /opt/e17/include/etk/etk_dnd.h \
-  /opt/e17/include/etk/etk_drag.h /opt/e17/include/etk/etk_editable.h \
-  /opt/e17/include/etk/etk_embed.h /opt/e17/include/etk/etk_engine.h \
-  /opt/e17/include/etk/etk_event.h /opt/e17/include/etk/etk_selection.h \
-  /opt/e17/include/etk/etk_entry.h \
+  /opt/e17/include/etk/etk_window.h /opt/e17/include/etk/etk_toplevel.h \
+  /opt/e17/include/etk/etk_dnd.h /opt/e17/include/etk/etk_drag.h \
+  /opt/e17/include/etk/etk_editable.h /opt/e17/include/etk/etk_embed.h \
+  /opt/e17/include/etk/etk_engine.h /opt/e17/include/etk/etk_event.h \
+  /opt/e17/include/etk/etk_selection.h /opt/e17/include/etk/etk_entry.h \
   /opt/e17/include/etk/etk_filechooser_widget.h \
   /opt/e17/include/etk/etk_fixed.h /opt/e17/include/etk/etk_frame.h \
   /opt/e17/include/etk/etk_iconbox.h /opt/e17/include/etk/etk_image.h \
@@ -149,21 +149,17 @@ config.h:
 
 /usr/local/include/exalt/exalt_wifi_info.h:
 
-/usr/local/include/exalt/exalt_command.h:
+/opt/e17/include/Ecore_Data.h:
 
-/usr/include/stdlib.h:
-
-/usr/include/bits/waitflags.h:
-
-/usr/include/bits/waitstatus.h:
-
-/usr/include/endian.h:
-
-/usr/include/bits/endian.h:
+/opt/e17/include/Ecore.h:
 
 /usr/include/sys/types.h:
 
 /usr/include/time.h:
+
+/usr/include/endian.h:
+
+/usr/include/bits/endian.h:
 
 /usr/include/sys/select.h:
 
@@ -176,6 +172,34 @@ config.h:
 /usr/include/sys/sysmacros.h:
 
 /usr/include/bits/pthreadtypes.h:
+
+/usr/include/signal.h:
+
+/usr/include/bits/signum.h:
+
+/usr/include/bits/siginfo.h:
+
+/usr/include/bits/sigaction.h:
+
+/usr/include/bits/sigcontext.h:
+
+/usr/include/asm/sigcontext.h:
+
+/usr/include/asm-i386/sigcontext.h:
+
+/usr/include/bits/sigstack.h:
+
+/usr/include/sys/ucontext.h:
+
+/usr/include/bits/sigthread.h:
+
+/usr/local/include/exalt/exalt_command.h:
+
+/usr/include/stdlib.h:
+
+/usr/include/bits/waitflags.h:
+
+/usr/include/bits/waitstatus.h:
 
 /usr/include/alloca.h:
 
@@ -209,6 +233,10 @@ config.h:
 
 /usr/include/getopt.h:
 
+/opt/e17/include/Ecore_Config.h:
+
+/opt/e17/include/Evas.h:
+
 /usr/local/include/exalt/exalt_regexp.h:
 
 /usr/include/regex.h:
@@ -226,8 +254,6 @@ main_window.h:
 /opt/e17/include/Eet.h:
 
 /opt/e17/include/etk/etk_main.h:
-
-/opt/e17/include/Evas.h:
 
 /opt/e17/include/etk/etk_marshallers.h:
 
@@ -292,28 +318,6 @@ main_window.h:
 /opt/e17/include/etk/etk_dialog.h:
 
 /opt/e17/include/etk/etk_window.h:
-
-/opt/e17/include/Ecore.h:
-
-/usr/include/signal.h:
-
-/usr/include/bits/signum.h:
-
-/usr/include/bits/siginfo.h:
-
-/usr/include/bits/sigaction.h:
-
-/usr/include/bits/sigcontext.h:
-
-/usr/include/asm/sigcontext.h:
-
-/usr/include/asm-i386/sigcontext.h:
-
-/usr/include/bits/sigstack.h:
-
-/usr/include/sys/ucontext.h:
-
-/usr/include/bits/sigthread.h:
 
 /opt/e17/include/etk/etk_toplevel.h:
 

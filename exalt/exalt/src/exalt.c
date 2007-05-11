@@ -16,14 +16,12 @@ int main(int argc,char**argv)
       	bindtextdomain( "exalt", PACKAGE_LOCALE_DIR );
      	textdomain( "exalt" );
 	
-	//load interfaces
 	exalt_eth_init();
-	exalt_eth_load();
-
 
 	//eth_printf();
 	win = mainwindow_create();
 	
+	exalt_eth_load(NULL);
 	etk_main();
 
 	return 1;

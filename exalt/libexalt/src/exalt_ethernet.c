@@ -15,39 +15,190 @@
 /**
  * @brief intialise the library
  */
-void exalt_eth_init()
+int exalt_eth_init()
 {
+	if(ecore_config_init("econfig") != ECORE_CONFIG_ERR_SUCC)
+	{
+	 	fprintf(stderr,"exalt_wifi_save_load_bywifiinfo(): error can't init ecore config\n");
+		return -1;
+	}
+	
+	exalt_eth_interfaces.ethernets = ecore_list_new();
+	exalt_eth_interfaces.ethernets->free_func =  ECORE_FREE_CB(exalt_eth_free);
+	ecore_list_init(exalt_eth_interfaces.ethernets);
+	exalt_eth_interfaces.eth_cb_timer = ecore_timer_add(EXALT_ETH_UPDATE_TIME ,exalt_eth_update,NULL);
+	exalt_eth_interfaces.eth_cb = NULL;
+	exalt_eth_interfaces.eth_cb_timer = NULL;
+	exalt_eth_interfaces.eth_cb_user_data = NULL;
 
-	exalt_eth_interfaces.size = 0;
-	exalt_eth_interfaces.ethernets = NULL;
-	exalt_eth_interfaces.default_gateway = NULL;
+	exalt_eth_interfaces.wifi_scan_cb = NULL;
+	exalt_eth_interfaces.wifi_scan_cb_timer = NULL;
+	exalt_eth_interfaces.wifi_scan_cb_user_data = NULL;
+ 	
+	return 1;
 }
 // }}}
 
-// {{{ void exalt_eth_free()
+// {{{ exalt_ethernet* exalt_eth_create()
 /**
- * @brief free the "library"
+ * @brief create a exalt_ethernet structure
+ * @return Return a new exalt_ethernet structure
  */
-void exalt_eth_free()
+exalt_ethernet* exalt_eth_create()
 {
-	int i;
-	for(i=0;i<exalt_eth_interfaces.size;i++)
+ 	exalt_ethernet* eth = (exalt_ethernet*)malloc((unsigned int)sizeof(exalt_ethernet));
+	if(!eth)
 	{
-		exalt_ethernet* eth = &exalt_eth_interfaces.ethernets[i];
-		EXALT_FREE(eth->ip)
-		EXALT_FREE(eth->broadcast)
+	 	fprintf(stderr,"exalt_eth_create(): eth==null, malloc error ! \n");
+		return NULL;
+	}
+
+	eth->name =NULL;
+	eth->ip = NULL;
+	eth->netmask = NULL;
+	eth->wifi = NULL;
+	eth->gateway = NULL;
+
+	return eth;
+}
+// }}}
+
+// {{{ void exalt_eth_ethernets_free()
+/**
+ * @brief free the "library" (exalt_eth_interfaces)
+ */
+void exalt_eth_ethernets_free()
+{
+ 	ecore_list_destroy(exalt_eth_interfaces.ethernets);	
+}
+// }}}
+
+// {{{ void exalt_eth_free(void* data)
+/**
+ * @brief free a exalt_ethernet structure
+ * @param data a exalt_ethernet* structure
+ */
+void exalt_eth_free(void *data)
+{
+	exalt_ethernet* eth = EXALT_ETHERNET(data);
+	EXALT_FREE(eth->ip)
 		EXALT_FREE(eth->netmask)
 		EXALT_FREE(eth->gateway)
 		if(eth->wifi) exalt_wifi_free(eth->wifi);
-	}
-	EXALT_FREE(exalt_eth_interfaces.ethernets)
-
 }
 // }}}
 
 /*
  * Load ethernet informations
  */
+
+// {{{
+/**
+ * @brief update all interfaces list (load new card, unload old cards, test if the card is activated or not)
+ * @param data just for fun
+ * @return Return 1
+ */
+int exalt_eth_update(void* data)
+{
+ 	//remove olds interfaces
+	exalt_eth_load_remove();
+
+	//load new interfaces
+	exalt_eth_load();
+
+ 	//test if interface are activate or not
+	exalt_eth_load_state();
+
+ 	return 1;
+}
+// }}}
+
+// {{{
+/*
+ * @brief load the state of  all interfaces
+ */
+void exalt_eth_load_state()
+{
+	void *data;
+	Ecore_List *l = exalt_eth_interfaces.ethernets;
+	ecore_list_goto_first(l);
+	data = ecore_list_next(l);
+	while(data)
+	{
+	 	exalt_ethernet* eth = EXALT_ETHERNET(data);
+		exalt_eth_load_activate(eth);
+
+		if(exalt_eth_is_wifi(eth))
+		{
+			exalt_wifi_load_radio_button(eth);
+		}
+
+		data = ecore_list_next(l);
+	}
+}
+//}}}
+
+
+// {{{ void exalt_eth_load_remove()
+/**
+ * @brief remove olds interfaces
+ */
+void exalt_eth_load_remove()
+{
+	FILE* f;
+	char buf[1024];
+	Ecore_List* l;
+ 	void* data,*data2;
+
+	exalt_regex *r;
+	f = exalt_execute_command(COMMAND_IFCONFIG_ALL);
+	r = exalt_regex_create("",REGEXP_INTERFACE,0);
+
+ 	//create a list with current interfaces
+	l = ecore_list_new();
+	ecore_list_init(l);
+	l->free_func = ECORE_FREE_CB(free);
+
+	while(fgets(buf, 1024, f))
+	{
+		exalt_regex_set_request(r,buf);
+		//get the interface name
+		if(exalt_regex_execute(r) && r->nmatch>0)
+			ecore_list_append(l,strdup(r->res[1]));
+	}
+	EXALT_PCLOSE(f);
+	exalt_regex_free(&r);
+
+	//remove olds interfaces
+	ecore_list_goto_first(exalt_eth_interfaces.ethernets);
+	data = ecore_list_next(exalt_eth_interfaces.ethernets);
+ 	while(data)
+	{
+	 	short find = 0;
+ 	 	exalt_ethernet* eth = EXALT_ETHERNET(data);
+
+ 	 	ecore_list_goto_first(l);
+		data2 = ecore_list_next(l);
+		while(data2 && !find)
+		{
+			if(strcmp(exalt_eth_get_name(eth),(char*)data2) == 0)
+			 	find = 1;
+			data2 = ecore_list_next(l);
+ 	 	}
+ 	 	if(!find)
+		{
+			if(exalt_eth_interfaces.eth_cb)
+			 	exalt_eth_interfaces.eth_cb(eth,EXALT_ETH_CB_REMOVE,exalt_eth_interfaces.eth_cb_user_data);
+			ecore_list_goto_index(exalt_eth_interfaces.ethernets, ecore_list_index(exalt_eth_interfaces.ethernets)-1);
+			ecore_list_remove_destroy(exalt_eth_interfaces.ethernets);
+		}
+		data = ecore_list_next(exalt_eth_interfaces.ethernets);
+	}
+ 	ecore_list_destroy(l);
+}
+// }}}
+
+
 
 // {{{ void exalt_eth_load()
 /**
@@ -57,68 +208,40 @@ void exalt_eth_load()
 {
 	FILE* f;
 	char buf[1024];
-	char* command_result[1024];
-	int lcommand_result,i;
 	exalt_regex *r;
 	f = exalt_execute_command(COMMAND_IFCONFIG_ALL);
-	r = exalt_regex_create("",REGEXP_ISETHERNET,0);
+	r = exalt_regex_create("",REGEXP_INTERFACE,0);
 
-	//count number of interfaces & save the command result
-	lcommand_result=0;
 	while(fgets(buf, 1024, f))
 	{
 		exalt_regex_set_request(r,buf);
+		//get the interface name
 		if(exalt_regex_execute(r) && r->nmatch>0)
-			exalt_eth_interfaces.size++;
-		//save the result
-		command_result[lcommand_result] = strdup(buf); 
-		lcommand_result++;
-	}
-	EXALT_PCLOSE(f);
-	if(exalt_eth_interfaces.size>0)
-	{	
-		int i_eth = 0;
-		exalt_eth_interfaces.ethernets = (exalt_ethernet*)malloc((unsigned int)sizeof(exalt_ethernet)*exalt_eth_interfaces.size);
-		if(!exalt_eth_interfaces.ethernets)
 		{
-			fprintf(stderr,"eth_load(): exalt_eth_interfaces.exalt_ethernets==null, malloc() error! \n");
-			return;
-		}
 
-		//read the name & mark as inactivate (activate = 0)
-		for(i=0;i<lcommand_result;i++)
-		{
-			char* buf = command_result[i];
-			exalt_regex_set_request(r,buf);
-			exalt_regex_set_regex(r,REGEXP_ISETHERNET);
-			if(exalt_regex_execute(r) && r->nmatch>0)
+			exalt_ethernet* eth;
+			eth = exalt_eth_get_ethernet_byname(r->res[1]);
+			//if the interface doesn't exist
+			if(!eth)
 			{
-				exalt_ethernet* eth = &(exalt_eth_interfaces.ethernets[i_eth]);
-				eth->name =NULL;
-				eth->ip = NULL;
-				eth->broadcast = NULL;
-				eth->netmask = NULL;
-				eth->wifi = NULL;
-				eth->gateway = NULL;
+				eth = exalt_eth_create();
 
-				//get the interface name
-				exalt_regex_set_regex(r,REGEXP_INTERFACE);
-				if(exalt_regex_execute(r) && r->nmatch>0)
-					exalt_eth_set_name(eth,r->res[1]);
+				exalt_eth_set_name(eth,r->res[1]);
 
+				//by default the interface is not activated
 				exalt_eth_set_activate(eth,0);
 
-				i_eth++;
+				//add the interface in the list
+				ecore_list_append(exalt_eth_interfaces.ethernets,(void *)eth);
+				exalt_eth_load_configuration_byeth(eth,1);
+
+				if(exalt_eth_interfaces.eth_cb)
+				 	exalt_eth_interfaces.eth_cb(eth,EXALT_ETH_CB_NEW,exalt_eth_interfaces.eth_cb_user_data);
 			}
 		}
 	}
-
+	EXALT_PCLOSE(f);
 	exalt_regex_free(&r);
-	//free the command result
-	for(i=0;i<lcommand_result;i++)
-		EXALT_FREE(command_result[i])
-	
-	exalt_eth_load_configuration();
 }
 // }}}
 
@@ -128,9 +251,16 @@ void exalt_eth_load()
  */
 void exalt_eth_load_configuration()
 {
-	int i;
-	for(i=0;i<exalt_eth_get_size();i++)
-		exalt_eth_load_configuration_byeth(exalt_eth_get_ethernet_bypos(i),1);
+	void *data;
+	exalt_ethernet* eth;
+	ecore_list_goto_first(exalt_eth_interfaces.ethernets);
+	data = ecore_list_next(exalt_eth_interfaces.ethernets);
+	while(data)
+	{
+	 	eth = EXALT_ETHERNET(data);
+	 	exalt_eth_load_configuration_byeth(eth,1);
+		data = ecore_list_next(exalt_eth_interfaces.ethernets);
+	}
 }
 // }}}
 
@@ -179,11 +309,6 @@ void exalt_eth_load_configuration_byeth(exalt_ethernet* eth, short load_file)
 				if(exalt_regex_execute(r) && r->nmatch>0)
 					exalt_eth_set_ip(eth,r->res[1]);
 
-				//get the broadcast address
-				exalt_regex_set_regex(r,REGEXP_BCAST);
-				if(exalt_regex_execute(r) && r->nmatch>0)
-					exalt_eth_set_broadcast(eth,r->res[1]);
-
 				//get the netmask
 				exalt_regex_set_regex(r,REGEXP_MASK);
 				if(exalt_regex_execute(r) && r->nmatch>0)
@@ -224,11 +349,15 @@ short exalt_eth_load_activate(exalt_ethernet * eth)
 	if(fgets(buf,1024,f))
 	{
 		EXALT_PCLOSE(f);
+		if(!exalt_eth_is_activate(eth))
+		 	 exalt_eth_set_activate(eth,1);
 		return 1;
 	}
 	else
 	{
 		EXALT_PCLOSE(f);
+		if(exalt_eth_is_activate(eth))
+		 	exalt_eth_set_activate(eth,0);
 		return 0;
 	}
 }
@@ -332,16 +461,17 @@ void exalt_eth_desactivate(exalt_ethernet* eth)
  */
 
 
-// {{{ int exalt_eth_get_size()
+// {{{ Ecore_List* exalt_eth_get_list()
 /**
- * @brief get the number of card (activate or not)
- * return Returns the number of card
+ * @brief get the interface ecore list
+ * @return Return the ecore list
  */
-int exalt_eth_get_size()
+Ecore_List* exalt_eth_get_list()
 {
-	return exalt_eth_interfaces.size;
+ 	return exalt_eth_interfaces.ethernets;
 }
 // }}}
+
 
 // {{{ exalt_ethernet* exalt_eth_get_ethernet_bypos(int pos)
 /**
@@ -351,10 +481,7 @@ int exalt_eth_get_size()
  */
 exalt_ethernet* exalt_eth_get_ethernet_bypos(int pos)
 {
-	if(pos>=0 && pos<exalt_eth_get_size())
-		return &exalt_eth_interfaces.ethernets[pos];
-	else
-		return NULL;
+	return EXALT_ETHERNET(ecore_list_goto_index(exalt_eth_interfaces.ethernets,pos));
 }
 // }}}
 
@@ -366,18 +493,26 @@ exalt_ethernet* exalt_eth_get_ethernet_bypos(int pos)
  */
 exalt_ethernet* exalt_eth_get_ethernet_byname(char* name)
 {
-	int i;
+	void *data;
+	exalt_ethernet* eth;
+
 	if(!name)
 	{
-		fprintf(stderr,"eth_get_exalt_ethernet_byname(): name==null! \n");
+		fprintf(stderr,"exalt_eth_get_exalt_ethernet_byname(): name==null! \n");
 		return NULL;
 	}
 
-	for(i=0;i<exalt_eth_get_size();i++)
+ 	ecore_list_goto_first(exalt_eth_interfaces.ethernets);
+	data = ecore_list_next(exalt_eth_interfaces.ethernets);
+	while(data)
 	{
-		if(strcmp(exalt_eth_get_ethernet_bypos(i)->name,name) == 0)
-			return exalt_eth_get_ethernet_bypos(i);
+	 	eth = EXALT_ETHERNET(data);
+		if(strcmp(exalt_eth_get_name(eth),name) == 0)
+			return eth;
+		
+		data = ecore_list_next(exalt_eth_interfaces.ethernets);
 	}
+
 	return NULL;
 }
 // }}}
@@ -407,21 +542,6 @@ char* exalt_eth_get_ip(exalt_ethernet* eth)
 {
 	if(eth)
 		return eth->ip;
-	else
-		return NULL;
-}
-// }}}
-
-// {{{ char* exalt_eth_get_broadcast(exalt_ethernet* eth)
-/**
- * @brief get the brodcast address of the card "eth" 
- * @param eth the card
- * @return Returns the broadcast address
- */
-char* exalt_eth_get_broadcast(exalt_ethernet* eth)
-{
-	if(eth)
-		return eth->broadcast;
 	else
 		return NULL;
 }
@@ -543,35 +663,6 @@ int exalt_eth_set_ip(exalt_ethernet* eth, const char* ip)
 }
 // }}}
 
-// {{{ int exalt_eth_set_broadcast(exalt_ethernet* eth, const char* broadcast)
-/**
- * @brief set the broadcast address of the card "eth" 
- * @param eth the card
- * @param broadcast the new broadcast address
- * @return Returns 1 if the new broadcast address is apply, 0 if the "broadcast" doesn't have a correct format else -1
- */
-int exalt_eth_set_broadcast(exalt_ethernet* eth, const char* broadcast)
-{
-
-	if(!eth || !broadcast)
-	{
-		fprintf(stderr,"eth_set_broadcast(): eth==%p broadcast==%p !\n",eth,broadcast);
-		return -1;
-	}
-	if(!exalt_is_address(broadcast))
-	{
-	 	fprintf(stderr,"eth_set_broadcast(): broadcast(%s) is not a valid address\n",broadcast);
-		return 0;
-	}
-
-
-	
-	EXALT_FREE(eth->broadcast)
-		eth->broadcast=strdup(broadcast);
-	return 1;
-}
-// }}}
-
 // {{{ int exalt_eth_set_netmask(exalt_ethernet* eth, const char* netmask)
 /**
  * @brief set the netmask address of the card "eth" 
@@ -609,10 +700,10 @@ int exalt_eth_set_gateway(exalt_ethernet* eth, const char* gateway)
 {
 	if(!eth || !gateway)
 	{
-		fprintf(stderr,"eth_set_gateway(): eth==%p broadcast==%p !\n",eth,gateway);
+		fprintf(stderr,"eth_set_gateway(): eth==%p gateway==%p !\n",eth,gateway);
 		return -1;
 	}
-	if(!exalt_is_address(gateway))
+	if(!exalt_is_address(gateway) && strlen(gateway)>0)
 	{
 		fprintf(stderr,"eth_set_gateway(): broadcast(%s) is not a valid address\n",gateway);
 		return 0;
@@ -674,12 +765,43 @@ int exalt_eth_set_activate(exalt_ethernet* eth, short activate)
 	if(eth)
 	{
 		eth->activate=activate;
+		if(exalt_eth_interfaces.eth_cb)
+			 exalt_eth_interfaces.eth_cb(eth,(activate==1?EXALT_ETH_CB_ACTIVATE:EXALT_ETH_CB_DESACTIVATE),exalt_eth_interfaces.eth_cb_user_data);
 		return 1;
 	}
 	else
 		return 0;
 }
 // }}}
+
+// {{{ int exalt_eth_set_cb(Exalt_Eth_Cb fct, void* user_data)
+/**
+ * @brief set the callback function
+ * @param fct function call when a new interface is add
+ * @param user_data user data
+ */
+int exalt_eth_set_cb(Exalt_Eth_Cb fct, void * user_data)
+{
+ 	exalt_eth_interfaces.eth_cb = fct;
+	exalt_eth_interfaces.eth_cb_user_data = user_data;
+	return 1;
+}
+// }}}
+
+// {{{ int exalt_eth_set_scan_cb(Exalt_Wifi_Scan_Cb fct, void* user_data)
+/**
+ * @brief set the callback scan function
+ * @param fct function call when a new interface is add
+ * @param user_data user data
+ */
+int exalt_eth_set_scan_cb(Exalt_Wifi_Scan_Cb fct, void * user_data)
+{
+ 	exalt_eth_interfaces.wifi_scan_cb = fct;
+	exalt_eth_interfaces.wifi_scan_cb_user_data = user_data;
+	return 1;
+}
+// }}}
+
 
 
 /*
@@ -698,14 +820,16 @@ int exalt_eth_apply_gateway(exalt_ethernet *eth)
 	FILE* f;
 	char command[1024];
 
-	sprintf(command, "%s %s %s %s", 
-			COMMAND_ROUTE, "add default gw",
-			exalt_eth_get_gateway(eth),
-			exalt_eth_get_name(eth));
-	printf("\t%s\n",command);
-	f = exalt_execute_command(command);	
-	EXALT_PCLOSE(f);
-
+	if(strlen(exalt_eth_get_gateway(eth))>0)
+	{
+		sprintf(command, "%s %s %s %s", 
+				COMMAND_ROUTE, "add default gw",
+				exalt_eth_get_gateway(eth),
+				exalt_eth_get_name(eth));
+		printf("\t%s\n",command);
+		f = exalt_execute_command(command);	
+		EXALT_PCLOSE(f);
+	}
 	return 1;
 }
 // }}}
@@ -771,14 +895,6 @@ int exalt_eth_apply_static(exalt_ethernet *eth)
 
 	sprintf(command, "%s %s %s %s", 
 			COMMAND_IFCONFIG, exalt_eth_get_name(eth),
-			IFCONFIG_PARAM_BROADCAST,exalt_eth_get_broadcast(eth));
-	printf("\t%s\n",command);
-	f = exalt_execute_command(command);
-	EXALT_PCLOSE(f);
-
-
-	sprintf(command, "%s %s %s %s", 
-			COMMAND_IFCONFIG, exalt_eth_get_name(eth),
 			IFCONFIG_PARAM_NETMASK,exalt_eth_get_netmask(eth));
 	printf("\t%s\n",command);
 	f = exalt_execute_command(command);	
@@ -836,27 +952,30 @@ int exalt_eth_apply_dhcp(exalt_ethernet* eth)
  */
 void exalt_eth_printf()
 {
-	int i;
-	for(i=0;i<exalt_eth_interfaces.size;i++)
+	void *data;
+	exalt_ethernet* eth;
+
+	ecore_list_goto_first(exalt_eth_interfaces.ethernets);
+	data = ecore_list_next(exalt_eth_interfaces.ethernets);
+	while(data)
 	{
-		exalt_ethernet eth = exalt_eth_interfaces.ethernets[i];
-		printf("###   %s   ###\n",eth.name);
-		printf("Activate: %s\n",(eth.activate>0?"yes":"no"));
-		if(exalt_eth_is_dhcp(&eth))
+	 	eth = EXALT_ETHERNET(data);
+		printf("###   %s   ###\n",eth->name);
+		printf("Activate: %s\n",(eth->activate>0?"yes":"no"));
+		if(exalt_eth_is_dhcp(eth))
 			printf("-- DHCP mode --\n");
 
-		printf("ip: %s\n",eth.ip);
-		printf("bcast: %s\n",eth.broadcast);
-		printf("mask: %s\n",eth.netmask);
-		printf("gateway: %s\n",eth.gateway);
-		printf("Wifi: %s\n",(eth.wifi==NULL?"no":"yes"));
-		if(eth.wifi!=NULL)
+		printf("ip: %s\n",eth->ip);
+		printf("mask: %s\n",eth->netmask);
+		printf("gateway: %s\n",eth->gateway);
+		printf("Wifi: %s\n",(eth->wifi==NULL?"no":"yes"));
+		if(eth->wifi!=NULL)
 		{
-			exalt_wifi_scan(&eth);
-			exalt_wifi_printf(*(eth.wifi));
+			exalt_wifi_scan(eth);
+			exalt_wifi_printf(*(eth->wifi));
 		}
+		data = ecore_list_next(exalt_eth_interfaces.ethernets);
 	}
-
 }
 // }}}
 

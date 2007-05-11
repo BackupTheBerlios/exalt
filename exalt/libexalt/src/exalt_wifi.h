@@ -23,61 +23,57 @@
 /** WPA_TKIP (ASCII mode) */
 #define WIFI_ENCRYPTION_WPA_PSK_TKIP_ASCII 4
 
-/** Ad_hoc conenction mode */
-#define WIFI_MODE_ADHOC 0
-/** Managed conenction mode */
-#define WIFI_MODE_MANAGED 1
-/** Number maximal of network scan */
-#define NB_NETWORKS_MAX 100
-
-
 typedef struct exalt_wifi exalt_wifi;
 
 #include "libexalt.h"
 #include "exalt_wifi_info.h"
+#include <Ecore_Data.h>
+#include <Ecore.h>
+
 /**
  * @brief informations about a wireless card
  * @structinfo
  */
 struct exalt_wifi
 {
+	exalt_ethernet* eth;
 	short radio_button; //1 the button is on, else 0
 	char* essid;
 	char* passwd;
 	int passwd_mode;
-	int mode;
 	FILE* f_scan; //result of 1 san
-	exalt_wifi_info networks[NB_NETWORKS_MAX];
-	int nb_networks;
+	Ecore_List* networks;
+
 };
 
 
-exalt_wifi* exalt_wifi_create();
+exalt_wifi* exalt_wifi_create(exalt_ethernet* eth);
 void exalt_wifi_reload(exalt_ethernet* eth);
 void exalt_wifi_free(exalt_wifi* w);
 void exalt_wifi_scan_execute(exalt_ethernet * eth);
 void exalt_wifi_scan_load(exalt_ethernet* eth);
-void exalt_wifi_scan(exalt_ethernet* eth);
+int exalt_wifi_scan(void* data);
+
+void exalt_wifi_scan_start(exalt_ethernet* eth);
+void exalt_wifi_scan_stop();
+
 void exalt_wifi_scan_free(exalt_wifi* w);
 short exalt_wifi_load_radio_button(exalt_ethernet* eth);
 
 char* exalt_wifi_get_current_essid(exalt_wifi* w);
 void exalt_wifi_set_current_essid(exalt_wifi* w,const char* essid);
-int exalt_wifi_get_current_mode(exalt_wifi* w);
-void exalt_wifi_set_current_mode(exalt_wifi* w,int mode);
 char* exalt_wifi_get_current_passwd(exalt_wifi* w);
 void exalt_wifi_set_current_passwd(exalt_wifi* w,const char* passwd);
 int exalt_wifi_get_current_passwd_mode(exalt_wifi* w);
 void exalt_wifi_set_current_passwd_mode(exalt_wifi* w,int passwd_mode);
+exalt_ethernet* exalt_wifi_get_ethernet(exalt_wifi* w);
 
 void exalt_set_button_state(exalt_wifi* w);
 void exalt_wifi_set_raddio_button(exalt_wifi* w,short on);
 short exalt_wifi_raddiobutton_ison(exalt_wifi* w);
 
 
-void exalt_wifi_add_network(exalt_wifi *w,char* addr);
 
-int exalt_wifi_get_nb_networks(exalt_wifi *w);
 exalt_wifi_info* exalt_wifi_get_networkinfo(exalt_wifi* w, int nb);
 exalt_wifi_info* exalt_wifi_get_networkinfo_by_essid(exalt_wifi* w,char *essid);
 

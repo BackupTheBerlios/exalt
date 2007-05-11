@@ -8,13 +8,13 @@ localedir = $(datadir)/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 
 INCLUDES	= \
- -Wall -g
+ -Wall -g @LIBEXALT_CFLAGS@
 
 lib_LTLIBRARIES = libexalt.la
 
 EXTRA_DIST = 
 
-ENIGMAHEADERS = \
+EXALTHEADERS = \
 libexalt.h \
 exalt_command.h \
 exalt_dns.h \
@@ -36,9 +36,9 @@ exalt_wifi_info.c \
 $(EXALTHEADERS)
 
 installed_headersdir = $(prefix)/include/exalt
-installed_headers_DATA = $(ENIGMAHEADERS)
+installed_headers_DATA = $(EXALTHEADERS)
 
-libexalt_la_LIBADD  =
+libexalt_la_LIBADD  = @LIBEXALT_LIBS@
 
 libexalt_la_DEPENDENCIES = 
 

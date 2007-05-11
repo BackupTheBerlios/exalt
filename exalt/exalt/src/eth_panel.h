@@ -25,7 +25,6 @@ struct _eth_panel
 	//configuration panel
 	Etk_Widget *entry_ip;
 	Etk_Widget *entry_mask;
-	Etk_Widget *entry_broadcast;
 	Etk_Widget *entry_gateway;
 	
 	Etk_Widget *check_static;

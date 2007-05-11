@@ -2,9 +2,10 @@
 
 
 general_panel* generalpanel_create()
-{
-	Etk_Widget *vbox,*hbox,*wifi_img,*eth_img,*label,*scroll;
+{/*{{{*/
+	Etk_Widget *vbox,*hbox,*scroll;
 	general_panel* pnl;
+
 	pnl=(general_panel*)malloc((unsigned int)sizeof(general_panel));
 
 	pnl->frame = etk_frame_new(_("General configuration"));
@@ -15,27 +16,6 @@ general_panel* generalpanel_create()
 	hbox = etk_hbox_new(ETK_FALSE, 5);
 	etk_container_add(ETK_CONTAINER(pnl->frame), vbox);
 	etk_box_append(ETK_BOX(vbox), hbox, ETK_BOX_START, ETK_BOX_FILL, 0);
-
-	//## default interface ##
-	label= etk_label_new(_("The default interface: "));
-	etk_box_append(ETK_BOX(hbox),label,ETK_BOX_START, ETK_BOX_NONE,0);
-
-	pnl->cmbox_ethernet = etk_combobox_new();
-	etk_combobox_column_add(ETK_COMBOBOX(pnl->cmbox_ethernet), ETK_COMBOBOX_IMAGE, 25, ETK_FALSE, 0.5);
-	etk_combobox_column_add(ETK_COMBOBOX(pnl->cmbox_ethernet), ETK_COMBOBOX_LABEL, 25, ETK_TRUE, 0.5);
-	etk_combobox_build(ETK_COMBOBOX(pnl->cmbox_ethernet));
-	etk_box_append(ETK_BOX(hbox), pnl->cmbox_ethernet, ETK_BOX_START, ETK_BOX_NONE, 0);
-	etk_signal_connect("active-item-changed", ETK_OBJECT(pnl->cmbox_ethernet), ETK_CALLBACK(generalpanel_cmboxethernet_active_item_changed_cb), pnl);
-
-	//add all interfaces in the combobox
-	int i;
-	wifi_img = etk_image_new_from_file(PACKAGE_DATA_DIR ICONS_WIFI_ACTIVATE,"hehe");
-	eth_img = etk_image_new_from_file(PACKAGE_DATA_DIR ICONS_ETHERNET_ACTIVATE,"haha");
-	for(i=0;i<exalt_eth_get_size();i++)
-	{
-		exalt_ethernet* eth =  exalt_eth_get_ethernet_bypos(i);
-		etk_combobox_item_append(ETK_COMBOBOX(pnl->cmbox_ethernet),(exalt_eth_is_wifi(eth)?wifi_img:eth_img) ,exalt_eth_get_name(eth) );
-	}
 
 	//#######################
 	//## DNS CONFIGURATION ##
@@ -77,10 +57,10 @@ general_panel* generalpanel_create()
 	pnl->select_dns = NULL;
 
 	return pnl;
-}
+}/*}}}*/
 
 void generalpanel_load_dns_list(general_panel* pnl)
-{
+{/*{{{*/
 	int i,nb_dns;
 	char** t;
 
@@ -90,23 +70,23 @@ void generalpanel_load_dns_list(general_panel* pnl)
 		etk_tree_row_append(ETK_TREE(pnl->dns_list), NULL,
 		    pnl->dns_col,t[i],NULL);
 	exalt_dns_free_list(t,nb_dns);	
-}
+}/*}}}*/
 
 
 void generalpanel_show(general_panel* pnl)
-{
+{/*{{{*/
 	etk_widget_show_all(pnl->frame);
 	generalpanel_load_dns_list(pnl);
  	generalpanel_textchanged_entry_cb(NULL,pnl);
-}
+}/*}}}*/
 
 void generalpanel_hide(general_panel* pnl)
-{
+{/*{{{*/
 	etk_widget_hide_all(pnl->frame);
-}
+}/*}}}*/
 
 void generalpanel_btn_dns_add_clicked_cb(void *data)
-{
+{/*{{{*/
 	if(!data)
 	{
 		fprintf(stderr,"ethpanel_btn_dns_add_clicked_cb(), data==null !\n");
@@ -118,9 +98,10 @@ void generalpanel_btn_dns_add_clicked_cb(void *data)
 	//load the dns list
 	EXALT_FREE(pnl->select_dns);
 	generalpanel_load_dns_list(pnl);
-}
+}/*}}}*/
+
 void generalpanel_btn_dns_modify_clicked_cb(void *data)
-{
+{/*{{{*/
 	if(!data)
 	{
 		fprintf(stderr,"ethpanel_btn_dns_modify_clicked_cb(), data==null !\n");
@@ -132,10 +113,10 @@ void generalpanel_btn_dns_modify_clicked_cb(void *data)
 	//load the dns list
 	EXALT_FREE(pnl->select_dns);
 	generalpanel_load_dns_list(pnl);
-}
+}/*}}}*/
 
 void generalpanel_btn_dns_delete_clicked_cb(void *data)
-{
+{/*{{{*/
 	if(!data)
 	{
 		fprintf(stderr,"ethpanel_btn_dns_delete_clicked_cb(), data==null !\n");
@@ -150,11 +131,11 @@ void generalpanel_btn_dns_delete_clicked_cb(void *data)
 		generalpanel_load_dns_list(pnl);
 		EXALT_FREE(pnl->select_dns);
 	}	
-}
+}/*}}}*/
 
 
 void generalpanel_list_dns_row_clicked_cb(Etk_Object *object, Etk_Tree_Row *row, Etk_Event_Mouse_Up *event, void *data)
-{
+{/*{{{*/
 	Etk_Tree *tree;
 	char *row_name;
 	general_panel *pnl;
@@ -170,11 +151,11 @@ void generalpanel_list_dns_row_clicked_cb(Etk_Object *object, Etk_Tree_Row *row,
 	etk_entry_text_set(ETK_ENTRY(pnl->entry_dns),row_name);
 	
 
-}
+}/*}}}*/
 
 
 void generalpanel_textchanged_entry_cb(Etk_Object *object, void *data)
-{
+{/*{{{*/
  	general_panel* pnl;
 	if(!data)
 	{
@@ -193,26 +174,6 @@ void generalpanel_textchanged_entry_cb(Etk_Object *object, void *data)
 	 	etk_widget_disabled_set(pnl->btn_dns_add,ETK_FALSE);
 		etk_widget_disabled_set(pnl->btn_dns_modify,ETK_FALSE);
 	}
-}
+}/*}}}*/
 
-
-void generalpanel_cmboxethernet_active_item_changed_cb(Etk_Object *object, void *data)
-{
-	Etk_Combobox *combobox;
-	Etk_Combobox_Item *active_item;
-	//ethernet* eth;
-	char* dta;
-
-	if (!(combobox = ETK_COMBOBOX(object)))
-		return;
-	if (!(active_item = etk_combobox_active_item_get(combobox)))
-		return;
-
-
-	dta = etk_combobox_item_data_get(active_item);
-	//printf("%s\n",dta);
-	//eth = eth_get_byname();
-	//if(eth) eth_apply_gateway(eth);
-
-}
 
