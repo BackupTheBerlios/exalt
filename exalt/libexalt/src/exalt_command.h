@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include "libexalt.h"
 
-#define EXPORT "export LANG= && "
+#define EXPORT "export LC_ALL=hehe && "
 #define COMMAND_IWCONFIG EXPORT "/sbin/iwconfig"
 #define COMMAND_IWCONFIG_ETH COMMAND_IWCONFIG " %s "
 #define COMMAND_IFCONFIG EXPORT "/sbin/ifconfig"
