@@ -2,7 +2,7 @@ exalt.o exalt.o: exalt.c exalt.h config.h /usr/include/libintl.h \
   /usr/include/features.h /usr/include/sys/cdefs.h \
   /usr/include/bits/wordsize.h /usr/include/gnu/stubs.h \
   /usr/include/gnu/stubs-32.h \
-  /usr/lib/gcc/i486-linux-gnu/4.1.2/include/stddef.h \
+  /usr/lib/gcc/i686-pc-linux-gnu/4.1.2/include/stddef.h \
   /usr/include/locale.h /usr/include/bits/locale.h /usr/include/xlocale.h \
   /usr/local/include/exalt/libexalt.h \
   /usr/local/include/exalt/exalt_ethernet.h \
@@ -11,82 +11,99 @@ exalt.o exalt.o: exalt.c exalt.h config.h /usr/include/libintl.h \
   /usr/include/bits/types.h /usr/include/bits/typesizes.h \
   /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h \
   /usr/include/bits/wchar.h /usr/include/gconv.h \
-  /usr/lib/gcc/i486-linux-gnu/4.1.2/include/stdarg.h \
+  /usr/lib/gcc/i686-pc-linux-gnu/4.1.2/include/stdarg.h \
   /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
   /usr/include/bits/stdio.h /usr/local/include/exalt/exalt_wifi_info.h \
-  /opt/e17/include/Ecore_Data.h /opt/e17/include/Ecore.h \
-  /usr/include/sys/types.h /usr/include/time.h /usr/include/endian.h \
-  /usr/include/bits/endian.h /usr/include/sys/select.h \
-  /usr/include/bits/select.h /usr/include/bits/sigset.h \
-  /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
-  /usr/include/bits/pthreadtypes.h /usr/include/signal.h \
-  /usr/include/bits/signum.h /usr/include/bits/siginfo.h \
-  /usr/include/bits/sigaction.h /usr/include/bits/sigcontext.h \
-  /usr/include/asm/sigcontext.h /usr/include/asm-i386/sigcontext.h \
-  /usr/include/bits/sigstack.h /usr/include/sys/ucontext.h \
-  /usr/include/bits/sigthread.h /usr/local/include/exalt/exalt_command.h \
+  /usr/include/Ecore_Data.h /usr/include/Ecore.h /usr/include/sys/types.h \
+  /usr/include/time.h /usr/include/endian.h /usr/include/bits/endian.h \
+  /usr/include/sys/select.h /usr/include/bits/select.h \
+  /usr/include/bits/sigset.h /usr/include/bits/time.h \
+  /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h \
+  /usr/include/signal.h /usr/include/bits/signum.h \
+  /usr/include/bits/siginfo.h /usr/include/bits/sigaction.h \
+  /usr/include/bits/sigcontext.h /usr/include/asm/sigcontext.h \
+  /usr/include/linux/compiler.h /usr/include/bits/sigstack.h \
+  /usr/include/sys/ucontext.h /usr/include/bits/sigthread.h \
+  /usr/local/include/exalt/iwlib.h /usr/include/sys/ioctl.h \
+  /usr/include/bits/ioctls.h /usr/include/asm/ioctls.h \
+  /usr/include/asm/ioctl.h /usr/include/asm-generic/ioctl.h \
+  /usr/include/bits/ioctl-types.h /usr/include/sys/ttydefaults.h \
+  /usr/include/math.h /usr/include/bits/huge_val.h \
+  /usr/include/bits/huge_valf.h /usr/include/bits/huge_vall.h \
+  /usr/include/bits/inf.h /usr/include/bits/nan.h \
+  /usr/include/bits/mathdef.h /usr/include/bits/mathcalls.h \
+  /usr/include/bits/mathinline.h /usr/include/errno.h \
+  /usr/include/bits/errno.h /usr/include/linux/errno.h \
+  /usr/include/asm/errno.h /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/errno-base.h /usr/include/fcntl.h \
+  /usr/include/bits/fcntl.h /usr/include/bits/uio.h \
+  /usr/include/sys/stat.h /usr/include/bits/stat.h /usr/include/ctype.h \
   /usr/include/stdlib.h /usr/include/bits/waitflags.h \
   /usr/include/bits/waitstatus.h /usr/include/alloca.h \
-  /usr/local/include/exalt/exalt_dns.h /usr/include/string.h \
-  /usr/include/bits/string.h /usr/include/bits/string2.h \
-  /usr/local/include/exalt/exalt_save_load.h /usr/include/sys/stat.h \
-  /usr/include/bits/stat.h /usr/include/fcntl.h /usr/include/bits/fcntl.h \
-  /usr/include/bits/uio.h /usr/include/unistd.h \
+  /usr/include/string.h /usr/include/bits/string.h \
+  /usr/include/bits/string2.h /usr/include/unistd.h \
   /usr/include/bits/posix_opt.h /usr/include/bits/environments.h \
-  /usr/include/bits/confname.h /usr/include/getopt.h \
-  /opt/e17/include/Ecore_Config.h /opt/e17/include/Evas.h \
-  /usr/local/include/exalt/exalt_regexp.h /usr/include/regex.h \
-  main_window.h /opt/e17/include/etk/Etk.h \
-  /opt/e17/include/etk/etk_argument.h /opt/e17/include/etk/etk_types.h \
-  /opt/e17/include/etk/etk_config.h /opt/e17/include/Eet.h \
-  /opt/e17/include/etk/etk_main.h /opt/e17/include/etk/etk_marshallers.h \
-  /opt/e17/include/etk/etk_object.h /opt/e17/include/etk/etk_type.h \
-  /opt/e17/include/etk/etk_property.h \
-  /opt/e17/include/etk/etk_signal_callback.h \
-  /opt/e17/include/etk/etk_signal.h /opt/e17/include/etk/etk_string.h \
-  /opt/e17/include/etk/etk_utils.h /usr/include/math.h \
-  /usr/include/bits/huge_val.h /usr/include/bits/huge_valf.h \
-  /usr/include/bits/huge_vall.h /usr/include/bits/inf.h \
-  /usr/include/bits/nan.h /usr/include/bits/mathdef.h \
-  /usr/include/bits/mathcalls.h /usr/include/bits/mathinline.h \
-  /opt/e17/include/etk/etk_alignment.h /opt/e17/include/etk/etk_bin.h \
-  /opt/e17/include/etk/etk_container.h /opt/e17/include/etk/etk_widget.h \
-  /opt/e17/include/etk/etk_box.h /opt/e17/include/etk/etk_button.h \
-  /opt/e17/include/etk/etk_stock.h /opt/e17/include/etk/etk_cache.h \
-  /opt/e17/include/etk/etk_canvas.h \
-  /opt/e17/include/etk/etk_check_button.h \
-  /opt/e17/include/etk/etk_toggle_button.h \
-  /opt/e17/include/etk/etk_colorpicker.h \
-  /opt/e17/include/etk/etk_combobox.h /opt/e17/include/etk/etk_dialog.h \
-  /opt/e17/include/etk/etk_window.h /opt/e17/include/etk/etk_toplevel.h \
-  /opt/e17/include/etk/etk_dnd.h /opt/e17/include/etk/etk_drag.h \
-  /opt/e17/include/etk/etk_editable.h /opt/e17/include/etk/etk_embed.h \
-  /opt/e17/include/etk/etk_engine.h /opt/e17/include/etk/etk_event.h \
-  /opt/e17/include/etk/etk_selection.h /opt/e17/include/etk/etk_entry.h \
-  /opt/e17/include/etk/etk_filechooser_widget.h \
-  /opt/e17/include/etk/etk_fixed.h /opt/e17/include/etk/etk_frame.h \
-  /opt/e17/include/etk/etk_iconbox.h /opt/e17/include/etk/etk_image.h \
-  /opt/e17/include/etk/etk_label.h /opt/e17/include/etk/etk_menu.h \
-  /opt/e17/include/etk/etk_menu_shell.h \
-  /opt/e17/include/etk/etk_popup_window.h \
-  /opt/e17/include/etk/etk_menu_bar.h \
-  /opt/e17/include/etk/etk_menu_item.h \
-  /opt/e17/include/etk/etk_message_dialog.h \
-  /opt/e17/include/etk/etk_notebook.h /opt/e17/include/etk/etk_paned.h \
-  /opt/e17/include/etk/etk_progress_bar.h \
-  /opt/e17/include/etk/etk_radio_button.h \
-  /opt/e17/include/etk/etk_range.h /opt/e17/include/etk/etk_scrollbar.h \
-  /opt/e17/include/etk/etk_scrolled_view.h \
-  /opt/e17/include/etk/etk_separator.h /opt/e17/include/etk/etk_shadow.h \
-  /opt/e17/include/etk/etk_slider.h /opt/e17/include/etk/etk_spinner.h \
-  /opt/e17/include/etk/etk_statusbar.h /opt/e17/include/etk/etk_table.h \
-  /opt/e17/include/etk/etk_textblock.h \
-  /opt/e17/include/etk/etk_text_view.h /opt/e17/include/etk/etk_theme.h \
-  /opt/e17/include/etk/etk_tool_button.h \
-  /opt/e17/include/etk/etk_toolbar.h /opt/e17/include/etk/etk_tooltips.h \
-  /opt/e17/include/etk/etk_tree.h /opt/e17/include/Ecore_Job.h \
-  /opt/e17/include/etk/etk_tree_model.h \
-  /opt/e17/include/etk/etk_viewport.h eth_panel.h /usr/include/sys/wait.h \
+  /usr/include/bits/confname.h /usr/include/getopt.h /usr/include/netdb.h \
+  /usr/include/netinet/in.h /usr/include/stdint.h \
+  /usr/include/sys/socket.h /usr/include/sys/uio.h \
+  /usr/include/bits/socket.h \
+  /usr/lib/gcc/i686-pc-linux-gnu/4.1.2/include/limits.h \
+  /usr/lib/gcc/i686-pc-linux-gnu/4.1.2/include/syslimits.h \
+  /usr/include/limits.h /usr/include/bits/posix1_lim.h \
+  /usr/include/bits/local_lim.h /usr/include/linux/limits.h \
+  /usr/include/bits/posix2_lim.h /usr/include/bits/xopen_lim.h \
+  /usr/include/bits/sockaddr.h /usr/include/asm/socket.h \
+  /usr/include/asm/sockios.h /usr/include/bits/in.h \
+  /usr/include/bits/byteswap.h /usr/include/rpc/netdb.h \
+  /usr/include/bits/netdb.h /usr/include/net/ethernet.h \
+  /usr/include/linux/if_ether.h /usr/include/linux/types.h \
+  /usr/include/linux/posix_types.h /usr/include/linux/stddef.h \
+  /usr/include/asm/posix_types.h /usr/include/asm/types.h \
+  /usr/include/sys/time.h /usr/include/linux/version.h \
+  /usr/include/net/if_arp.h /usr/include/netinet/if_ether.h \
+  /usr/include/net/if.h /usr/include/wireless.h /usr/include/arpa/inet.h \
+  /usr/local/include/exalt/exalt_command.h \
+  /usr/local/include/exalt/exalt_dns.h \
+  /usr/local/include/exalt/exalt_save_load.h /usr/include/Ecore_Config.h \
+  /usr/include/Evas.h /usr/local/include/exalt/exalt_regexp.h \
+  /usr/include/regex.h main_window.h /usr/include/etk/Etk.h \
+  /usr/include/etk/etk_argument.h /usr/include/etk/etk_types.h \
+  /usr/include/etk/etk_config.h /usr/include/Eet.h \
+  /usr/include/etk/etk_main.h /usr/include/etk/etk_marshallers.h \
+  /usr/include/etk/etk_object.h /usr/include/etk/etk_type.h \
+  /usr/include/etk/etk_property.h /usr/include/etk/etk_signal_callback.h \
+  /usr/include/etk/etk_signal.h /usr/include/etk/etk_string.h \
+  /usr/include/etk/etk_utils.h /usr/include/etk/etk_alignment.h \
+  /usr/include/etk/etk_bin.h /usr/include/etk/etk_container.h \
+  /usr/include/etk/etk_widget.h /usr/include/etk/etk_box.h \
+  /usr/include/etk/etk_button.h /usr/include/etk/etk_stock.h \
+  /usr/include/etk/etk_cache.h /usr/include/etk/etk_canvas.h \
+  /usr/include/etk/etk_check_button.h \
+  /usr/include/etk/etk_toggle_button.h /usr/include/etk/etk_colorpicker.h \
+  /usr/include/etk/etk_combobox.h /usr/include/etk/etk_dialog.h \
+  /usr/include/etk/etk_window.h /usr/include/etk/etk_toplevel.h \
+  /usr/include/etk/etk_dnd.h /usr/include/etk/etk_drag.h \
+  /usr/include/etk/etk_editable.h /usr/include/etk/etk_embed.h \
+  /usr/include/etk/etk_engine.h /usr/include/etk/etk_event.h \
+  /usr/include/etk/etk_selection.h /usr/include/etk/etk_entry.h \
+  /usr/include/etk/etk_filechooser_widget.h /usr/include/etk/etk_fixed.h \
+  /usr/include/etk/etk_frame.h /usr/include/etk/etk_iconbox.h \
+  /usr/include/etk/etk_image.h /usr/include/etk/etk_label.h \
+  /usr/include/etk/etk_menu.h /usr/include/etk/etk_menu_shell.h \
+  /usr/include/etk/etk_popup_window.h /usr/include/etk/etk_menu_bar.h \
+  /usr/include/etk/etk_menu_item.h /usr/include/etk/etk_message_dialog.h \
+  /usr/include/etk/etk_notebook.h /usr/include/etk/etk_paned.h \
+  /usr/include/etk/etk_progress_bar.h /usr/include/etk/etk_radio_button.h \
+  /usr/include/etk/etk_range.h /usr/include/etk/etk_scrollbar.h \
+  /usr/include/etk/etk_scrolled_view.h /usr/include/etk/etk_separator.h \
+  /usr/include/etk/etk_shadow.h /usr/include/etk/etk_slider.h \
+  /usr/include/etk/etk_spinner.h /usr/include/etk/etk_statusbar.h \
+  /usr/include/etk/etk_table.h /usr/include/etk/etk_textblock.h \
+  /usr/include/etk/etk_text_view.h /usr/include/etk/etk_theme.h \
+  /usr/include/etk/etk_tool_button.h /usr/include/etk/etk_toolbar.h \
+  /usr/include/etk/etk_tooltips.h /usr/include/etk/etk_tree.h \
+  /usr/include/Ecore_Job.h /usr/include/etk/etk_tree_model.h \
+  /usr/include/etk/etk_viewport.h eth_panel.h /usr/include/sys/wait.h \
   /usr/include/sys/resource.h /usr/include/bits/resource.h wifi_panel.h \
   /usr/include/pthread.h /usr/include/sched.h /usr/include/bits/sched.h \
   /usr/include/bits/setjmp.h general_panel.h
@@ -107,7 +124,7 @@ config.h:
 
 /usr/include/gnu/stubs-32.h:
 
-/usr/lib/gcc/i486-linux-gnu/4.1.2/include/stddef.h:
+/usr/lib/gcc/i686-pc-linux-gnu/4.1.2/include/stddef.h:
 
 /usr/include/locale.h:
 
@@ -139,7 +156,7 @@ config.h:
 
 /usr/include/gconv.h:
 
-/usr/lib/gcc/i486-linux-gnu/4.1.2/include/stdarg.h:
+/usr/lib/gcc/i686-pc-linux-gnu/4.1.2/include/stdarg.h:
 
 /usr/include/bits/stdio_lim.h:
 
@@ -149,9 +166,9 @@ config.h:
 
 /usr/local/include/exalt/exalt_wifi_info.h:
 
-/opt/e17/include/Ecore_Data.h:
+/usr/include/Ecore_Data.h:
 
-/opt/e17/include/Ecore.h:
+/usr/include/Ecore.h:
 
 /usr/include/sys/types.h:
 
@@ -185,7 +202,7 @@ config.h:
 
 /usr/include/asm/sigcontext.h:
 
-/usr/include/asm-i386/sigcontext.h:
+/usr/include/linux/compiler.h:
 
 /usr/include/bits/sigstack.h:
 
@@ -193,83 +210,21 @@ config.h:
 
 /usr/include/bits/sigthread.h:
 
-/usr/local/include/exalt/exalt_command.h:
+/usr/local/include/exalt/iwlib.h:
 
-/usr/include/stdlib.h:
+/usr/include/sys/ioctl.h:
 
-/usr/include/bits/waitflags.h:
+/usr/include/bits/ioctls.h:
 
-/usr/include/bits/waitstatus.h:
+/usr/include/asm/ioctls.h:
 
-/usr/include/alloca.h:
+/usr/include/asm/ioctl.h:
 
-/usr/local/include/exalt/exalt_dns.h:
+/usr/include/asm-generic/ioctl.h:
 
-/usr/include/string.h:
+/usr/include/bits/ioctl-types.h:
 
-/usr/include/bits/string.h:
-
-/usr/include/bits/string2.h:
-
-/usr/local/include/exalt/exalt_save_load.h:
-
-/usr/include/sys/stat.h:
-
-/usr/include/bits/stat.h:
-
-/usr/include/fcntl.h:
-
-/usr/include/bits/fcntl.h:
-
-/usr/include/bits/uio.h:
-
-/usr/include/unistd.h:
-
-/usr/include/bits/posix_opt.h:
-
-/usr/include/bits/environments.h:
-
-/usr/include/bits/confname.h:
-
-/usr/include/getopt.h:
-
-/opt/e17/include/Ecore_Config.h:
-
-/opt/e17/include/Evas.h:
-
-/usr/local/include/exalt/exalt_regexp.h:
-
-/usr/include/regex.h:
-
-main_window.h:
-
-/opt/e17/include/etk/Etk.h:
-
-/opt/e17/include/etk/etk_argument.h:
-
-/opt/e17/include/etk/etk_types.h:
-
-/opt/e17/include/etk/etk_config.h:
-
-/opt/e17/include/Eet.h:
-
-/opt/e17/include/etk/etk_main.h:
-
-/opt/e17/include/etk/etk_marshallers.h:
-
-/opt/e17/include/etk/etk_object.h:
-
-/opt/e17/include/etk/etk_type.h:
-
-/opt/e17/include/etk/etk_property.h:
-
-/opt/e17/include/etk/etk_signal_callback.h:
-
-/opt/e17/include/etk/etk_signal.h:
-
-/opt/e17/include/etk/etk_string.h:
-
-/opt/e17/include/etk/etk_utils.h:
+/usr/include/sys/ttydefaults.h:
 
 /usr/include/math.h:
 
@@ -289,123 +244,285 @@ main_window.h:
 
 /usr/include/bits/mathinline.h:
 
-/opt/e17/include/etk/etk_alignment.h:
+/usr/include/errno.h:
 
-/opt/e17/include/etk/etk_bin.h:
+/usr/include/bits/errno.h:
 
-/opt/e17/include/etk/etk_container.h:
+/usr/include/linux/errno.h:
 
-/opt/e17/include/etk/etk_widget.h:
+/usr/include/asm/errno.h:
 
-/opt/e17/include/etk/etk_box.h:
+/usr/include/asm-generic/errno.h:
 
-/opt/e17/include/etk/etk_button.h:
+/usr/include/asm-generic/errno-base.h:
 
-/opt/e17/include/etk/etk_stock.h:
+/usr/include/fcntl.h:
 
-/opt/e17/include/etk/etk_cache.h:
+/usr/include/bits/fcntl.h:
 
-/opt/e17/include/etk/etk_canvas.h:
+/usr/include/bits/uio.h:
 
-/opt/e17/include/etk/etk_check_button.h:
+/usr/include/sys/stat.h:
 
-/opt/e17/include/etk/etk_toggle_button.h:
+/usr/include/bits/stat.h:
 
-/opt/e17/include/etk/etk_colorpicker.h:
+/usr/include/ctype.h:
 
-/opt/e17/include/etk/etk_combobox.h:
+/usr/include/stdlib.h:
 
-/opt/e17/include/etk/etk_dialog.h:
+/usr/include/bits/waitflags.h:
 
-/opt/e17/include/etk/etk_window.h:
+/usr/include/bits/waitstatus.h:
 
-/opt/e17/include/etk/etk_toplevel.h:
+/usr/include/alloca.h:
 
-/opt/e17/include/etk/etk_dnd.h:
+/usr/include/string.h:
 
-/opt/e17/include/etk/etk_drag.h:
+/usr/include/bits/string.h:
 
-/opt/e17/include/etk/etk_editable.h:
+/usr/include/bits/string2.h:
 
-/opt/e17/include/etk/etk_embed.h:
+/usr/include/unistd.h:
 
-/opt/e17/include/etk/etk_engine.h:
+/usr/include/bits/posix_opt.h:
 
-/opt/e17/include/etk/etk_event.h:
+/usr/include/bits/environments.h:
 
-/opt/e17/include/etk/etk_selection.h:
+/usr/include/bits/confname.h:
 
-/opt/e17/include/etk/etk_entry.h:
+/usr/include/getopt.h:
 
-/opt/e17/include/etk/etk_filechooser_widget.h:
+/usr/include/netdb.h:
 
-/opt/e17/include/etk/etk_fixed.h:
+/usr/include/netinet/in.h:
 
-/opt/e17/include/etk/etk_frame.h:
+/usr/include/stdint.h:
 
-/opt/e17/include/etk/etk_iconbox.h:
+/usr/include/sys/socket.h:
 
-/opt/e17/include/etk/etk_image.h:
+/usr/include/sys/uio.h:
 
-/opt/e17/include/etk/etk_label.h:
+/usr/include/bits/socket.h:
 
-/opt/e17/include/etk/etk_menu.h:
+/usr/lib/gcc/i686-pc-linux-gnu/4.1.2/include/limits.h:
 
-/opt/e17/include/etk/etk_menu_shell.h:
+/usr/lib/gcc/i686-pc-linux-gnu/4.1.2/include/syslimits.h:
 
-/opt/e17/include/etk/etk_popup_window.h:
+/usr/include/limits.h:
 
-/opt/e17/include/etk/etk_menu_bar.h:
+/usr/include/bits/posix1_lim.h:
 
-/opt/e17/include/etk/etk_menu_item.h:
+/usr/include/bits/local_lim.h:
 
-/opt/e17/include/etk/etk_message_dialog.h:
+/usr/include/linux/limits.h:
 
-/opt/e17/include/etk/etk_notebook.h:
+/usr/include/bits/posix2_lim.h:
 
-/opt/e17/include/etk/etk_paned.h:
+/usr/include/bits/xopen_lim.h:
 
-/opt/e17/include/etk/etk_progress_bar.h:
+/usr/include/bits/sockaddr.h:
 
-/opt/e17/include/etk/etk_radio_button.h:
+/usr/include/asm/socket.h:
 
-/opt/e17/include/etk/etk_range.h:
+/usr/include/asm/sockios.h:
 
-/opt/e17/include/etk/etk_scrollbar.h:
+/usr/include/bits/in.h:
 
-/opt/e17/include/etk/etk_scrolled_view.h:
+/usr/include/bits/byteswap.h:
 
-/opt/e17/include/etk/etk_separator.h:
+/usr/include/rpc/netdb.h:
 
-/opt/e17/include/etk/etk_shadow.h:
+/usr/include/bits/netdb.h:
 
-/opt/e17/include/etk/etk_slider.h:
+/usr/include/net/ethernet.h:
 
-/opt/e17/include/etk/etk_spinner.h:
+/usr/include/linux/if_ether.h:
 
-/opt/e17/include/etk/etk_statusbar.h:
+/usr/include/linux/types.h:
 
-/opt/e17/include/etk/etk_table.h:
+/usr/include/linux/posix_types.h:
 
-/opt/e17/include/etk/etk_textblock.h:
+/usr/include/linux/stddef.h:
 
-/opt/e17/include/etk/etk_text_view.h:
+/usr/include/asm/posix_types.h:
 
-/opt/e17/include/etk/etk_theme.h:
+/usr/include/asm/types.h:
 
-/opt/e17/include/etk/etk_tool_button.h:
+/usr/include/sys/time.h:
 
-/opt/e17/include/etk/etk_toolbar.h:
+/usr/include/linux/version.h:
 
-/opt/e17/include/etk/etk_tooltips.h:
+/usr/include/net/if_arp.h:
 
-/opt/e17/include/etk/etk_tree.h:
+/usr/include/netinet/if_ether.h:
 
-/opt/e17/include/Ecore_Job.h:
+/usr/include/net/if.h:
 
-/opt/e17/include/etk/etk_tree_model.h:
+/usr/include/wireless.h:
 
-/opt/e17/include/etk/etk_viewport.h:
+/usr/include/arpa/inet.h:
+
+/usr/local/include/exalt/exalt_command.h:
+
+/usr/local/include/exalt/exalt_dns.h:
+
+/usr/local/include/exalt/exalt_save_load.h:
+
+/usr/include/Ecore_Config.h:
+
+/usr/include/Evas.h:
+
+/usr/local/include/exalt/exalt_regexp.h:
+
+/usr/include/regex.h:
+
+main_window.h:
+
+/usr/include/etk/Etk.h:
+
+/usr/include/etk/etk_argument.h:
+
+/usr/include/etk/etk_types.h:
+
+/usr/include/etk/etk_config.h:
+
+/usr/include/Eet.h:
+
+/usr/include/etk/etk_main.h:
+
+/usr/include/etk/etk_marshallers.h:
+
+/usr/include/etk/etk_object.h:
+
+/usr/include/etk/etk_type.h:
+
+/usr/include/etk/etk_property.h:
+
+/usr/include/etk/etk_signal_callback.h:
+
+/usr/include/etk/etk_signal.h:
+
+/usr/include/etk/etk_string.h:
+
+/usr/include/etk/etk_utils.h:
+
+/usr/include/etk/etk_alignment.h:
+
+/usr/include/etk/etk_bin.h:
+
+/usr/include/etk/etk_container.h:
+
+/usr/include/etk/etk_widget.h:
+
+/usr/include/etk/etk_box.h:
+
+/usr/include/etk/etk_button.h:
+
+/usr/include/etk/etk_stock.h:
+
+/usr/include/etk/etk_cache.h:
+
+/usr/include/etk/etk_canvas.h:
+
+/usr/include/etk/etk_check_button.h:
+
+/usr/include/etk/etk_toggle_button.h:
+
+/usr/include/etk/etk_colorpicker.h:
+
+/usr/include/etk/etk_combobox.h:
+
+/usr/include/etk/etk_dialog.h:
+
+/usr/include/etk/etk_window.h:
+
+/usr/include/etk/etk_toplevel.h:
+
+/usr/include/etk/etk_dnd.h:
+
+/usr/include/etk/etk_drag.h:
+
+/usr/include/etk/etk_editable.h:
+
+/usr/include/etk/etk_embed.h:
+
+/usr/include/etk/etk_engine.h:
+
+/usr/include/etk/etk_event.h:
+
+/usr/include/etk/etk_selection.h:
+
+/usr/include/etk/etk_entry.h:
+
+/usr/include/etk/etk_filechooser_widget.h:
+
+/usr/include/etk/etk_fixed.h:
+
+/usr/include/etk/etk_frame.h:
+
+/usr/include/etk/etk_iconbox.h:
+
+/usr/include/etk/etk_image.h:
+
+/usr/include/etk/etk_label.h:
+
+/usr/include/etk/etk_menu.h:
+
+/usr/include/etk/etk_menu_shell.h:
+
+/usr/include/etk/etk_popup_window.h:
+
+/usr/include/etk/etk_menu_bar.h:
+
+/usr/include/etk/etk_menu_item.h:
+
+/usr/include/etk/etk_message_dialog.h:
+
+/usr/include/etk/etk_notebook.h:
+
+/usr/include/etk/etk_paned.h:
+
+/usr/include/etk/etk_progress_bar.h:
+
+/usr/include/etk/etk_radio_button.h:
+
+/usr/include/etk/etk_range.h:
+
+/usr/include/etk/etk_scrollbar.h:
+
+/usr/include/etk/etk_scrolled_view.h:
+
+/usr/include/etk/etk_separator.h:
+
+/usr/include/etk/etk_shadow.h:
+
+/usr/include/etk/etk_slider.h:
+
+/usr/include/etk/etk_spinner.h:
+
+/usr/include/etk/etk_statusbar.h:
+
+/usr/include/etk/etk_table.h:
+
+/usr/include/etk/etk_textblock.h:
+
+/usr/include/etk/etk_text_view.h:
+
+/usr/include/etk/etk_theme.h:
+
+/usr/include/etk/etk_tool_button.h:
+
+/usr/include/etk/etk_toolbar.h:
+
+/usr/include/etk/etk_tooltips.h:
+
+/usr/include/etk/etk_tree.h:
+
+/usr/include/Ecore_Job.h:
+
+/usr/include/etk/etk_tree_model.h:
+
+/usr/include/etk/etk_viewport.h:
 
 eth_panel.h:
 

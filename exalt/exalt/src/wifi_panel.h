@@ -27,8 +27,11 @@ struct _wifi_panel
 	Etk_Widget *box_button_on; //the main frame, list of network, configure ...
 	Etk_Widget *box_button_off; //a message to say than the radio button is off
 
-	//box current configuraton (display essid & ip)
-	Etk_Widget* lbl_essid_ip;
+	//box current configuraton (display essid / ip / mask & gateway)
+	Etk_Widget* lbl_essid;
+	Etk_Widget* lbl_ip;
+	Etk_Widget* lbl_mask;
+	Etk_Widget* lbl_gateway;
 
 	//box (dis)activate
 	Etk_Widget* box_activate;
@@ -41,23 +44,8 @@ struct _wifi_panel
 	Etk_Tree_Col* scan_encryption;
 	Etk_Tree_Col* scan_essid;
 
-	Etk_Widget *notebook;
-	//network information
-	Etk_Widget *page_informations;
-	Etk_Widget *entry_info_addr;
-	Etk_Widget *entry_info_essid;
-	Etk_Widget *entry_info_protocol;
-	Etk_Widget *entry_info_mode;
-	Etk_Widget *entry_info_channel;
-	Etk_Widget *entry_info_encryption;
-	Etk_Widget *entry_info_bitrates;
-	Etk_Widget *entry_info_quality;
-	Etk_Widget *entry_info_signallvl;
-	Etk_Widget *entry_info_noiselvl;
-
-
 	//network connection
-	Etk_Widget *page_connection;
+	Etk_Widget *box_connection;
 	Etk_Widget *entry_conn_essid;
 	Etk_Widget *entry_conn_pwd;
 	Etk_Widget *entry_conn_ip;
@@ -73,13 +61,6 @@ struct _wifi_panel
 	Etk_Widget* pbar;
 	Ecore_Timer* dhcp_timer;
 
-
-	//current configuration
-	Etk_Widget *page_current;
-	Etk_Widget *entry_current_essid;
-	Etk_Widget *entry_current_ip;
-	Etk_Widget *entry_current_mask;
-	Etk_Widget *entry_current_gateway;
 };
 
 void wifipanel_scan_networks_cb(exalt_wifi_info* wi, int action, void* data);
@@ -94,9 +75,7 @@ void wifipanel_set_boxbutton(wifi_panel* pnl);
 void wifipanel_update_current_conf(wifi_panel* pnl);
 
 
-Etk_Widget* wifipanel_pageinformations_create(wifi_panel* pnl);
 Etk_Widget* wifipanel_pageconnection_create(wifi_panel* pnl);
-Etk_Widget* wifipanel_pagecurrent_create(wifi_panel* pnl);
 
 void wifipanel_disabled_widget_activate(wifi_panel* pnl,Etk_Bool b);
 

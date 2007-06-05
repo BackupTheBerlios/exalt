@@ -8,13 +8,15 @@ localedir = $(datadir)/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 
 INCLUDES	= \
- -Wall -g @LIBEXALT_CFLAGS@
+ -Wall -g @LIBEXALT_CFLAGS@ -Iiw/ -Inettools/
 
 lib_LTLIBRARIES = libexalt.la
 
 EXTRA_DIST = 
 
 EXALTHEADERS = \
+nettools/proc.h \
+iw/iwlib.h \
 libexalt.h \
 exalt_command.h \
 exalt_dns.h \
@@ -22,9 +24,11 @@ exalt_ethernet.h \
 exalt_regexp.h \
 exalt_save_load.h \
 exalt_wifi.h \
-exalt_wifi_info.h
+exalt_wifi_info.h 
 
 libexalt_la_SOURCES = \
+nettools/proc.c \
+iw/iwlib.c \
 libexalt.c \
 exalt_command.c \
 exalt_dns.c \

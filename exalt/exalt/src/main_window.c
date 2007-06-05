@@ -10,7 +10,7 @@ main_window* mainwindow_create()
 	win->win = etk_window_new();
 	etk_window_title_set(ETK_WINDOW(win->win), _("Exalt: network manager"));
 	etk_window_wmclass_set(ETK_WINDOW(win->win),"Exalt_network_manager","Exalt_network_manager");
-        etk_window_resize(ETK_WINDOW(win->win), 675, 315);
+        etk_window_resize(ETK_WINDOW(win->win), 623,268);
 	etk_signal_connect("delete-event", ETK_OBJECT(win->win), ETK_CALLBACK( mainWindow_close), win);
 
 	hbox = etk_hbox_new(ETK_FALSE, 5);

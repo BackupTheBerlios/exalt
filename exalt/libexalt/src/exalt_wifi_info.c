@@ -31,10 +31,11 @@ exalt_wifi_info* exalt_wifiinfo_create()
 
 	wi->address = NULL;
 	wi->essid= NULL;
+	wi->encryption = 0;
+
 	wi->protocol = NULL;
 	wi->mode = NULL;
 	wi->channel = NULL;
-	wi->encryption = NULL;
  	wi->bit_rates= NULL;
 	wi->quality = 0;
 	wi->signal_lvl = 0;
@@ -66,10 +67,7 @@ void exalt_wifiinfo_free(void* data)
 	EXALT_FREE(wi->protocol)
 	EXALT_FREE(wi->mode)
 	EXALT_FREE(wi->channel)
-	EXALT_FREE(wi->encryption)
 	EXALT_FREE(wi->bit_rates)
-	EXALT_FREE(wi->passwd)
-	EXALT_FREE(wi->passwd_mode)
 }
 // }}}
 
@@ -154,18 +152,17 @@ void exalt_wifiinfo_set_channel(exalt_wifi_info* w, char* channel)
 }
 // }}}
 
-// {{{ void exalt_wifiinfo_set_encryption(exalt_wifi_info* w, char* encryption)
+// {{{ void exalt_wifiinfo_set_encryption(exalt_wifi_info* w, int encryption)
 /**
  * @brief set if ecryption state
  * @param w the exalt_wifi_info
- * @param encryption the new encryption state
+ * @param encryption the new encryption
  */
-void exalt_wifiinfo_set_encryption(exalt_wifi_info* w, char* encryption)
+void exalt_wifiinfo_set_encryption(exalt_wifi_info* w, int  encryption)
 {
-	if(w && encryption)
+	if(w)
 	{
-		EXALT_FREE(w->encryption)
-			w->encryption = strdup(encryption);
+		w->encryption = encryption;
 	}
 }
 // }}}
@@ -328,18 +325,18 @@ char* exalt_wifiinfo_get_channel(exalt_wifi_info* w)
 }
 // }}}
 
-// {{{ char* exalt_wifiinfo_get_encryption(exalt_wifi_info* w)
+// {{{ int exalt_wifiinfo_get_encryption(exalt_wifi_info* w)
 /**
  * @brief get the encryption state
  * @param w the exalt_wifi_info
- * @return Return the encryption state
+ * @return Return the encryption state (1 or 0)
  */
-char* exalt_wifiinfo_get_encryption(exalt_wifi_info* w)
+int exalt_wifiinfo_get_encryption(exalt_wifi_info* w)
 {
 	if(w)
 		return w->encryption;
 	else
-		return NULL;
+		return -1;
 }
 // }}}
 

@@ -5,7 +5,7 @@
 
 wifi_panel* wifipanel_create(main_window* win)
 {/*{{{*/
-	Etk_Widget *hbox, *hbox2,*vbox,*scroll,*label;
+	Etk_Widget *hbox,*vbox,*scroll,*label, *table;
 	wifi_panel* pnl;
 	pnl=(wifi_panel*)malloc((unsigned int)sizeof(wifi_panel));
 	pnl->win=win;
@@ -77,29 +77,35 @@ wifi_panel* wifipanel_create(main_window* win)
  	//###########################
  	//## current configuration ##
 	//###########################
-	hbox2 = etk_hbox_new(ETK_FALSE,5);
- 	etk_box_append(ETK_BOX(vbox), hbox2, ETK_BOX_START, ETK_BOX_NONE, 0);
- 	label = etk_label_new(_("Current network: "));
- 	etk_box_append(ETK_BOX(hbox2), label, ETK_BOX_START, ETK_BOX_EXPAND_FILL, 0);
-	pnl->lbl_essid_ip = etk_label_new(_("none"));
- 	etk_box_append(ETK_BOX(hbox2), pnl->lbl_essid_ip, ETK_BOX_START, ETK_BOX_EXPAND_FILL, 0);
- 	
-	//##############
- 	//## Notebook ##
-	//##############
-	pnl->notebook = etk_notebook_new();
-	etk_box_append(ETK_BOX(hbox), pnl->notebook, ETK_BOX_START, ETK_BOX_EXPAND_FILL, 0);
-	pnl->page_current = wifipanel_pagecurrent_create(pnl);
-	etk_notebook_page_append(ETK_NOTEBOOK(pnl->notebook), _("Current conf."), pnl->page_current);
+ 	table = etk_table_new(2, 4,ETK_TABLE_HOMOGENEOUS);
+ 	etk_box_append(ETK_BOX(vbox), table, ETK_BOX_START, ETK_BOX_NONE, 0);
+ 	pnl->lbl_essid = etk_label_new(_("none"));
+	pnl->lbl_ip = etk_label_new(_("none"));
+	pnl->lbl_gateway = etk_label_new(_("none"));
+	pnl->lbl_mask = etk_label_new(_("none"));
 
- 	pnl->page_informations = wifipanel_pageinformations_create(pnl);
-	etk_notebook_page_append(ETK_NOTEBOOK(pnl->notebook), _("Informations"), pnl->page_informations);
-	pnl->page_connection = wifipanel_pageconnection_create(pnl);
-	etk_notebook_page_append(ETK_NOTEBOOK(pnl->notebook), _("Connection"), pnl->page_connection);
+	label = etk_label_new(_("Current essid: "));
+ 	etk_table_attach(ETK_TABLE(table), label, 0, 0, 0, 0, 0, 0, ETK_TABLE_HFILL);
+	etk_table_attach_default(ETK_TABLE(table), pnl->lbl_essid, 1, 1, 0, 0);
+
+	label = etk_label_new(_("Current IP: "));
+	etk_table_attach(ETK_TABLE(table), label, 0, 0, 1, 1, 0, 0, ETK_TABLE_HFILL);
+	etk_table_attach_default(ETK_TABLE(table), pnl->lbl_ip, 1, 1, 1, 1);
+
+	label = etk_label_new(_("Current mask: "));
+	etk_table_attach(ETK_TABLE(table), label, 0, 0, 2, 2, 0, 0, ETK_TABLE_HFILL);
+	etk_table_attach_default(ETK_TABLE(table), pnl->lbl_mask, 1, 1, 2, 2);
+
+	label = etk_label_new(_("Current gateway: "));
+	etk_table_attach(ETK_TABLE(table), label, 0, 0, 3, 3, 0, 0, ETK_TABLE_HFILL);
+	etk_table_attach_default(ETK_TABLE(table), pnl->lbl_gateway, 1, 1, 3, 3);
+	
 
 
-  	exalt_eth_set_scan_cb(wifipanel_scan_networks_cb,pnl);
-
+	pnl->box_connection = wifipanel_pageconnection_create(pnl);
+ 	etk_box_append(ETK_BOX(hbox), pnl->box_connection, ETK_BOX_START, ETK_BOX_NONE , 0);
+  	
+	exalt_eth_set_scan_cb(wifipanel_scan_networks_cb,pnl);
 
 	return pnl;
 }/*}}}*/
@@ -116,7 +122,7 @@ void wifipanel_show(wifi_panel* pnl)
 //test if the radio button is on
 void wifipanel_set_boxbutton(wifi_panel* pnl)
 {/*{{{*/
- 	if(!pnl)
+	if(!pnl)
 	{
 	 	fprintf(stderr,"wifipanel_set_boxbutton(): pnl=null ! \n");
 		return ;
@@ -139,8 +145,6 @@ void wifipanel_set_boxbutton(wifi_panel* pnl)
 		etk_widget_hide_all(pnl->box_button_off);
 		etk_widget_show_all(pnl->box_button_on);
  	 	etk_widget_hide(pnl->hbox_pbar);
-		//scan networks
-                exalt_wifi_scan_execute(pnl->eth);
 	
 	 	exalt_wifi_scan_stop(pnl->eth);
 		exalt_wifi_scan_start(pnl->eth);
@@ -232,102 +236,18 @@ void wifipanel_set_eth(wifi_panel* pnl, exalt_ethernet* eth)
 
 void wifipanel_update_current_conf(wifi_panel* pnl)
 {/*{{{*/
-	char essid_ip[1024];
-	char* a, *b;
+	exalt_wifi* w;
 	if(!pnl)
 	{
 	 	fprintf(stderr,"wifipanel_update_current_conf(): pnl==null! \n");
 		return ;
 	}
-	
-	a=exalt_wifi_get_current_essid(exalt_eth_get_wifi(pnl->eth));
-	if(!a) a=_("none");
-	b=exalt_eth_get_ip(pnl->eth);
-	if(!b) b=_("none");
-
-	sprintf(essid_ip,"%s (%s)",a,b);
-	etk_label_set(ETK_LABEL(pnl->lbl_essid_ip), essid_ip);
-
-	etk_entry_text_set(ETK_ENTRY(pnl->entry_current_essid),exalt_wifi_get_current_essid(exalt_eth_get_wifi(pnl->eth)));
-	etk_entry_text_set(ETK_ENTRY(pnl->entry_current_ip),exalt_eth_get_ip(pnl->eth));
-	etk_entry_text_set(ETK_ENTRY(pnl->entry_current_mask),exalt_eth_get_netmask(pnl->eth));
-	etk_entry_text_set(ETK_ENTRY(pnl->entry_current_gateway),exalt_eth_get_gateway(pnl->eth));
+ 	w = exalt_eth_get_wifi(pnl->eth);
+	etk_label_set(ETK_LABEL(pnl->lbl_essid), exalt_wifi_get_current_essid(w));
+	etk_label_set(ETK_LABEL(pnl->lbl_ip), exalt_eth_get_ip(pnl->eth));
+	etk_label_set(ETK_LABEL(pnl->lbl_mask), exalt_eth_get_netmask(pnl->eth));
+	etk_label_set(ETK_LABEL(pnl->lbl_gateway), exalt_eth_get_gateway(pnl->eth));
 }/*}}}*/
-
-
-
-Etk_Widget* wifipanel_pageinformations_create(wifi_panel* pnl)
-{/*{{{*/
-	Etk_Widget *table,*label;
-	table = etk_table_new(2, 10, ETK_FALSE);
-
-	pnl->entry_info_addr = etk_entry_new();
-	pnl->entry_info_essid = etk_entry_new();
-	pnl->entry_info_protocol = etk_entry_new();
-	pnl->entry_info_mode = etk_entry_new();
-	pnl->entry_info_channel = etk_entry_new();
-	pnl->entry_info_encryption = etk_entry_new();
-	pnl->entry_info_bitrates = etk_entry_new();
-	pnl->entry_info_quality = etk_entry_new();
-	pnl->entry_info_signallvl = etk_entry_new();
-	pnl->entry_info_noiselvl = etk_entry_new();
-
-	etk_widget_disabled_set(pnl->entry_info_addr,ETK_TRUE);
-	etk_widget_disabled_set(pnl->entry_info_essid,ETK_TRUE);
-	etk_widget_disabled_set(pnl->entry_info_protocol,ETK_TRUE);
-	etk_widget_disabled_set(pnl->entry_info_mode,ETK_TRUE);
-	etk_widget_disabled_set(pnl->entry_info_channel,ETK_TRUE);
-	etk_widget_disabled_set(pnl->entry_info_encryption,ETK_TRUE);
-	etk_widget_disabled_set(pnl->entry_info_bitrates,ETK_TRUE);
-	etk_widget_disabled_set(pnl->entry_info_quality,ETK_TRUE);
-	etk_widget_disabled_set(pnl->entry_info_signallvl,ETK_TRUE);
-	etk_widget_disabled_set(pnl->entry_info_noiselvl,ETK_TRUE);
-
-
-
-	label = etk_label_new(_("Address: "));
-	etk_table_attach(ETK_TABLE(table), label, 0, 0, 0, 0, 0, 0, ETK_TABLE_HFILL);
-	etk_table_attach_default(ETK_TABLE(table), pnl->entry_info_addr, 1, 1, 0, 0);
-
-	label = etk_label_new(_("Essid: "));
-	etk_table_attach(ETK_TABLE(table), label, 0, 0, 1, 1, 0, 0, ETK_TABLE_HFILL);
-	etk_table_attach_default(ETK_TABLE(table), pnl->entry_info_essid, 1, 1, 1, 1);
-
-	label = etk_label_new(_("Protocol: "));
-	etk_table_attach(ETK_TABLE(table), label, 0, 0, 2, 2, 0, 0, ETK_TABLE_HFILL);
-	etk_table_attach_default(ETK_TABLE(table), pnl->entry_info_protocol, 1, 1, 2, 2);
-
-	label = etk_label_new(_("Mode: "));
-	etk_table_attach(ETK_TABLE(table), label, 0, 0, 3, 3, 0, 0, ETK_TABLE_HFILL);
-	etk_table_attach_default(ETK_TABLE(table), pnl->entry_info_mode, 1, 1, 3, 3);
-
-	label = etk_label_new(_("Channel: "));
-	etk_table_attach(ETK_TABLE(table), label, 0, 0, 4, 4, 0, 0, ETK_TABLE_HFILL);
-	etk_table_attach_default(ETK_TABLE(table), pnl->entry_info_channel, 1, 1, 4, 4);
-
-	label = etk_label_new(_("Encryption: "));
-	etk_table_attach(ETK_TABLE(table), label, 0, 0, 5, 5, 0, 0, ETK_TABLE_HFILL);
-	etk_table_attach_default(ETK_TABLE(table), pnl->entry_info_encryption, 1, 1, 5, 5);
-
-	label = etk_label_new(_("Bit rates: "));
-	etk_table_attach(ETK_TABLE(table), label, 0, 0, 6, 6, 0, 0, ETK_TABLE_HFILL);
-	etk_table_attach_default(ETK_TABLE(table), pnl->entry_info_bitrates, 1, 1, 6, 6);
-
-	label = etk_label_new(_("Quality: "));
-	etk_table_attach(ETK_TABLE(table), label, 0, 0, 7, 7, 0, 0, ETK_TABLE_HFILL);
-	etk_table_attach_default(ETK_TABLE(table), pnl->entry_info_quality, 1, 1, 7, 7);
-
-	label = etk_label_new(_("Signal level: "));
-	etk_table_attach(ETK_TABLE(table), label, 0, 0, 8, 8, 0, 0, ETK_TABLE_HFILL);
-	etk_table_attach_default(ETK_TABLE(table), pnl->entry_info_signallvl, 1, 1, 8, 8);
-
-	label = etk_label_new(_("Noise level: "));
-	etk_table_attach(ETK_TABLE(table), label, 0, 0, 9, 9, 0, 0, ETK_TABLE_HFILL);
-	etk_table_attach_default(ETK_TABLE(table), pnl->entry_info_noiselvl, 1, 1, 9, 9);
-
-	return table;
-}/*}}}*/
-
 
 Etk_Widget* wifipanel_pageconnection_create(wifi_panel* pnl)
 {/*{{{*/
@@ -431,44 +351,6 @@ Etk_Widget* wifipanel_pageconnection_create(wifi_panel* pnl)
 	return table;
 }/*}}}*/
 
-
-Etk_Widget* wifipanel_pagecurrent_create(wifi_panel* pnl)
-{/*{{{*/
-	Etk_Widget *table,*label;
-	table = etk_table_new(2, 5,ETK_TABLE_NOT_HOMOGENEOUS);
-
-	pnl->entry_current_essid = etk_entry_new();
-	pnl->entry_current_ip = etk_entry_new();
-	pnl->entry_current_mask = etk_entry_new();
-	pnl->entry_current_gateway = etk_entry_new();
-
-	etk_widget_disabled_set(pnl->entry_current_essid,ETK_TRUE);
-	etk_widget_disabled_set(pnl->entry_current_ip,ETK_TRUE);
-	etk_widget_disabled_set(pnl->entry_current_mask,ETK_TRUE);
-	etk_widget_disabled_set(pnl->entry_current_gateway,ETK_TRUE);
-	
-	label = etk_label_new(_("Essid: "));
-	etk_table_attach(ETK_TABLE(table), label, 0, 0, 0, 0, 0, 0, ETK_TABLE_HFILL);
-	etk_table_attach_default(ETK_TABLE(table), pnl->entry_current_essid, 1, 1, 0, 0);
-
-	label = etk_label_new(_("Ip address: "));
-	etk_table_attach(ETK_TABLE(table), label, 0, 0, 1, 1, 0, 0, ETK_TABLE_HFILL);
-	etk_table_attach_default(ETK_TABLE(table), pnl->entry_current_ip, 1, 1, 1, 1);
-
-	label = etk_label_new(_("Network mask: "));
-	etk_table_attach(ETK_TABLE(table), label, 0, 0, 2, 2, 0, 0, ETK_TABLE_HFILL);
-	etk_table_attach_default(ETK_TABLE(table), pnl->entry_current_mask, 1, 1, 2, 2);
-
-	label = etk_label_new(_("Gateway: "));
-	etk_table_attach(ETK_TABLE(table), label, 0, 0, 3, 3, 0, 0, ETK_TABLE_HFILL);
-	etk_table_attach_default(ETK_TABLE(table), pnl->entry_current_gateway, 1, 1, 3, 3);
-
-	return table;
-}/*}}}*/
-
-
-
-
 void wifipanel_scanlist_row_clicked_cb(Etk_Object *object, Etk_Tree_Row *row, Etk_Event_Mouse_Up *event, void *data)
 {/*{{{*/
 	Etk_Tree *tree;
@@ -487,26 +369,7 @@ void wifipanel_scanlist_row_clicked_cb(Etk_Object *object, Etk_Tree_Row *row, Et
 	w=exalt_wifi_get_networkinfo_by_essid(eth->wifi,row_name);
 	if(w)
 	{
-		char buf[1024];
-		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_addr),exalt_wifiinfo_get_addr(w));
-		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_essid),exalt_wifiinfo_get_essid(w));
-		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_protocol),exalt_wifiinfo_get_protocol(w));
-		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_mode),exalt_wifiinfo_get_mode(w));
-		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_channel),exalt_wifiinfo_get_channel(w));
-		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_encryption),exalt_wifiinfo_get_encryption(w));
-		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_bitrates),exalt_wifiinfo_get_bitrates(w));
-
  	 	etk_entry_text_set(ETK_ENTRY(pnl->entry_conn_essid),exalt_wifiinfo_get_essid(w));
-
-
-		sprintf(buf,_("%d%%"),exalt_wifiinfo_get_quality(w));
-		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_quality),buf);
-		sprintf(buf,_("%d dBm"),exalt_wifiinfo_get_signallvl(w));
-		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_signallvl),buf);
-		sprintf(buf,_("%d dBm"),exalt_wifiinfo_get_noiselvl(w));
-		etk_entry_text_set(ETK_ENTRY(pnl->entry_info_noiselvl),buf);
-
-
 	}
 }/*}}}*/
 
@@ -528,8 +391,7 @@ void wifipanel_scan_networks_cb(exalt_wifi_info* wi, int action, void* data)
 					pnl->scan_quality,
 					img[(exalt_wifiinfo_get_quality(wi))/25],NULL,
 					pnl->scan_encryption,
-					(strcmp(exalt_wifiinfo_get_encryption(wi),"on")
-					 	 	==0?encryption:NULL)
+					(exalt_wifiinfo_get_encryption(wi)?encryption:NULL)
 					,NULL,
  	 	 	 	 	pnl->scan_essid,
 					exalt_wifiinfo_get_essid(wi),NULL);

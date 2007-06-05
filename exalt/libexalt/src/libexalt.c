@@ -57,6 +57,36 @@ short exalt_is_passwd(const char* passwd, int passwd_mode)
 }
 
 
+char* exalt_addr_hexa_to_dec(char* addr)
+{
+ 	char *res;
+	char buf[4];
+	char* end;
+	int i;
+	int n;
+	if(strlen(addr)!=8)
+	{
+	 	fprintf(stderr,"addr_hexa_to_dec(): the hexadecimal address is not correct: %s\n",addr);
+		return NULL;
+	}
+ 
+  	res = (char*)malloc((unsigned int)sizeof(char)*16);
+   	res[0] = '\0';
+ 	for(i=0;i<8;i+=2)
+	{
+	 	buf[0] = addr[7-i-1];
+ 	 	buf[1] = addr[7-i];
+		buf[2] = '\0';
+ 	 	n = strtoul(buf,&end,16);
+		sprintf(buf,"%d",n);
+		strcat(res,buf);
+		if(i<6)
+		 	strcat(res,".");
+	}
+ 	return res;
+}
+
+
 char *str_remove (const char *s, const char *ct)
 {
    char *new_s = NULL;

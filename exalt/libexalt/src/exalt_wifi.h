@@ -29,6 +29,7 @@ typedef struct exalt_wifi exalt_wifi;
 #include "exalt_wifi_info.h"
 #include <Ecore_Data.h>
 #include <Ecore.h>
+#include "iwlib.h"
 
 /**
  * @brief informations about a wireless card
@@ -41,9 +42,11 @@ struct exalt_wifi
 	char* essid;
 	char* passwd;
 	int passwd_mode;
-	FILE* f_scan; //result of 1 san
 	Ecore_List* networks;
 
+	//use for scanning
+	wireless_scan_head *context;
+	int scan_fd;
 };
 
 

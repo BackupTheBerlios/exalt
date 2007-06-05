@@ -65,7 +65,7 @@ dnl detecting the linux distribution
 dnl C_ARG_WITH(distro, AS_HELP_STRING([--with-distro=DISTRO],[Specify the Linux distribution to target: One of debian, gentoo, archlinux or none]))
 if test "z$with_distro" = "z"; then
 dnl	 	AC_CHECK_FILE(/etc/SuSE-release,with_distro="suse")
-dnl	 	AC_CHECK_FILE(/etc/gentoo-release,with_distro="gentoo")
+	 	AC_CHECK_FILE(/etc/gentoo-release,with_distro="gentoo")
 dnl	 	AC_CHECK_FILE(/etc/arch-release,with_distro="archlinux")
  	 	AC_CHECK_FILE(/etc/debian_version,with_distro="debian")
 fi
@@ -77,7 +77,7 @@ if test "z$with_distro" = "z"; then
 	 	exit 1
 else
 	 	case $with_distro in
-	 	debian|none) dnl|gentoo|archlinux|suse|none)
+	 	debian|gentoo|none) dnl|gentoo|archlinux|suse|none)
 	 	;;
 	 	*)
  	 	AC_MSG_ERROR([Your distribution (${with_distro}) is not yet supported, you will not save your configuration! (patches welcome), you can specify --with-distro=none to skip this check])
@@ -88,6 +88,11 @@ fi
 if test "x$with_distro" = 'xdebian'; then
  	AC_DEFINE_UNQUOTED(DIST_DEBIAN,"debian", [Debian distribution])
 fi
+if test "x$with_distro" = 'xgentoo'; then
+ 	AC_DEFINE_UNQUOTED(DIST_GENTOO,"gentoo", [Gentoo distribution])
+fi
+
+
 
 
 PKG_CHECK_MODULES(LIBEXALT, [

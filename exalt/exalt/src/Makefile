@@ -81,7 +81,7 @@ AR = ar
 AUTOCONF = ${SHELL} /home/watchwolf/Projects/C/exalt/exalt/missing --run autoconf
 AUTOHEADER = ${SHELL} /home/watchwolf/Projects/C/exalt/exalt/missing --run autoheader
 AUTOMAKE = ${SHELL} /home/watchwolf/Projects/C/exalt/exalt/missing --run automake-1.9
-AWK = mawk
+AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2
@@ -100,13 +100,13 @@ ECHO_C =
 ECHO_N = -n
 ECHO_T = 
 EGREP = /bin/grep -E
-EXALT_CFLAGS = -I/opt/e17/include -I/opt/e17/include/etk -I/usr/local/include -I/usr/local/include/exalt  
-EXALT_LIBS = -L/opt/e17/lib -L/usr/local/lib -letk -lecore_file -ledje -lecore_x -lcurl -lgssapi_krb5 -lkrb5 -lk5crypto -lcom_err -lkrb5support -lresolv -lidn -ldl -lssl -lcrypto -lz -levas -lecore_txt -lecore -lexalt  
+EXALT_CFLAGS = -I/usr/local/include -I/usr/local/include/exalt -I/usr/include/etk  
+EXALT_LIBS = -L/usr/local/lib -letk -lecore_file -ledje -lecore_x -lecore -levas -lexalt  
 EXEEXT = 
-F77 = 
-FFLAGS = 
-GMSGFMT = /usr/bin/msgfmt
-GMSGFMT_015 = /usr/bin/msgfmt
+F77 = gfortran
+FFLAGS = -g -O2
+GMSGFMT = /usr/bin/gmsgfmt
+GMSGFMT_015 = /usr/bin/gmsgfmt
 GREP = /bin/grep
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
@@ -140,7 +140,7 @@ PKG_CONFIG = /usr/bin/pkg-config
 POSUB = po
 RANLIB = ranlib
 SET_MAKE = 
-SHELL = /bin/bash
+SHELL = /bin/sh
 STRIP = strip
 USE_NLS = yes
 VERSION = 0.0.1
@@ -148,7 +148,7 @@ XGETTEXT = /usr/bin/xgettext
 XGETTEXT_015 = /usr/bin/xgettext
 ac_ct_CC = gcc
 ac_ct_CXX = g++
-ac_ct_F77 = 
+ac_ct_F77 = gfortran
 am__fastdepCC_FALSE = #
 am__fastdepCC_TRUE = 
 am__fastdepCXX_FALSE = #
@@ -198,7 +198,7 @@ target_cpu = i686
 target_os = linux-gnu
 target_vendor = pc
 AM_CFLAGS = \
--Wall -W -g -D_GNU_SOURCE -I/opt/e17/include -I/opt/e17/include/etk -I/usr/local/include -I/usr/local/include/exalt  
+-Wall -W -g -D_GNU_SOURCE -I/usr/local/include -I/usr/local/include/exalt -I/usr/include/etk  
 
 exalt_INCLUDES = \
 exalt.h            \
@@ -215,7 +215,7 @@ general_panel.c     \
 wifi_panel.c 
 
 exalt_LDFLAGS = -export-dynamic
-exalt_LDADD = -L/opt/e17/lib -L/usr/local/lib -letk -lecore_file -ledje -lecore_x -lcurl -lgssapi_krb5 -lkrb5 -lk5crypto -lcom_err -lkrb5support -lresolv -lidn -ldl -lssl -lcrypto -lz -levas -lecore_txt -lecore -lexalt   
+exalt_LDADD = -L/usr/local/lib -letk -lecore_file -ledje -lecore_x -lecore -levas -lexalt   
 MAINTAINERCLEANFILES = Makefile.in
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am

@@ -36,13 +36,16 @@ exalt_wifi* exalt_wifi_create(exalt_ethernet* eth)
 	w -> passwd = NULL;
 	w -> passwd_mode = 0;
 	w->radio_button = 0;
-        w->f_scan=NULL;
 	//initialisation of the networks list
  	w -> networks = ecore_list_new();
 	w->networks->free_func =  ECORE_FREE_CB(exalt_wifiinfo_free);
 	ecore_list_init(w->networks);
 
-
+ 	w->context=(wireless_scan_head*)malloc((unsigned int)sizeof(wireless_scan_head));
+ 	w->context->result=NULL;
+	w->context->retry= 0;
+	w->scan_fd = iw_sockets_open();
+	
 	return w;
 }
 // }}}
@@ -302,308 +305,164 @@ exalt_wifi_info* exalt_wifi_get_networkinfo_by_essid(exalt_wifi* w,char *essid)
  */
 int exalt_wifi_scan(void *data)
 {
+	//see iw/ilwlib.c::iw_scan() for a example & comments
+	int fd;
+	wireless_scan_head *context;
+	int delay; //in ms
+ 	Ecore_List* l;
+ 	short find;
+	exalt_wifi_info *wi_n,*wi_l;
+	void *data_n, *data_l;
+ 	exalt_wifi_info* wi= NULL;
+
 	if(!data)
 	{
 		fprintf(stderr,"exalt_wifi_scan_load(): data==null ! \n");
 		return -1;
 	}
 	exalt_ethernet* eth = EXALT_ETHERNET(data);
-	if(!exalt_eth_get_wifi(eth)->f_scan)
-         	exalt_wifi_scan_execute(eth);
-	else
-	 	exalt_wifi_scan_load(eth);
-
-	return 1;
-}
-// }}}
-
-// {{{ void  exalt_wifi_scan_execute(exalt_ethernet * eth)
-/**
- * @brief execute a scan
- * @param eth the card
- */
-void  exalt_wifi_scan_execute(exalt_ethernet * eth)
-{
-       char* eth_name;
-       char command[1024];
-
-	if(!eth)
+	
+ 	context=eth->wifi->context;
+	if(!context)
 	{
-		fprintf(stderr,"exalt_wifi_scan_execute(): eth==null ! \n");
-		return ;
+	 	fprintf(stderr,"exalt_wifi_scan(): context==null");
+		return -1;
 	}
-
-	eth_name=exalt_eth_get_name(eth);
-	if(!eth_name)
+ 	
+	fd = eth->wifi->scan_fd;
+	if(fd<0)
 	{
-		fprintf(stderr,"exalt_wifi_scan_execute(): eth_name==null ! \n");
-		return ;
+	 	fprintf(stderr,"exalt_wifi_scan(): fd==%d",fd);
+		return -1;
 	}
-	if(!exalt_eth_is_wifi(eth))
+ 	exalt_wifi* w= exalt_eth_get_wifi(eth);
+  	delay = iw_process_scan(fd, exalt_eth_get_name(eth), exalt_eth_interfaces.we_version, context);
+
+ 	if(delay<=0)
 	{
-            fprintf(stderr,"exalt_wifi_scan_execute(): eth->wifi==null! \n");
-	    return ;
-	}
-	EXALT_PCLOSE(eth->wifi->f_scan);
-	sprintf(command, "%s %s %s", IWLIST_LIST,eth_name,"scan");
-	eth->wifi->f_scan =  exalt_execute_command(command);
-}
-// }}}
+ 	 	l = ecore_list_new();
+ 	 	l->free_func =  ECORE_FREE_CB(exalt_wifiinfo_free);
+		ecore_list_init(l);
 
-// {{{ void exalt_wifi_scan_load(exalt_ethernet* eth)
-/**
- * @brief load scan after execute a scan
- * @param eth the card
- */
-void exalt_wifi_scan_load(exalt_ethernet* eth)
-{
-	char* eth_name;
-	char buf[1024];
-	FILE* f;
-	int nb_spaces=0;
- 	Ecore_List* l;
- 	void *data_n, *data_l;
- 	exalt_wifi_info *wi_n,*wi_l;
- 	short find;
 
-	if(!eth)
-	{
-		fprintf(stderr,"exalt_wifi_scan_load(): eth==%p ! \n",eth);
-		return ;
-	}
-
-	eth_name=exalt_eth_get_name(eth);
-	if(!eth_name)
-	{
-		fprintf(stderr,"exalt_wifi_scan_load(): eth_name==null ! \n");
-		return ;
-	}
-
-	exalt_wifi* w= exalt_eth_get_wifi(eth);
-	if(!w)
-	{
-             fprintf(stderr,"exalt_wifi_scan_load(): w==null ! \n");
-	     return ;
-	}
-
-	f=w->f_scan;
-	if(!f)
-	{
-             fprintf(stderr,"exalt_wifi_scan_load(): wifi->f_scan==null ! \n");
-	     return ;
-	}
-
- 	l = ecore_list_new();
-	l->free_func =  ECORE_FREE_CB(exalt_wifiinfo_free);
-	ecore_list_init(l);
-
-	exalt_regex *r;
-	exalt_wifi_info* wi= NULL;
-	r = exalt_regex_create("","",0);
-	while(fgets(buf, 1024, f))
-	{
-	 	exalt_regex_set_request(r,buf);
-	 	exalt_regex_set_regex(r,REGEXP_SCAN_CELL);
-	 	if(wi && !exalt_regex_execute(r))
+		wireless_scan * result = context->result;
+		while(result)
 		{
-		 	//we are in a Cell
-
-			//get the essid
-	 	 	exalt_regex_set_regex(r,REGEXP_SCAN_ESSID);
-			if(exalt_regex_execute(r) && r->nmatch>0 && strlen(r->res[1])>0 && strcmp(r->res[1],"<hidden>")!=0)
+			//retrieve the essid
+			if(result->b.has_essid && result->b.essid_on && strcmp(result->b.essid,"<hidden>")!=0)
 			{
-			 	find = 0;
-				exalt_wifiinfo_set_essid(wi,r->res[1]);
-  	 	 	 	
+				//Mac address
+				char buf[16];
+				iw_ether_ntop((struct ether_addr* )result->ap_addr.sa_data,buf);
+				wi = exalt_wifiinfo_create();
+				exalt_wifiinfo_set_address(wi,buf);
+				exalt_wifiinfo_set_essid(wi,result->b.essid);
+				exalt_wifiinfo_set_encryption(wi,result->b.has_key);
+				exalt_wifiinfo_set_scanok(wi,1);
+				exalt_wifiinfo_set_known(wi,0);
+
 				//search if the essid is in the list
- 	 	 	 	ecore_list_goto_first(l);
+				ecore_list_goto_first(l);
 				data_l = ecore_list_next(l);
+				find = 0;
 				while(data_l && !find)
 				{
-				 	wi_l = EXALT_WIFI_INFO(data_l);
+					wi_l = EXALT_WIFI_INFO(data_l);
 					if(strcmp(exalt_wifiinfo_get_essid(wi_l),exalt_wifiinfo_get_essid(wi))==0)
-					 	find = 1;
+						find = 1;
 					else
-					 	data_l = ecore_list_next(l);
+						data_l = ecore_list_next(l);
 				}
 				if(!find)
 				{
-				 	ecore_list_append(l,wi);
+					ecore_list_append(l,wi);
 					exalt_wifi_save_load_bywifiinfo(wi);
-			 	}
-			}
-
-	 	 	//get the protocol
-			exalt_regex_set_regex(r,REGEXP_SCAN_PROTOCOL);
-			if(exalt_regex_execute(r) && r->nmatch>0)
-				exalt_wifiinfo_set_protocol(wi,r->res[1]);
-
-			//get the mode
-			exalt_regex_set_regex(r,REGEXP_SCAN_MODE);
-			if(exalt_regex_execute(r) && r->nmatch>0)
-				exalt_wifiinfo_set_mode(wi,r->res[1]);
-
-			//get the channel
-			exalt_regex_set_regex(r,REGEXP_SCAN_CHANNEL);
-			if(exalt_regex_execute(r) && r->nmatch>0)
-				exalt_wifiinfo_set_channel(wi,r->res[1]);
-
-			//get the encryption key
-			exalt_regex_set_regex(r,REGEXP_SCAN_ENCRYPTION);
-			if(exalt_regex_execute(r) && r->nmatch>0)
-				exalt_wifiinfo_set_encryption(wi,r->res[1]);
-
-			//get the Bit rates
-			exalt_regex_set_regex(r,REGEXP_SCAN_BITRATES);
-			if(exalt_regex_execute(r) && r->nmatch>0)
-			{
-			 	exalt_wifiinfo_set_bitrates(wi,r->res[1]);
-				
-				//count number of space before the first rates
- 	 	 	 	nb_spaces = 0;
-				int pos = 0;
-				while(buf[pos]!=':' && nb_spaces<1024)
-				{
-				 	nb_spaces++;
-					pos++;
 				}
-				nb_spaces++;
-	 	 	}
 
-  	 	 	//get the Bit rates
- 	 	 	if(nb_spaces>0)
-			{
-			 	int k=0;
-				short ok = 1;
-				while(k<nb_spaces && ok)
-				{
-				 	if(buf[k]==' ')
-					 	k++;
-					else
-					 	ok = 0;
-				}
-				if(ok)
-				{
-				 	//delete the last \n
-					k=strlen(buf);
-					while(buf[k]!='\n' && k>=0)
-					 	k--;
-				 	buf[k]='\0';
-				 	exalt_wifiinfo_set_bitrates(wi,buf+nb_spaces);
-			 	}
+				iwqual  qual = result->stats.qual;
+				exalt_wifiinfo_set_noiselvl(wi,qual.noise);
+				exalt_wifiinfo_set_signalvl(wi,qual.level);
+				exalt_wifiinfo_set_quality(wi,qual.qual);
+
 			}
-				
-	 	 	
-			//get the quality
-			exalt_regex_set_regex(r,REGEXP_SCAN_QUALITY);
-			if(exalt_regex_execute(r) && r->nmatch>0)
-				exalt_wifiinfo_set_quality(wi,atoi(r->res[1]));
-			
-			//get the signal lvl
-			exalt_regex_set_regex(r,REGEXP_SCAN_SIGNALLVL);
-			if(exalt_regex_execute(r) && r->nmatch>0)
-				exalt_wifiinfo_set_signalvl(wi,atoi(r->res[1]));
 
-			//get the noise lvl
-			exalt_regex_set_regex(r,REGEXP_SCAN_NOISELVL);
-			if(exalt_regex_execute(r) && r->nmatch>0)
-				exalt_wifiinfo_set_noiselvl(wi,atoi(r->res[1]));
-
-
-
+			result = result->next;
 		}
-		else if(exalt_regex_execute(r))
-		{
-		 	//we found a cell (if nb_networks==0, it's the first cell)
-			nb_spaces = 0;
-			//get the mac address
-			exalt_regex_set_regex(r,REGEXP_SCAN_ADDRESS);
-			wi = exalt_wifiinfo_create();
-			if(exalt_regex_execute(r) && r->nmatch>0)
-			{
- 	 	 	 	exalt_wifiinfo_set_address(wi,r->res[1]);
-				exalt_wifiinfo_set_scanok(wi,1);
-				exalt_wifiinfo_set_known(wi,0);
-			}
-		}
-	}
-	exalt_regex_free(&r);
- 	EXALT_PCLOSE(w->f_scan);
-	//compare w->networks and l
-	//if a network is in l & not int w->networks, it's a new network
-	//if a network is in w->networks & not in l, it's a old network
 
- 	//new networks
-	ecore_list_goto_first(l);
-	data_l = ecore_list_next(l);
-	while(data_l)
-	{
-	 	find = 0;
-	 	wi_l = EXALT_WIFI_INFO(data_l);
-		ecore_list_goto_first(w->networks);
-		data_n = ecore_list_next(w->networks);
-		while(data_n)
-		{
- 	 	 	wi_n = EXALT_WIFI_INFO(data_n);
- 	 	 	if(strcmp(exalt_wifiinfo_get_essid(wi_l),exalt_wifiinfo_get_essid(wi_n))==0)
-			{
-			 	//not a new network
-				data_n = NULL;
-				find = 1;
-			}
-			else
-			 	data_n = ecore_list_next(w->networks);
-		}
-		if(!find && exalt_eth_interfaces.wifi_scan_cb)
-		 	exalt_eth_interfaces.wifi_scan_cb(wi_l,EXALT_WIFI_SCAN_CB_NEW,exalt_eth_interfaces.wifi_scan_cb_user_data);
+		//compare w->networks and l
+		//if a network is in l & not int w->networks, it's a new network
+		//if a network is in w->networks & not in l, it's a old network
 
- 	 	data_l = ecore_list_next(l);
-	}
-
-	//old networks
-  	ecore_list_goto_first(w->networks);
-	data_n = ecore_list_next(w->networks);
-	while(data_n)
-	{
-	 	find = 0;
-	 	wi_n = EXALT_WIFI_INFO(data_n);
+		//new networks
 		ecore_list_goto_first(l);
 		data_l = ecore_list_next(l);
 		while(data_l)
 		{
- 	 	 	wi_l = EXALT_WIFI_INFO(data_l);
- 	 	 	if(strcmp(exalt_wifiinfo_get_essid(wi_l),exalt_wifiinfo_get_essid(wi_n))==0)
+			find = 0;
+			wi_l = EXALT_WIFI_INFO(data_l);
+			ecore_list_goto_first(w->networks);
+			data_n = ecore_list_next(w->networks);
+			while(data_n)
 			{
-			 	//not a new network
-				data_l = NULL;
-				find = 1;
+				wi_n = EXALT_WIFI_INFO(data_n);
+				if(strcmp(exalt_wifiinfo_get_essid(wi_l),exalt_wifiinfo_get_essid(wi_n))==0)
+				{
+					//not a new network
+					data_n = NULL;
+					find = 1;
+				}
+				else
+					data_n = ecore_list_next(w->networks);
 			}
-			else
-			 	data_l = ecore_list_next(l);
+			if(!find && exalt_eth_interfaces.wifi_scan_cb)
+				exalt_eth_interfaces.wifi_scan_cb(wi_l,EXALT_WIFI_SCAN_CB_NEW,exalt_eth_interfaces.wifi_scan_cb_user_data);
+			data_l = ecore_list_next(l);
 		}
-		if(!find && exalt_eth_interfaces.wifi_scan_cb)
-		 	exalt_eth_interfaces.wifi_scan_cb(wi_n,EXALT_WIFI_SCAN_CB_REMOVE,exalt_eth_interfaces.wifi_scan_cb_user_data);
 
- 	 	data_n = ecore_list_next(w->networks);
+		//old networks
+		ecore_list_goto_first(w->networks);
+		data_n = ecore_list_next(w->networks);
+		while(data_n)
+		{
+			find = 0;
+			wi_n = EXALT_WIFI_INFO(data_n);
+			ecore_list_goto_first(l);
+			data_l = ecore_list_next(l);
+			while(data_l)
+			{
+				wi_l = EXALT_WIFI_INFO(data_l);
+				if(strcmp(exalt_wifiinfo_get_essid(wi_l),exalt_wifiinfo_get_essid(wi_n))==0)
+				{
+					//not a new network
+					data_l = NULL;
+					find = 1;
+				}
+				else
+					data_l = ecore_list_next(l);
+			}
+			if(!find && exalt_eth_interfaces.wifi_scan_cb)
+				exalt_eth_interfaces.wifi_scan_cb(wi_n,EXALT_WIFI_SCAN_CB_REMOVE,exalt_eth_interfaces.wifi_scan_cb_user_data);
+
+			data_n = ecore_list_next(w->networks);
+		}
+
+		ecore_list_destroy(w->networks);
+		w->networks = l;
+ 	
+
+
+
+ 	 	delay = EXALT_WIFI_SCAN_UPDATE_TIME*1000; 
+		//TODO FREE!!
+		context->result=NULL;
+		context->retry=0;
 	}
 
-	ecore_list_destroy(w->networks);
- 	w->networks = l;
-}
-// }}}
-
-// {{{ void exalt_wifi_scan_free(exalt_wifi* w)
-/**
- * @brief free the scan result
- * @param w the exalt_wifi
- */
-void exalt_wifi_scan_free(exalt_wifi* w)
-{
-	if(!w)
-	{
-		fprintf(stderr,"exalt_wifi_scan_free(): w==null\n");
-	}
-	EXALT_PCLOSE(w->f_scan);
+ 	if(exalt_eth_interfaces.wifi_scan_cb_timer)
+	 	ecore_timer_interval_set(exalt_eth_interfaces.wifi_scan_cb_timer,delay/1000.);
+	 	
+	
+	return delay;
 }
 // }}}
 
@@ -627,12 +486,11 @@ void exalt_wifi_scan_start(exalt_ethernet* eth)
 
   	if(exalt_eth_interfaces.wifi_scan_cb_timer)
 	{
-	 	fprintf(stderr,"exalt_wifi_scan_start(): you can start 2 scan in the same time !\n");
+	 	fprintf(stderr,"exalt_wifi_scan_start(): you can't start 2 scan in the same time !\n");
 		return ;
 	}
-
  	ecore_list_clear(exalt_eth_get_wifi(eth)->networks);
-	exalt_eth_interfaces.wifi_scan_cb_timer = ecore_timer_add(EXALT_WIFI_SCAN_UPDATE_TIME, exalt_wifi_scan, eth);
+	exalt_eth_interfaces.wifi_scan_cb_timer = ecore_timer_add(0, exalt_wifi_scan, eth);
 }
 // }}}
 
@@ -647,7 +505,7 @@ void exalt_wifi_scan_stop()
 	 	fprintf(stderr,"exalt_wifi_scan_stop(): no scan launch !\n");
 		return ;
 	}
- 	DELETE_TIMER(exalt_eth_interfaces.wifi_scan_cb_timer)
+	DELETE_TIMER(exalt_eth_interfaces.wifi_scan_cb_timer)
 }
 // }}}
 
@@ -663,11 +521,10 @@ void exalt_wifi_scan_stop()
  */
 void exalt_wifi_reload(exalt_ethernet* eth)
 {
-	FILE* f;
-	char buf[1024];
-	char command[1024];
-	char exalt_regexp[1024];
-	exalt_regex* r;
+	int fd;
+	char essid[IW_ESSID_MAX_SIZE];
+ 	struct iwreq wrq;
+	exalt_wifi* w;
 
 	if(!eth)
 	{
@@ -675,55 +532,56 @@ void exalt_wifi_reload(exalt_ethernet* eth)
 		return ;
 	}
 
-	sprintf(exalt_regexp, "^%s",eth->name);
-	r = exalt_regex_create("",exalt_regexp,0);
-
-	sprintf(command, COMMAND_IWCONFIG_ETH, eth->name);
-	f = exalt_execute_command(command);
-
-	while(fgets(buf, 1024, f))
+	
+	fd = iw_sockets_open();
+	if(fd<0)
 	{
-
-		exalt_regex_set_request(r,buf);
-		if(exalt_regex_execute(r) && r->nmatch>0)
-		{
-			//found the interface
-			//test if it is a wireless extension
-
-			exalt_regex *r2;
-			r2 = exalt_regex_create(buf,REGEXP_ISNOTWIFI,0);
-
-			if(!exalt_regex_execute(r2))
-			{
-				//yes, it's a wireless interface !
-				//if the config not exist, we create one
-				if(!eth->wifi)
-					eth->wifi = exalt_wifi_create(eth);
-				exalt_wifi* w = eth->wifi;
-
-				//get the current ESSID
-				exalt_regex_set_regex(r2,REGEXP_ESSID);
-				if(exalt_regex_execute(r2) && r->nmatch>0)
-					exalt_wifi_set_current_essid(w,r2->res[1]);
-
-				exalt_wifi_load_radio_button(eth);
-				exalt_regex_free(&r);
-				EXALT_PCLOSE(f);
-
-				return ;
-			}
-
-			exalt_regex_free(&r2);
-			exalt_regex_free(&r);
-			EXALT_PCLOSE(f);
-			return ;
-		}
+	 	fprintf(stderr,"exalt_wifi_reload(): fd==%d",fd);
+		return;
 	}
-	exalt_regex_free(&r);	
-	EXALT_PCLOSE(f);
-	return ;	
 
-}
+	
+	strncpy(wrq.ifr_name, exalt_eth_get_name(eth), sizeof(wrq.ifr_name));
+	if(ioctl(fd, SIOCGIWNAME, &wrq) < 0)
+	{
+	 	//no wireless extension
+		eth->wifi=NULL;
+		close(fd);
+		return;
+	}
+
+ 	//if the config not exist, we create one
+	if(!eth->wifi)
+	  	eth->wifi = exalt_wifi_create(eth);
+	if(!( w = exalt_eth_get_wifi(eth)))
+	{
+	 	close(fd);
+	 	return;
+	}
+
+	if(!exalt_wifi_load_radio_button(eth))
+	{
+	 	exalt_wifi_set_current_essid(w," ");
+		close(fd);
+		return ;
+	}
+ 	
+	//load the essid
+	wrq.u.essid.pointer = (caddr_t) essid;
+	wrq.u.essid.length = IW_ESSID_MAX_SIZE+1;
+	wrq.u.essid.flags = 0;
+	if(ioctl(fd, SIOCGIWESSID, &wrq) < 0)
+	{
+	 	perror("exalt_wifi_reload(): ioctl (SIOCGIWESSID)");
+		close(fd);
+		return ;
+	}
+	if(wrq.u.essid.length>0)
+	 	exalt_wifi_set_current_essid(w,(char*) wrq.u.essid.pointer);
+ 	else
+	 	exalt_wifi_set_current_essid(w," ");
+	close(fd);
+ }
 // }}}
 
 // {{{ short exalt_wifi_load_radio_button(exalt_ethernet* eth)
@@ -734,10 +592,8 @@ void exalt_wifi_reload(exalt_ethernet* eth)
  */
 short exalt_wifi_load_radio_button(exalt_ethernet* eth)
 {
-	char command[1024];
-	char buf[1024];
-	FILE* f;
-
+ 	struct iwreq wrq;
+	int fd;
 	if(!eth)
 	{
 		fprintf(stderr,"exalt_wifi_load_radio_button(): eth==null\n");
@@ -750,11 +606,16 @@ short exalt_wifi_load_radio_button(exalt_ethernet* eth)
 		return -1;
 	}
 
-	sprintf(command,COMMAND_RADIO_BUTTON_ON,eth->name,eth->name);
-	f = exalt_execute_command(command);
-	if(fgets(buf,1024,f))
+ 	fd = iw_sockets_open();
+	strncpy(wrq.ifr_name, exalt_eth_get_name(eth), sizeof(wrq.ifr_name));
+ 	if(ioctl(fd, SIOCGIWNAME, &wrq) < 0)
 	{
-		if(exalt_wifi_raddiobutton_ison(eth->wifi) != 0)
+	 	//no wireless extension
+		return -1;
+	}
+	if(strcmp("radio off",wrq.u.name)==0)
+	{
+	 	if(exalt_wifi_raddiobutton_ison(eth->wifi) != 0)
 		 	exalt_wifi_set_raddio_button(eth->wifi,0);
 		return 0;
 	}
@@ -866,7 +727,7 @@ void exalt_wifi_printf_scan(exalt_wifi w)
 		printf("\t\tProtocol: %s\n",exalt_wifiinfo_get_protocol(wi));
 		printf("\t\tMode: %s\n",exalt_wifiinfo_get_mode(wi));
 		printf("\t\tChannel: %s\n",exalt_wifiinfo_get_channel(wi));
-		printf("\t\tEncryption: %s\n",exalt_wifiinfo_get_encryption(wi));
+		printf("\t\tEncryption: %d\n",exalt_wifiinfo_get_encryption(wi));
 		printf("\t\tBit rates: %s\n",exalt_wifiinfo_get_bitrates(wi));
 		printf("\t\tQuality: %d\n",exalt_wifiinfo_get_quality(wi));
 		printf("\t\tSignal lvl: %d\n",exalt_wifiinfo_get_signallvl(wi));

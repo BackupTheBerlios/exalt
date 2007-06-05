@@ -34,7 +34,8 @@ int exalt_eth_init()
 	exalt_eth_interfaces.wifi_scan_cb = NULL;
 	exalt_eth_interfaces.wifi_scan_cb_timer = NULL;
 	exalt_eth_interfaces.wifi_scan_cb_user_data = NULL;
- 	
+ 
+  	exalt_eth_interfaces.we_version = iw_get_kernel_we_version(); 
 	return 1;
 }
 // }}}
@@ -92,7 +93,7 @@ void exalt_eth_free(void *data)
  * Load ethernet informations
  */
 
-// {{{
+// {{{ int exalt_eth_update(void* data)
 /**
  * @brief update all interfaces list (load new card, unload old cards, test if the card is activated or not)
  * @param data just for fun
@@ -113,7 +114,7 @@ int exalt_eth_update(void* data)
 }
 // }}}
 
-// {{{
+// {{{ void exalt_eth_load_state()
 /*
  * @brief load the state of  all interfaces
  */
@@ -138,7 +139,6 @@ void exalt_eth_load_state()
 }
 //}}}
 
-
 // {{{ void exalt_eth_load_remove()
 /**
  * @brief remove olds interfaces
@@ -151,22 +151,27 @@ void exalt_eth_load_remove()
  	void* data,*data2;
 
 	exalt_regex *r;
-	f = exalt_execute_command(COMMAND_IFCONFIG_ALL);
-	r = exalt_regex_create("",REGEXP_INTERFACE,0);
+	r = exalt_regex_create("",REGEXP_PROCNNET_GET_NAME,0);
 
  	//create a list with current interfaces
 	l = ecore_list_new();
 	ecore_list_init(l);
 	l->free_func = ECORE_FREE_CB(free);
 
+	f = fopen(EXALT_PATH_PROCNET_DEV, "r");
+	if(!f)
+	{
+		fprintf(stderr,"exalt_eth_load_configuration_byeth(): Warning: cannot open %s (%s). Limited output.\n",EXALT_PATH_PROCNET_DEV, strerror(errno));
+		return ;
+	}
+	fgets(buf, 1024, f);
+	fgets(buf, 1024, f);
 	while(fgets(buf, 1024, f))
 	{
 		exalt_regex_set_request(r,buf);
-		//get the interface name
-		if(exalt_regex_execute(r) && r->nmatch>0)
+		if(exalt_regex_execute(r) && r->nmatch>0 && exalt_eth_is_ethernet(r->res[1]))
 			ecore_list_append(l,strdup(r->res[1]));
 	}
-	EXALT_PCLOSE(f);
 	exalt_regex_free(&r);
 
 	//remove olds interfaces
@@ -209,16 +214,22 @@ void exalt_eth_load()
 	FILE* f;
 	char buf[1024];
 	exalt_regex *r;
-	f = exalt_execute_command(COMMAND_IFCONFIG_ALL);
-	r = exalt_regex_create("",REGEXP_INTERFACE,0);
+	
+	r = exalt_regex_create("",REGEXP_PROCNNET_GET_NAME,0);
 
+	f = fopen(EXALT_PATH_PROCNET_DEV, "r");
+	if(!f)
+	{
+		fprintf(stderr,"exalt_eth_load_configuration_byeth(): Warning: cannot open %s (%s). Limited output.\n",EXALT_PATH_PROCNET_DEV, strerror(errno));
+		return ;
+	}
+	fgets(buf, 1024, f);
+	fgets(buf, 1024, f);
 	while(fgets(buf, 1024, f))
 	{
 		exalt_regex_set_request(r,buf);
-		//get the interface name
-		if(exalt_regex_execute(r) && r->nmatch>0)
+		if(exalt_regex_execute(r) && r->nmatch>0 && exalt_eth_is_ethernet(r->res[1]))
 		{
-
 			exalt_ethernet* eth;
 			eth = exalt_eth_get_ethernet_byname(r->res[1]);
 			//if the interface doesn't exist
@@ -236,11 +247,11 @@ void exalt_eth_load()
 				exalt_eth_load_configuration_byeth(eth,1);
 
 				if(exalt_eth_interfaces.eth_cb)
-				 	exalt_eth_interfaces.eth_cb(eth,EXALT_ETH_CB_NEW,exalt_eth_interfaces.eth_cb_user_data);
+					exalt_eth_interfaces.eth_cb(eth,EXALT_ETH_CB_NEW,exalt_eth_interfaces.eth_cb_user_data);
 			}
 		}
 	}
-	EXALT_PCLOSE(f);
+	fclose(f);
 	exalt_regex_free(&r);
 }
 // }}}
@@ -257,8 +268,8 @@ void exalt_eth_load_configuration()
 	data = ecore_list_next(exalt_eth_interfaces.ethernets);
 	while(data)
 	{
-	 	eth = EXALT_ETHERNET(data);
-	 	exalt_eth_load_configuration_byeth(eth,1);
+		eth = EXALT_ETHERNET(data);
+		exalt_eth_load_configuration_byeth(eth,1);
 		data = ecore_list_next(exalt_eth_interfaces.ethernets);
 	}
 }
@@ -272,58 +283,30 @@ void exalt_eth_load_configuration()
  */
 void exalt_eth_load_configuration_byeth(exalt_ethernet* eth, short load_file)
 {
-	FILE* f;
-	char buf[1024];
-	exalt_regex *r;
-
 	if(!eth)
 	{
 		fprintf(stderr,"eth_load_configuration_byeth(): eth==null ! \n");
 		return ;
 	}
 
-	sprintf(buf,"%s %s\n",COMMAND_IFCONFIG,exalt_eth_get_name(eth));
-
-	f = exalt_execute_command(buf);
-	r = exalt_regex_create("","",0);
-
-
 	//wifi ?
 	exalt_wifi_reload(eth);
 
-	while(fgets(buf, 1024, f))
-	{
-		exalt_regex_set_regex(r,REGEXP_ISETHERNET);
-		exalt_regex_set_request(r,buf);
-		if(exalt_regex_execute(r))
-		{
-			//get the interface name
-			exalt_regex_set_regex(r,REGEXP_INTERFACE);
-			if(exalt_regex_execute(r) && r->nmatch>0)
-			{
-				exalt_eth_set_activate(eth,exalt_eth_load_activate(eth));
-				//get the ip address
-				fgets(buf, 1024, f);
-				exalt_regex_set_request(r,buf);
-				exalt_regex_set_regex(r,REGEXP_INETADDR);
-				if(exalt_regex_execute(r) && r->nmatch>0)
-					exalt_eth_set_ip(eth,r->res[1]);
+ 	//interface load ?
+	exalt_eth_load_activate(eth);
 
-				//get the netmask
-				exalt_regex_set_regex(r,REGEXP_MASK);
-				if(exalt_regex_execute(r) && r->nmatch>0)
-					exalt_eth_set_netmask(eth,r->res[1]);
+	//get the ip address
+	exalt_eth_load_ip(eth);				
 
-				//load the conf file
-				if(load_file)
-					exalt_eth_save_load_byeth(eth);
-			}
-		}
-	}
-	
-	EXALT_PCLOSE(f);
-	exalt_regex_free(&r);
+	//get the netmask
+	exalt_eth_load_netmask(eth);
+
+ 	//get the gateway
 	exalt_eth_load_gateway_byeth(eth);
+ 	
+	//load the conf file
+	if(load_file)
+		exalt_eth_save_load_byeth(eth);
 }
 // }}}
 
@@ -331,35 +314,40 @@ void exalt_eth_load_configuration_byeth(exalt_ethernet* eth, short load_file)
 /**
  * @brief test if the card is activated
  * @param eth the card
- * @return Return 1 if the card is activated, else 0
+ * @return Return 1 ok, else 0
  */
 short exalt_eth_load_activate(exalt_ethernet * eth)
 {
-	FILE* f;
-	char command[1024];
-	char buf[1024];
+	struct sockaddr_in sin = { AF_INET };
+	struct ifreq ifr;
+ 	int fd;
+
 	if(!eth)
 	{
-		fprintf(stderr,"eth_load_activate(): eth==null ! \n");
+	 	fprintf(stderr,"exalt_eth_load_activate(): eth==null ! \n");
 		return -1;
 	}
-	
-	sprintf(command,COMMAND_IS_ACTIVATE,exalt_eth_get_name(eth));
-	f = exalt_execute_command(command);
-	if(fgets(buf,1024,f))
+
+ 	fd=iw_sockets_open();
+ 	strncpy(ifr.ifr_name,exalt_eth_get_name(eth),sizeof(ifr.ifr_name));
+ 	if (fd < 0) 
 	{
-		EXALT_PCLOSE(f);
-		if(!exalt_eth_is_activate(eth))
-		 	 exalt_eth_set_activate(eth,1);
-		return 1;
+	 	fprintf(stderr,"exalt_eth_load_activate(): fd==%d",fd);
+		return -1;
 	}
-	else
+
+ 	ifr.ifr_addr = *(struct sockaddr *) &sin;
+	if( ioctl(fd, SIOCGIFFLAGS, (caddr_t)&ifr) < 0)
 	{
-		EXALT_PCLOSE(f);
-		if(exalt_eth_is_activate(eth))
-		 	exalt_eth_set_activate(eth,0);
-		return 0;
+	 	perror("exalt_eth_load_activate(): ioctl (SIOCGIFFLAGS)");
+		return -1;
 	}
+	close(fd);
+	if( (ifr.ifr_flags & IFF_UP) && !exalt_eth_is_activate(eth))
+ 	 	exalt_eth_set_activate(eth,1);
+	else if( !(ifr.ifr_flags & IFF_UP) && exalt_eth_is_activate(eth))
+	 	exalt_eth_set_activate(eth,0);
+	return 1;
 }
 // }}}
 
@@ -372,9 +360,11 @@ void exalt_eth_load_gateway_byeth(exalt_ethernet* eth)
 {
 	FILE* f;
 	char buf[1024];
-	char command[1024];
-	char exalt_regexp[1024];
-	exalt_regex* r;
+	char* fmt;
+ 	int num, iflags, metric, refcnt, use, mss, window, irtt;
+	char iface[16];
+	char gate_addr[128], net_addr[128];
+	char mask_addr[128];
 
 	if(!eth)
 	{
@@ -382,25 +372,156 @@ void exalt_eth_load_gateway_byeth(exalt_ethernet* eth)
 		return ;
 	}
 
-	sprintf(exalt_regexp, REGEXP_GATEWAY,exalt_eth_get_name(eth));
-	r = exalt_regex_create("",exalt_regexp,0);
-	sprintf(command, "%s", COMMAND_ROUTE);
-	f = exalt_execute_command(command);
-	
-	while(fgets(buf, 1024, f))
+	f = fopen(EXALT_PATH_ROUTE,"r");
+	if(!f)
 	{
-		exalt_regex_set_request(r,buf);
-		if(exalt_regex_execute(r) && r->nmatch >0)
-		{
-			exalt_eth_set_gateway(eth,r->res[1]);
-		}
+	 	fprintf(stderr,"eth_load_gateway_byeth(): failed to open: %s\n",EXALT_PATH_ROUTE);
+		return ;
 	}
-	
-	exalt_regex_free(&r);
-	EXALT_PCLOSE(f);
+	fmt = proc_gen_fmt(EXALT_PATH_ROUTE, 0, f,
+			"Iface", "%16s",
+			"Destination", "%128s",
+			"Gateway", "%128s", 
+			"Flags", "%X",  
+			"RefCnt", "%d",
+			"Use", "%d",
+			"Metric", "%d",
+			"Mask", "%128s",
+			"MTU", "%d",
+			"Window", "%d",
+			"IRTT", "%d",
+			NULL);       
+
+	while(fgets(buf,1024,f))
+	{
+	 	num = sscanf(buf, fmt,
+		 	iface, net_addr, gate_addr,
+			&iflags, &refcnt, &use, &metric, mask_addr,
+			&mss, &window, &irtt);
+	 	if(strcmp(iface,exalt_eth_get_name(eth))==0 && strcmp(net_addr,"00000000")==0)
+	 	 	exalt_eth_set_gateway(eth,exalt_addr_hexa_to_dec(gate_addr));
+	}
+	fclose(f);
 }
 // }}}
 
+// {{{ int exalt_eth_load_ip(exalt_ethernet* eth)
+/**
+ * @brief load the ip address of eth
+ * @param eth exalt_ethernet
+ * @return Returns 1 if ok, else -1
+ */
+int exalt_eth_load_ip(exalt_ethernet* eth)
+{
+ 	struct sockaddr_in sin = { AF_INET };
+	struct ifreq ifr;
+ 	int fd;
+
+	if(!eth)
+	{
+	 	fprintf(stderr,"exalt_eth_load_ip(): eth==null ! \n");
+		return -1;
+	}
+
+ 	fd=iw_sockets_open();
+ 	strncpy(ifr.ifr_name,exalt_eth_get_name(eth),sizeof(ifr.ifr_name));
+ 	if (fd < 0) 
+	{
+	 	fprintf(stderr,"exalt_eth_load_ip(): fd==%d",fd);
+		return -1;
+	}
+
+ 	ifr.ifr_addr = *(struct sockaddr *) &sin;
+	if( ioctl(fd, SIOCGIFADDR, (caddr_t)&ifr) < 0)
+	{
+	 	perror("exalt_eth_load_ip(): ioctl (SIOCGIFADDR)");
+		return -1;
+	}
+	sin = *(struct sockaddr_in*) &ifr.ifr_addr;
+	exalt_eth_set_ip(eth,inet_ntoa(sin.sin_addr));
+	close(fd);
+
+	return 1;
+}
+// }}}
+
+// {{{ int exalt_eth_load_netmask(exalt_ethernet* eth)
+/**
+ * @brief load the netmask of eth
+ * @param eth exalt_ethernet
+ * @return Returns 1 if ok, else -1
+ */
+int exalt_eth_load_netmask(exalt_ethernet* eth)
+{
+ 	struct sockaddr_in sin = { AF_INET };
+	struct ifreq ifr;
+ 	int fd;
+
+	if(!eth)
+	{
+	 	fprintf(stderr,"exalt_eth_load_netmask(): eth==null ! \n");
+		return -1;
+	}
+
+ 	fd=iw_sockets_open();
+ 	strncpy(ifr.ifr_name,exalt_eth_get_name(eth),sizeof(ifr.ifr_name));
+ 	if (fd < 0) 
+	{
+	 	fprintf(stderr,"exalt_eth_load_netmask(): fd==%d",fd);
+		return -1;
+	}
+
+ 	ifr.ifr_addr = *(struct sockaddr *) &sin;
+	if( ioctl(fd, SIOCGIFNETMASK, (caddr_t)&ifr) < 0)
+	{
+	 	perror("exalt_eth_load_netmask(): ioctl (SIOCGIFNETMASK)");
+		return -1;
+	}
+	sin = *(struct sockaddr_in*) &ifr.ifr_addr;
+	exalt_eth_set_netmask(eth,inet_ntoa(sin.sin_addr));
+	close(fd);
+
+	return 1;
+}
+// }}}
+
+// {{{ short exalt_eth_is_ethernet(char* name)
+/**
+ * @brief test if a interface is a ethernet interface
+ * @param name the name of the interface
+ * @return Return 1 if yes else 0
+ */
+short exalt_eth_is_ethernet(char* name)
+{
+ 	struct sockaddr_in sin = { AF_INET };
+	struct ifreq ifr;
+ 	int fd;
+
+	if(!name)
+	{
+	 	fprintf(stderr,"exalt_eth_is_ethernet(): name==null ! \n");
+		return -1;
+	}
+
+ 	fd=iw_sockets_open();
+ 	strncpy(ifr.ifr_name,name,sizeof(ifr.ifr_name));
+ 	if (fd < 0) 
+	{
+	 	fprintf(stderr,"exalt_eth_is_ethernet(): fd==%d",fd);
+		return -1;
+	}
+
+ 	ifr.ifr_addr = *(struct sockaddr *) &sin;
+	if( ioctl(fd, SIOCGIFHWADDR, (caddr_t)&ifr) < 0)
+	{
+	 	perror("exalt_eth_is_ethernet(): ioctl (SIOCGIFHWADDR)");
+		return -1;
+	}
+	close(fd);
+
+	return ifr.ifr_hwaddr.sa_family == ARPHRD_ETHER;
+}
+// }}}
 
 /*
  * activate / desactivate a card
@@ -413,21 +534,42 @@ void exalt_eth_load_gateway_byeth(exalt_ethernet* eth)
  */
 void exalt_eth_activate(exalt_ethernet* eth)
 {
-	char command[1024], buf[1024];
-	FILE* f;
+ 	struct sockaddr_in sin = { AF_INET };
+	struct ifreq ifr;
+ 	int fd;
+
 	if(!eth)
 	{
-		fprintf(stderr,"eth_activate(): eth==null ! \n");
+	 	fprintf(stderr,"exalt_eth_activate(): eth==null ! \n");
 		return ;
 	}
-	sprintf(command,COMMAND_ACTIVATE,exalt_eth_get_name(eth));
-	f = exalt_execute_command(command);
-	while(fgets(buf,1024,f));
-		;
-	EXALT_PCLOSE(f);
-	
-	exalt_eth_set_activate(eth,exalt_eth_load_activate(eth));
- 	exalt_eth_save_autoload(eth);
+
+ 	fd=iw_sockets_open();
+ 	strncpy(ifr.ifr_name,exalt_eth_get_name(eth),sizeof(ifr.ifr_name));
+ 	if (fd < 0) 
+	{
+	 	fprintf(stderr,"exalt_eth_activate(): fd==%d",fd);
+		return ;
+	}
+
+ 	ifr.ifr_addr = *(struct sockaddr *) &sin;
+	if( ioctl(fd, SIOCGIFFLAGS, (caddr_t)&ifr) < 0)
+	{
+	 	perror("exalt_eth_activate(): ioctl (SIOCGIFFLAGS)");
+		return ;
+	}
+
+ 	ifr.ifr_flags |= IFF_UP;
+	if( ioctl(fd, SIOCSIFFLAGS, (caddr_t)&ifr) < 0)
+	{
+	 	perror("exalt_eth_activate(): ioctl (SIOCSIFFLAGS)");
+		return ;
+	}
+	close(fd);
+
+	//save the configuration
+	exalt_eth_set_activate(eth,1);
+	exalt_eth_save_autoload(eth);
 }
 // }}}
 
@@ -438,19 +580,41 @@ void exalt_eth_activate(exalt_ethernet* eth)
  */
 void exalt_eth_desactivate(exalt_ethernet* eth)
 {
-	char command[1024], buf[1024];
-	FILE* f;
+	struct sockaddr_in sin = { AF_INET };
+	struct ifreq ifr;
+ 	int fd;
+
 	if(!eth)
 	{
-		fprintf(stderr,"eth_desactivate(): eth==null ! \n");
+	 	fprintf(stderr,"exalt_eth_desactivate(): eth==null ! \n");
 		return ;
 	}
-	sprintf(command,COMMAND_DESACTIVATE,exalt_eth_get_name(eth));
-	f = exalt_execute_command(command);
-	while(fgets(buf,1024,f));
-		;
-	EXALT_PCLOSE(f);
-	exalt_eth_set_activate(eth,exalt_eth_load_activate(eth));
+
+ 	fd=iw_sockets_open();
+ 	strncpy(ifr.ifr_name,exalt_eth_get_name(eth),sizeof(ifr.ifr_name));
+ 	if (fd < 0) 
+	{
+	 	fprintf(stderr,"exalt_eth_desactivate(): fd==%d",fd);
+		return ;
+	}
+
+ 	ifr.ifr_addr = *(struct sockaddr *) &sin;
+	if( ioctl(fd, SIOCGIFFLAGS, (caddr_t)&ifr) < 0)
+	{
+	 	perror("exalt_eth_desactivate(): ioctl (SIOCGIFFLAGS)");
+		return ;
+	}
+
+ 	ifr.ifr_flags &= ~IFF_UP;
+	if( ioctl(fd, SIOCSIFFLAGS, (caddr_t)&ifr) < 0)
+	{
+	 	perror("exalt_eth_desactivate(): ioctl (SIOCSIFFLAGS)");
+		return ;
+	}
+	close(fd);
+
+	//save the configuration
+ 	exalt_eth_set_activate(eth,0);
  	exalt_eth_save_autoload(eth);
 }
 // }}}
@@ -809,31 +973,6 @@ int exalt_eth_set_scan_cb(Exalt_Wifi_Scan_Cb fct, void * user_data)
  */
 
 
-// {{{ int exalt_eth_apply_gateway(exalt_ethernet *eth)
-/**
- * @brief apply the gateway address for the card the card "eth" 
- * @param eth the card
- * @return Returns 1 if the gateway address is apply, else 0
- */
-int exalt_eth_apply_gateway(exalt_ethernet *eth)
-{
-	FILE* f;
-	char command[1024];
-
-	if(strlen(exalt_eth_get_gateway(eth))>0)
-	{
-		sprintf(command, "%s %s %s %s", 
-				COMMAND_ROUTE, "add default gw",
-				exalt_eth_get_gateway(eth),
-				exalt_eth_get_name(eth));
-		printf("\t%s\n",command);
-		f = exalt_execute_command(command);	
-		EXALT_PCLOSE(f);
-	}
-	return 1;
-}
-// }}}
-
 // {{{ int exalt_eth_apply_conf(exalt_ethernet* eth)
 /**
  * @brief apply the configuration for the card "eth" 
@@ -843,7 +982,9 @@ int exalt_eth_apply_gateway(exalt_ethernet *eth)
 int exalt_eth_apply_conf(exalt_ethernet* eth)
 {
 	int res;
-
+ 	struct rtentry rt;
+	int fd;
+	struct sockaddr_in sin = { AF_INET };	
 	if(!eth)
 	{
 		fprintf(stderr,"eth_apply(): eth==null! \n");
@@ -856,6 +997,22 @@ int exalt_eth_apply_conf(exalt_ethernet* eth)
 	
 	if(exalt_eth_is_wifi(eth))
 	 	exalt_wifi_apply_conf(eth);
+	
+	//remove old gateway
+	fd=iw_sockets_open();
+ 	if (fd < 0) 
+	{
+	 	fprintf(stderr,"exalt_eth_apply_static(): fd==%d",fd);
+		return -1;
+	}
+	memset((char *) &rt, 0, sizeof(struct rtentry));
+ 	rt.rt_flags = ( RTF_UP | RTF_GATEWAY );
+ 	sin.sin_addr.s_addr = inet_addr ("0.0.0.0");
+	rt.rt_dst = *(struct sockaddr *) &sin;
+
+	while (ioctl(fd, SIOCDELRT, &rt) >= 0) 
+	 	;
+ 	close(fd);	
 	
 	if(exalt_eth_is_dhcp(eth))
 		res = exalt_eth_apply_dhcp(eth);
@@ -875,32 +1032,71 @@ int exalt_eth_apply_conf(exalt_ethernet* eth)
  */
 int exalt_eth_apply_static(exalt_ethernet *eth)
 {
-	FILE* f;
-	char command[1024];
+	struct sockaddr_in sin = { AF_INET };
+	struct ifreq ifr;
+	struct rtentry rt;
+  	int fd;
 
 	if(!eth)
 	{
-		fprintf(stderr,"eth_apply_static(): eth==null! \n");
+	 	fprintf(stderr,"exalt_eth_apply_static(): eth==null ! \n");
 		return -1;
 	}
 
+ 	fd=iw_sockets_open();
+ 	strncpy(ifr.ifr_name,exalt_eth_get_name(eth),sizeof(ifr.ifr_name));
+ 	if (fd < 0) 
+	{
+	 	fprintf(stderr,"exalt_eth_apply_static(): fd==%d",fd);
+		return -1;
+	}
+
+ 	//apply the ip
+ 	sin.sin_addr.s_addr = inet_addr (exalt_eth_get_ip(eth));
+	ifr.ifr_addr = *(struct sockaddr *) &sin;
+	if( ioctl(fd, SIOCSIFADDR, (caddr_t)&ifr) < 0)
+	{
+	 	perror("exalt_eth_apply_static(): ioctl (SIOCSIFADDR)");
+		close(fd);
+		return -1;
+	}
+
+	//apply the netmask
+ 	sin.sin_addr.s_addr = inet_addr (exalt_eth_get_netmask(eth));
+	ifr.ifr_addr = *(struct sockaddr *) &sin;
+	if( ioctl(fd, SIOCSIFNETMASK , (caddr_t)&ifr) < 0)
+	{
+	 	perror("exalt_eth_apply_static(): ioctl (SIOCSIFNETMASK)");
+	 	close(fd);
+	 	return -1;
+	}
 	
-	sprintf(command, "%s %s %s %s", 
-			COMMAND_IFCONFIG, exalt_eth_get_name(eth),
-			IFCONFIG_PARAM_IP,exalt_eth_get_ip(eth));
-	printf("\t%s\n",command);
-	f = exalt_execute_command(command);
-	EXALT_PCLOSE(f);
+	
+	if(!exalt_eth_get_gateway(eth))
+	 	return 1;
+
+	//apply the default gateway
+	memset((char *) &rt, 0, sizeof(struct rtentry));
+ 	rt.rt_flags = ( RTF_UP | RTF_GATEWAY );
+	sin.sin_addr.s_addr = inet_addr (exalt_eth_get_gateway(eth));
+	rt.rt_gateway = *(struct sockaddr *) &sin;
+ 	sin.sin_addr.s_addr = inet_addr ("0.0.0.0");
+	rt.rt_dst = *(struct sockaddr *) &sin;
+	rt.rt_metric = 2001;
+	rt.rt_dev = exalt_eth_get_name(eth);
+
+	if (ioctl(fd, SIOCADDRT, &rt) < 0) {
+	    perror("exalt_eth_apply_static(): ioctl (SIOCADDRT)");
+	    close(fd);
+	    return -1;
+	}
 
 
-	sprintf(command, "%s %s %s %s", 
-			COMMAND_IFCONFIG, exalt_eth_get_name(eth),
-			IFCONFIG_PARAM_NETMASK,exalt_eth_get_netmask(eth));
-	printf("\t%s\n",command);
-	f = exalt_execute_command(command);	
-	EXALT_PCLOSE(f);
-
-
+ 	close(fd);
+	
+	/*//A CHANGER !!
+	char command[1024];
+	FILE* f;
 	sprintf(command, "%s %s", 
 			COMMAND_ROUTE, "del default");
 	printf("\t%s\n",command);
@@ -909,7 +1105,7 @@ int exalt_eth_apply_static(exalt_ethernet *eth)
 
 	
 	exalt_eth_apply_gateway(eth);
-
+ 	*/
 	return 1;
 }
 // }}}

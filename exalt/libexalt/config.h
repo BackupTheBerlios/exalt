@@ -2,7 +2,10 @@
 /* config.h.in.  Generated from configure.in by autoheader.  */
 
 /* Debian distribution */
-#define DIST_DEBIAN "debian"
+/* #undef DIST_DEBIAN */
+
+/* Gentoo distribution */
+#define DIST_GENTOO "gentoo"
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #define HAVE_DLFCN_H 1

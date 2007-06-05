@@ -7,9 +7,19 @@ typedef struct exalt_ethernet exalt_ethernet;
 #include "libexalt.h"
 #include "exalt_wifi.h"
 #include "exalt_wifi_info.h"
+#include "iwlib.h"
+#include "proc.h"
+
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <sys/socket.h>
+#include <net/route.h>
 
 #include <Ecore_Data.h>
 #include <Ecore.h>
+
+
+
 
 /**
  * @defgroup Exalt_ethernet
@@ -33,7 +43,7 @@ typedef struct exalt_ethernet exalt_ethernet;
 typedef void (*Exalt_Eth_Cb) (exalt_ethernet* eth, int action, void* user_data);
 #define EXALT_ETH_CB(a) (Exalt_Eth_Cb)a
 
-#define EXALT_WIFI_SCAN_UPDATE_TIME 2
+#define EXALT_WIFI_SCAN_UPDATE_TIME 10
 typedef void (*Exalt_Wifi_Scan_Cb) (exalt_wifi_info* wi, int action, void* user_data);
 #define EXALT_WIFI_SCAN_CB(a) (Exalt_Wifi_Scan_Cb)a
 
@@ -70,6 +80,8 @@ typedef struct Exalt_Ethernets
 	void* wifi_scan_cb_user_data;
 	Ecore_Timer* wifi_scan_cb_timer;
 
+	int we_version;
+
 } Exalt_Ethernets;
 
 
@@ -89,6 +101,8 @@ short exalt_eth_load_activate(exalt_ethernet * eth);
 
 void exalt_eth_activate(exalt_ethernet* eth);
 void exalt_eth_desactivate(exalt_ethernet* eth);
+short exalt_eth_is_ethernet(char* name);
+
 
 void exalt_eth_printf();
 
@@ -106,6 +120,8 @@ short exalt_eth_is_dhcp(exalt_ethernet * eth);
 short exalt_eth_is_wifi(exalt_ethernet* eth);
 exalt_wifi* exalt_eth_get_wifi(exalt_ethernet* eth);
 
+int exalt_eth_load_ip(exalt_ethernet* eth);
+int exalt_eth_load_netmask(exalt_ethernet* eth);
 
 int exalt_eth_set_cb(Exalt_Eth_Cb fct, void* user_data;);
 int exalt_eth_set_scan_cb(Exalt_Wifi_Scan_Cb fct, void* user_data);

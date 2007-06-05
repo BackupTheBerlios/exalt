@@ -20,6 +20,9 @@
 #define REGEXP_IP   REGEXP_IP_PARTIAL "\\."  REGEXP_IP_PARTIAL "\\."  REGEXP_IP_PARTIAL "\\."  REGEXP_IP_PARTIAL 
 /** ip regexp when the string request contains only a ip */
 #define REGEXP_IS_IP "^"  REGEXP_IP "$"
+/** retrive the interface name since /proc/net/dev */
+#define REGEXP_PROCNNET_GET_NAME " *(.+):"
+
 /** is ethernet regexp */
 #define REGEXP_ISETHERNET "Link encap:Ethernet"
 /** regexp to find a ip */
