@@ -17,6 +17,7 @@ EXTRA_DIST =
 EXALTHEADERS = \
 nettools/proc.h \
 iw/iwlib.h \
+iw/wireless.h \
 libexalt.h \
 exalt_command.h \
 exalt_dns.h \
