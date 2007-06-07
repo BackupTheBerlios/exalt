@@ -48,12 +48,12 @@ libexalt.lo libexalt.o: libexalt.c libexalt.h exalt_ethernet.h \
   /usr/include/linux/stddef.h /usr/include/asm/posix_types.h \
   /usr/include/asm/types.h /usr/include/sys/time.h \
   /usr/include/linux/version.h /usr/include/net/if_arp.h \
-  /usr/include/netinet/if_ether.h /usr/include/net/if.h \
-  /usr/include/wireless.h nettools/proc.h /usr/include/arpa/inet.h \
-  /usr/include/net/route.h exalt_command.h exalt_dns.h exalt_save_load.h \
-  /usr/include/sys/stat.h /usr/include/bits/stat.h \
-  /usr/include/Ecore_Config.h /usr/include/Evas.h exalt_regexp.h \
-  libexalt.h /usr/include/regex.h ../config.h
+  /usr/include/netinet/if_ether.h /usr/include/net/if.h iw/wireless.h \
+  nettools/proc.h /usr/include/arpa/inet.h /usr/include/net/route.h \
+  exalt_command.h exalt_dns.h exalt_save_load.h /usr/include/sys/stat.h \
+  /usr/include/bits/stat.h /usr/include/Ecore_Config.h \
+  /usr/include/Evas.h exalt_regexp.h libexalt.h /usr/include/regex.h \
+  ../config.h
 
 libexalt.h:
 
@@ -269,7 +269,7 @@ iw/iwlib.h:
 
 /usr/include/net/if.h:
 
-/usr/include/wireless.h:
+iw/wireless.h:
 
 nettools/proc.h:
 

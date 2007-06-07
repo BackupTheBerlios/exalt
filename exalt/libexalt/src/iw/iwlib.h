@@ -88,11 +88,7 @@
 #endif	/* !HEADERS_KERNEL */
 
 /* Private copy of Wireless extensions (in this directoty) */
-#ifdef DIST_DEBIAN
- 	#include "linux/wireless.h"
-#else
- 	#include "wireless.h"
-#endif
+#include "wireless.h"
 
 /* Make gcc understant that when we say inline, we mean it.
  * I really hate when the compiler is trying to be more clever than me,
