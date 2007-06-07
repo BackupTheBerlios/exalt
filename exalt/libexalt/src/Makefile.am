@@ -18,6 +18,7 @@ EXALTHEADERS = \
 nettools/proc.h \
 iw/iwlib.h \
 libexalt.h \
+iw/wireless.h \
 exalt_command.h \
 exalt_dns.h \
 exalt_ethernet.h \
