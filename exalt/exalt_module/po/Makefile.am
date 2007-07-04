@@ -2,7 +2,7 @@ MAINTAINERCLEANFILES = Makefile.in $(PACKAGE).pot
 
 MSGFMT = msgfmt
 
-localedir = @LOCALEDIR@
+localedir = $(datadir)/locale
 locale_DATA = $(addsuffix .mo,$(ALL_LINGUAS))
 
 EXTRA_DIST = $(PACKAGE).pot $(addsuffix .po,$(ALL_LINGUAS))

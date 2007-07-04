@@ -2,19 +2,5 @@ make  all-recursive
 make[1]: Entering directory `/home/watchwolf/Projects/C/exalt/exalt_module'
 Making all in po
 make[2]: Entering directory `/home/watchwolf/Projects/C/exalt/exalt_module/po'
-make[2]: Nothing to be done for `all'.
 make[2]: Leaving directory `/home/watchwolf/Projects/C/exalt/exalt_module/po'
-make[2]: Entering directory `/home/watchwolf/Projects/C/exalt/exalt_module'
-/bin/sh ./libtool --tag=CC   --mode=compile gcc -DHAVE_CONFIG_H -I. -I. -I. -I/home/watchwolf/.e/e/include -I/usr/local/include -I/usr/local/include/exalt -I/usr/include/enlightenment -DUSE_E_CONFIG_H -I/usr/include/efreet    -g -O2 -MT e_mod_main.lo -MD -MP -MF .deps/e_mod_main.Tpo -c -o e_mod_main.lo e_mod_main.c
- gcc -DHAVE_CONFIG_H -I. -I. -I. -I/home/watchwolf/.e/e/include -I/usr/local/include -I/usr/local/include/exalt -I/usr/include/enlightenment -DUSE_E_CONFIG_H -I/usr/include/efreet -g -O2 -MT e_mod_main.lo -MD -MP -MF .deps/e_mod_main.Tpo -c e_mod_main.c  -fPIC -DPIC -o .libs/e_mod_main.o
- gcc -DHAVE_CONFIG_H -I. -I. -I. -I/home/watchwolf/.e/e/include -I/usr/local/include -I/usr/local/include/exalt -I/usr/include/enlightenment -DUSE_E_CONFIG_H -I/usr/include/efreet -g -O2 -MT e_mod_main.lo -MD -MP -MF .deps/e_mod_main.Tpo -c e_mod_main.c -o e_mod_main.o >/dev/null 2>&1
-mv -f .deps/e_mod_main.Tpo .deps/e_mod_main.Plo
-/bin/sh ./libtool --tag=CC   --mode=link gcc  -g -O2 -module -avoid-version  -o module.la -rpath /home/watchwolf/.e/e/modules/exalt/linux-gnu-i686 e_mod_main.lo e_mod_config.lo -L/usr/lib -L/usr/local/lib -lexalt   
-rm -fr  .libs/module.a .libs/module.la .libs/module.lai .libs/module.so
-gcc -shared  .libs/e_mod_main.o .libs/e_mod_config.o  -L/usr/lib -L/usr/local/lib /usr/local/lib/libexalt.so  -Wl,-soname -Wl,module.so -o .libs/module.so
-ar cru .libs/module.a  e_mod_main.o e_mod_config.o
-ranlib .libs/module.a
-creating module.la
-(cd .libs && rm -f module.la && ln -s ../module.la module.la)
-make[2]: Leaving directory `/home/watchwolf/Projects/C/exalt/exalt_module'
 make[1]: Leaving directory `/home/watchwolf/Projects/C/exalt/exalt_module'

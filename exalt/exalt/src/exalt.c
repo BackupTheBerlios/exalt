@@ -6,9 +6,9 @@ int main(int argc,char**argv)
 {
 	main_window* win;
  	int opt_i = 0;
-	char* interface;
+	char* interface = NULL;
 	int opt_w = 0;
-	char* wireless;
+	char* wireless = NULL;
 
 	if (!etk_init(&argc, &argv))
         {
@@ -27,25 +27,31 @@ int main(int argc,char**argv)
 	argv++;
 	while(argc)
 	{
- 	 	if(*argv[0] == '-')
+		if(*argv[0] == '-')
 		{
  	 	 	if(strcmp(*argv, "-i")==0)
 			{
- 	 	 	 	interface = *(++argv);
-				opt_i=1;
 				argc--;
+				if(argc)
+				{
+					interface = *(++argv);
+					opt_i=1;
+				}
 			}
 			else if(strcmp(*argv,"-w")==0)
 			{
-			 	wireless = *(++argv);
-				opt_w = 1;
-				argc--;
+			 	argc--;
+				if(argc)
+				{
+					wireless = *(++argv);
+					opt_w = 1;
+				}
 			}
 		}
-		argc--;
+		if(argc) argc--;
  	 	argv++;
 	}
-
+	
 	//eth_printf();
 	win = mainwindow_create();
 	

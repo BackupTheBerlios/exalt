@@ -1,0 +1,62 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-07-04 17:27+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../e_mod_config.c:65
+#, c-format
+msgid "%i: the interface (eth0, wlan0 ...)"
+msgstr "%i: la carte reseau (eth0, wlan0 ...)"
+
+#: ../e_mod_config.c:67
+msgid "%w: the wireless network essid"
+msgstr "%w: le nom du reseau sans fils"
+
+#: ../e_mod_main.c:315
+msgid "(no networks)"
+msgstr "(pas de reseaux)"
+
+#: ../e_mod_main.c:228
+msgid "Configuration"
+msgstr "Configuration"
+
+#: ../e_mod_main.c:117
+msgid "Exalt"
+msgstr "Exalt"
+
+#: ../e_mod_config.c:30
+msgid "Exalt Configuration"
+msgstr "Configuration de Exalt"
+
+#: ../e_mod_main.c:500
+msgid "Exalt Module"
+msgstr "Module Exalt"
+
+#: ../e_mod_config.c:63
+msgid "Lauch Application:"
+msgstr "Executer l'application:"
+
+#: ../e_mod_main.c:261
+msgid "Networks"
+msgstr "Rseaux"
+
+#: ../e_mod_config.c:62
+msgid "Settings"
+msgstr "Options"
+
+#: ../e_mod_main.c:501
+msgid "This module allow you to configure yours networks cards."
+msgstr "Ce module permet de configurer ces cartes reseaux."

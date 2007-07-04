@@ -16,9 +16,9 @@
 
 
 
-pkgdatadir = $(datadir)/exalt
-pkglibdir = $(libdir)/exalt
-pkgincludedir = $(includedir)/exalt
+pkgdatadir = $(datadir)/module_exalt
+pkglibdir = $(libdir)/module_exalt
+pkgincludedir = $(includedir)/module_exalt
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
 install_sh_DATA = $(install_sh) -c -m 644
 install_sh_PROGRAM = $(install_sh) -c
@@ -37,9 +37,9 @@ subdir = .
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
 	$(srcdir)/e_modules-exalt.spec.in $(top_srcdir)/configure \
-	ABOUT-NLS AUTHORS COPYING ChangeLog INSTALL NEWS TODO \
-	config.guess config.rpath config.sub depcomp install-sh \
-	ltmain.sh missing mkinstalldirs
+	ABOUT-NLS AUTHORS COPYING ChangeLog INSTALL NEWS config.guess \
+	config.rpath config.sub depcomp install-sh ltmain.sh missing \
+	mkinstalldirs
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.in
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -103,7 +103,7 @@ GZIP_ENV = --best
 distuninstallcheck_listfiles = find . -type f -print
 distcleancheck_listfiles = find . -type f -print
 ACLOCAL = ${SHELL} /home/watchwolf/Projects/C/exalt/exalt_module/missing --run aclocal-1.10
-ALL_LINGUAS = it sv
+ALL_LINGUAS = fr
 AMTAR = ${SHELL} /home/watchwolf/Projects/C/exalt/exalt_module/missing --run tar
 AR = ar
 AUTOCONF = ${SHELL} /home/watchwolf/Projects/C/exalt/exalt_module/missing --run autoconf
@@ -152,7 +152,6 @@ LIBOBJS =
 LIBS = 
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LN_S = ln -s
-LOCALEDIR = /home/watchwolf/.e/e/locale
 LTLIBICONV = -liconv
 LTLIBINTL = 
 LTLIBOBJS = 
@@ -163,7 +162,7 @@ MSGFMT = /usr/bin/msgfmt
 MSGFMT_015 = /usr/bin/msgfmt
 MSGMERGE = /usr/bin/msgmerge
 OBJEXT = o
-PACKAGE = exalt
+PACKAGE = module_exalt
 PACKAGE_BUGREPORT = 
 PACKAGE_NAME = 
 PACKAGE_STRING = 
@@ -192,15 +191,15 @@ am__leading_dot = .
 am__quote = 
 am__tar = ${AMTAR} chof - "$$tardir"
 am__untar = ${AMTAR} xf -
-bindir = /home/watchwolf/.e/e/bin
+bindir = /usr/local/bin
 build = i686-pc-linux-gnu
 build_alias = 
 build_cpu = i686
 build_os = linux-gnu
 build_vendor = pc
 builddir = .
-datadir = /home/watchwolf/.e/e/modules/exalt
-datarootdir = /home/watchwolf/.e/e
+datadir = /home/watchwolf/.e/e/modules/module_exalt
+datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE}
 dvidir = ${docdir}
 e_cflags = -I/usr/include/enlightenment -DUSE_E_CONFIG_H -I/usr/include/efreet
@@ -217,15 +216,15 @@ htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
 install_sh = $(SHELL) /home/watchwolf/Projects/C/exalt/exalt_module/install-sh
-libdir = /home/watchwolf/.e/e/lib
+libdir = /usr/local/lib
 libexecdir = ${exec_prefix}/libexec
-localedir = /home/watchwolf/.e/e/locale
+localedir = /home/watchwolf/.e/e/modules/module_exalt
 localstatedir = ${prefix}/var
 mandir = ${datarootdir}/man
 mkdir_p = /usr/bin/mkdir -p
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /home/watchwolf/.e/e
+prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin

@@ -8,197 +8,146 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-14 11:12+0200\n"
+"POT-Creation-Date: 2007-07-04 17:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/wifi_panel.c:590 ../src/wifi_panel.c:592
-#, c-format
-msgid "%d dBm"
-msgstr "%d dBm"
-
-#: ../src/wifi_panel.c:588
-#, c-format
-msgid "%d%%"
-msgstr "%d%%"
-
-#: ../src/wifi_panel.c:49
+#: ../src/wireless_panel.c:47
 msgid "Activate"
-msgstr "Activé"
+msgstr "Active"
 
-#: ../src/wifi_panel.h:21
+#: ../src/wireless_panel.h:18
 msgid "Ad-hoc"
 msgstr "Ad-hoc"
 
-#: ../src/wifi_panel.c:351
-msgid "Address: "
-msgstr "Adresse: "
+#: ../src/wireless_panel.c:91
+msgid "Current IP: "
+msgstr "IP actuelle: "
 
-#: ../src/wifi_panel.c:375
-msgid "Bit rates: "
-msgstr "Bit rates: "
+#: ../src/wireless_panel.c:87
+msgid "Current essid: "
+msgstr "Essid actuel: "
 
-#: ../src/eth_panel.c:80 ../src/wifi_panel.c:497 ../src/wifi_panel.c:544
-msgid "Broadcast: "
-msgstr "Broadcast: "
+#: ../src/wireless_panel.c:99
+msgid "Current gateway: "
+msgstr "Passerelle actuelle: "
 
-#: ../src/wifi_panel.c:367
-msgid "Channel: "
-msgstr "Channel: "
+#: ../src/wireless_panel.c:95
+msgid "Current mask: "
+msgstr "Masque actuel: "
 
-#: ../src/wifi_panel.c:100
-msgid "Connection"
-msgstr "Connexion: "
-
-#: ../src/wifi_panel.c:95
-msgid "Current conf."
-msgstr "Conf. actuelle: "
-
-#: ../src/wifi_panel.c:84
-msgid "Current network: "
-msgstr "Réseau actuel: "
-
-#: ../src/eth_panel.c:43 ../src/wifi_panel.c:428
+#: ../src/eth_panel.c:43 ../src/wireless_panel.c:283
 msgid "DHCP (Automatic configuration)"
 msgstr "DHCP (configuration automatique)"
 
-#: ../src/general_panel.c:50
+#: ../src/general_panel.c:30
 msgid "DNS list"
-msgstr "Liste des DNS"
+msgstr "List des DNS"
 
-#: ../src/wifi_panel.c:50
+#: ../src/wireless_panel.c:48
 msgid "Disactivate"
-msgstr "Désactivé"
+msgstr "Desactive"
 
-#: ../src/wifi_panel.c:66
+#: ../src/wireless_panel.c:64
 msgid "Encryption"
 msgstr "Cryptage"
 
-#: ../src/wifi_panel.c:478
+#: ../src/wireless_panel.c:322
 msgid "Encryption mode: "
 msgstr "Mode de cryptage: "
 
-#: ../src/wifi_panel.c:371
-msgid "Encryption: "
-msgstr "Cryptage: "
-
-#: ../src/wifi_panel.c:70
+#: ../src/wireless_panel.c:68
 msgid "Essid"
 msgstr "Essid"
 
-#: ../src/wifi_panel.c:355 ../src/wifi_panel.c:469 ../src/wifi_panel.c:532
+#: ../src/wireless_panel.c:318
 msgid "Essid: "
 msgstr "Essid: "
 
 #: ../src/main_window.c:11
 msgid "Exalt: network manager"
-msgstr "Exalt: gestionnaire réseau"
+msgstr "Exalt: gestionnaire reseaux"
 
-#: ../src/eth_panel.c:84 ../src/wifi_panel.c:501 ../src/wifi_panel.c:548
+#: ../src/eth_panel.c:77 ../src/wireless_panel.c:341
 msgid "Gateway: "
-msgstr "Paserelle: "
+msgstr "Passerelle: "
 
-#: ../src/main_window.c:40 ../src/main_window.c:155
+#: ../src/main_window.c:40 ../src/main_window.c:223
 msgid "General"
-msgstr "Général"
+msgstr "General"
 
-#: ../src/general_panel.c:10
+#: ../src/general_panel.c:11
 msgid "General configuration"
-msgstr "Configuration général"
-
-#: ../src/wifi_panel.c:98
-msgid "Informations"
-msgstr "Informations"
+msgstr "Configuration general"
 
 #: ../src/main_window.c:26
 msgid "Interfaces"
-msgstr "Interfaces"
+msgstr "Carte reseaux"
 
-#: ../src/eth_panel.c:72 ../src/wifi_panel.c:489 ../src/wifi_panel.c:536
+#: ../src/eth_panel.c:69 ../src/wireless_panel.c:333
 msgid "Ip address: "
-msgstr "Adresse ip: "
+msgstr "Adresse IP: "
 
-#: ../src/wifi_panel.h:22
+#: ../src/wireless_panel.h:19
 msgid "Managed"
 msgstr "Managed"
 
-#: ../src/wifi_panel.c:34
+#: ../src/wireless_panel.c:32
 msgid "Maybe you have disable the card with a key (bindings)"
-msgstr ""
-"Peut être que vous désactivé la carte réseau avec une combinaison clavier"
+msgstr "Peut etre que vous avez desactive la carte avec un racourcis claviers"
 
-#: ../src/wifi_panel.c:363 ../src/wifi_panel.c:473
-msgid "Mode: "
-msgstr "Mode: "
-
-#: ../src/eth_panel.c:139
+#: ../src/eth_panel.c:132
 #, c-format
 msgid "Network card: %s"
-msgstr "Carte réseau: %s"
+msgstr "Carte reseau: %s"
 
-#: ../src/eth_panel.c:76 ../src/wifi_panel.c:493 ../src/wifi_panel.c:540
+#: ../src/eth_panel.c:73 ../src/wireless_panel.c:337
 msgid "Network mask: "
-msgstr "Masque réseau: "
+msgstr "Masque de sous-reseau: "
 
-#: ../src/wifi_panel.c:387
-msgid "Noise level: "
-msgstr "Bruit: "
-
-#: ../src/wifi_panel.c:482
+#: ../src/wireless_panel.c:326
 msgid "Password: "
 msgstr "Mot de passe: "
 
-#: ../src/wifi_panel.c:359
-msgid "Protocol: "
-msgstr "Protocol: "
-
-#: ../src/wifi_panel.c:68
+#: ../src/wireless_panel.c:66
 msgid "Quality"
-msgstr "Qualité"
+msgstr "Qualite"
 
-#: ../src/wifi_panel.c:379
-msgid "Quality: "
-msgstr "Qualité: "
-
-#: ../src/wifi_panel.c:383
-msgid "Signal level: "
-msgstr "Signal: "
-
-#: ../src/eth_panel.c:41 ../src/wifi_panel.c:427
+#: ../src/eth_panel.c:41 ../src/wireless_panel.c:282
 msgid "Static address"
-msgstr "Adresse static: "
+msgstr "Adresse static"
 
-#: ../src/general_panel.c:20
-msgid "The default interface: "
-msgstr "Interface par défaut: "
-
-#: ../src/wifi_panel.c:32
+#: ../src/wireless_panel.c:30
 msgid "The wireless card is not activated"
-msgstr "La carte sans fil n'est pas activée"
+msgstr "La carte sans-fils n'est pas active"
 
 #: ../src/exalt.h:25
-#, fuzzy
 msgid "Updating interface configuration ..."
-msgstr "Configuration général"
+msgstr "Mise a jour de la configuration ..."
 
-#: ../src/wifi_panel.h:19
+#: ../src/wireless_panel.h:15
 msgid "WEP (10 or 26 hexadecimals characters)"
-msgstr "WEP (10 ou 26 caractères hexadécimaux)"
+msgstr "WEP (10 ou 26 caracteres hexadecimals)"
 
-#: ../src/wifi_panel.h:18
+#: ../src/wireless_panel.h:14
 msgid "WEP (ASCII)"
 msgstr "WEP (ASCII)"
 
-#: ../src/wifi_panel.c:229
+#: ../src/wireless_panel.h:16
+msgid "WPA PSK"
+msgstr "WPA PSK"
+
+#: ../src/wireless_panel.c:229
 #, c-format
 msgid "Wireless card: %s"
-msgstr "Carte sans fil: %s"
+msgstr "Carte sans-fils: %s"
 
-#: ../src/wifi_panel.c:86 ../src/wifi_panel.c:247 ../src/wifi_panel.c:249
-#: ../src/wifi_panel.h:17
+#: ../src/wireless_panel.c:82 ../src/wireless_panel.c:83
+#: ../src/wireless_panel.c:84 ../src/wireless_panel.c:85
+#: ../src/wireless_panel.h:13
 msgid "none"
 msgstr "vide"

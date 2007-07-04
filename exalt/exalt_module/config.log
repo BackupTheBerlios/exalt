@@ -43,142 +43,142 @@ PATH: /usr/local/bin
 ## Core tests. ##
 ## ----------- ##
 
-configure:2011: checking build system type
-configure:2029: result: i686-pc-linux-gnu
-configure:2051: checking host system type
-configure:2066: result: i686-pc-linux-gnu
-configure:2104: checking for a BSD-compatible install
-configure:2160: result: /usr/bin/install -c
-configure:2171: checking whether build environment is sane
-configure:2214: result: yes
-configure:2242: checking for a thread-safe mkdir -p
-configure:2281: result: /usr/bin/mkdir -p
-configure:2294: checking for gawk
-configure:2310: found /usr/bin/gawk
-configure:2321: result: gawk
-configure:2332: checking whether make sets $(MAKE)
-configure:2353: result: yes
-configure:2555: checking for style of include used by make
-configure:2583: result: GNU
-configure:2653: checking for gcc
-configure:2669: found /usr/bin/gcc
-configure:2680: result: gcc
-configure:2918: checking for C compiler version
-configure:2925: gcc --version >&5
+configure:2009: checking build system type
+configure:2027: result: i686-pc-linux-gnu
+configure:2049: checking host system type
+configure:2064: result: i686-pc-linux-gnu
+configure:2102: checking for a BSD-compatible install
+configure:2158: result: /usr/bin/install -c
+configure:2169: checking whether build environment is sane
+configure:2212: result: yes
+configure:2240: checking for a thread-safe mkdir -p
+configure:2279: result: /usr/bin/mkdir -p
+configure:2292: checking for gawk
+configure:2308: found /usr/bin/gawk
+configure:2319: result: gawk
+configure:2330: checking whether make sets $(MAKE)
+configure:2351: result: yes
+configure:2553: checking for style of include used by make
+configure:2581: result: GNU
+configure:2651: checking for gcc
+configure:2667: found /usr/bin/gcc
+configure:2678: result: gcc
+configure:2916: checking for C compiler version
+configure:2923: gcc --version >&5
 gcc (GCC) 4.1.2 (Gentoo 4.1.2)
 Copyright (C) 2006 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-configure:2928: $? = 0
-configure:2935: gcc -v >&5
+configure:2926: $? = 0
+configure:2933: gcc -v >&5
 Using built-in specs.
 Target: i686-pc-linux-gnu
 Configured with: /var/tmp/portage/sys-devel/gcc-4.1.2/work/gcc-4.1.2/configure --prefix=/usr --bindir=/usr/i686-pc-linux-gnu/gcc-bin/4.1.2 --includedir=/usr/lib/gcc/i686-pc-linux-gnu/4.1.2/include --datadir=/usr/share/gcc-data/i686-pc-linux-gnu/4.1.2 --mandir=/usr/share/gcc-data/i686-pc-linux-gnu/4.1.2/man --infodir=/usr/share/gcc-data/i686-pc-linux-gnu/4.1.2/info --with-gxx-include-dir=/usr/lib/gcc/i686-pc-linux-gnu/4.1.2/include/g++-v4 --host=i686-pc-linux-gnu --build=i686-pc-linux-gnu --disable-altivec --enable-nls --without-included-gettext --with-system-zlib --disable-checking --disable-werror --enable-secureplt --disable-libunwind-exceptions --disable-multilib --enable-libmudflap --disable-libssp --disable-libgcj --enable-languages=c,c++,fortran --enable-shared --enable-threads=posix --enable-__cxa_atexit --enable-clocale=gnu
 Thread model: posix
 gcc version 4.1.2 (Gentoo 4.1.2)
-configure:2938: $? = 0
-configure:2945: gcc -V >&5
+configure:2936: $? = 0
+configure:2943: gcc -V >&5
 gcc: '-V' option must have argument
-configure:2948: $? = 1
-configure:2971: checking for C compiler default output file name
-configure:2998: gcc    conftest.c  >&5
-configure:3001: $? = 0
-configure:3039: result: a.out
-configure:3056: checking whether the C compiler works
-configure:3066: ./a.out
-configure:3069: $? = 0
-configure:3086: result: yes
-configure:3093: checking whether we are cross compiling
-configure:3095: result: no
-configure:3098: checking for suffix of executables
-configure:3105: gcc -o conftest    conftest.c  >&5
-configure:3108: $? = 0
-configure:3132: result: 
-configure:3138: checking for suffix of object files
-configure:3164: gcc -c   conftest.c >&5
-configure:3167: $? = 0
-configure:3190: result: o
-configure:3194: checking whether we are using the GNU C compiler
-configure:3223: gcc -c   conftest.c >&5
-configure:3229: $? = 0
-configure:3246: result: yes
-configure:3251: checking whether gcc accepts -g
-configure:3281: gcc -c -g  conftest.c >&5
-configure:3287: $? = 0
-configure:3386: result: yes
-configure:3403: checking for gcc option to accept ISO C89
-configure:3477: gcc  -c -g -O2  conftest.c >&5
-configure:3483: $? = 0
-configure:3506: result: none needed
-configure:3526: checking dependency style of gcc
-configure:3617: result: gcc3
-configure:3633: checking for library containing strerror
-configure:3674: gcc -o conftest -g -O2   conftest.c  >&5
-configure:3680: $? = 0
-configure:3708: result: none required
-configure:3764: checking for gcc
-configure:3791: result: gcc
-configure:4029: checking for C compiler version
-configure:4036: gcc --version >&5
+configure:2946: $? = 1
+configure:2969: checking for C compiler default output file name
+configure:2996: gcc    conftest.c  >&5
+configure:2999: $? = 0
+configure:3037: result: a.out
+configure:3054: checking whether the C compiler works
+configure:3064: ./a.out
+configure:3067: $? = 0
+configure:3084: result: yes
+configure:3091: checking whether we are cross compiling
+configure:3093: result: no
+configure:3096: checking for suffix of executables
+configure:3103: gcc -o conftest    conftest.c  >&5
+configure:3106: $? = 0
+configure:3130: result: 
+configure:3136: checking for suffix of object files
+configure:3162: gcc -c   conftest.c >&5
+configure:3165: $? = 0
+configure:3188: result: o
+configure:3192: checking whether we are using the GNU C compiler
+configure:3221: gcc -c   conftest.c >&5
+configure:3227: $? = 0
+configure:3244: result: yes
+configure:3249: checking whether gcc accepts -g
+configure:3279: gcc -c -g  conftest.c >&5
+configure:3285: $? = 0
+configure:3384: result: yes
+configure:3401: checking for gcc option to accept ISO C89
+configure:3475: gcc  -c -g -O2  conftest.c >&5
+configure:3481: $? = 0
+configure:3504: result: none needed
+configure:3524: checking dependency style of gcc
+configure:3615: result: gcc3
+configure:3631: checking for library containing strerror
+configure:3672: gcc -o conftest -g -O2   conftest.c  >&5
+configure:3678: $? = 0
+configure:3706: result: none required
+configure:3762: checking for gcc
+configure:3789: result: gcc
+configure:4027: checking for C compiler version
+configure:4034: gcc --version >&5
 gcc (GCC) 4.1.2 (Gentoo 4.1.2)
 Copyright (C) 2006 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-configure:4039: $? = 0
-configure:4046: gcc -v >&5
+configure:4037: $? = 0
+configure:4044: gcc -v >&5
 Using built-in specs.
 Target: i686-pc-linux-gnu
 Configured with: /var/tmp/portage/sys-devel/gcc-4.1.2/work/gcc-4.1.2/configure --prefix=/usr --bindir=/usr/i686-pc-linux-gnu/gcc-bin/4.1.2 --includedir=/usr/lib/gcc/i686-pc-linux-gnu/4.1.2/include --datadir=/usr/share/gcc-data/i686-pc-linux-gnu/4.1.2 --mandir=/usr/share/gcc-data/i686-pc-linux-gnu/4.1.2/man --infodir=/usr/share/gcc-data/i686-pc-linux-gnu/4.1.2/info --with-gxx-include-dir=/usr/lib/gcc/i686-pc-linux-gnu/4.1.2/include/g++-v4 --host=i686-pc-linux-gnu --build=i686-pc-linux-gnu --disable-altivec --enable-nls --without-included-gettext --with-system-zlib --disable-checking --disable-werror --enable-secureplt --disable-libunwind-exceptions --disable-multilib --enable-libmudflap --disable-libssp --disable-libgcj --enable-languages=c,c++,fortran --enable-shared --enable-threads=posix --enable-__cxa_atexit --enable-clocale=gnu
 Thread model: posix
 gcc version 4.1.2 (Gentoo 4.1.2)
-configure:4049: $? = 0
-configure:4056: gcc -V >&5
+configure:4047: $? = 0
+configure:4054: gcc -V >&5
 gcc: '-V' option must have argument
-configure:4059: $? = 1
-configure:4062: checking whether we are using the GNU C compiler
-configure:4114: result: yes
-configure:4119: checking whether gcc accepts -g
-configure:4254: result: yes
-configure:4271: checking for gcc option to accept ISO C89
-configure:4374: result: none needed
-configure:4394: checking dependency style of gcc
-configure:4485: result: gcc3
-configure:4548: checking for gcc
-configure:4575: result: gcc
-configure:4813: checking for C compiler version
-configure:4820: gcc --version >&5
+configure:4057: $? = 1
+configure:4060: checking whether we are using the GNU C compiler
+configure:4112: result: yes
+configure:4117: checking whether gcc accepts -g
+configure:4252: result: yes
+configure:4269: checking for gcc option to accept ISO C89
+configure:4372: result: none needed
+configure:4392: checking dependency style of gcc
+configure:4483: result: gcc3
+configure:4546: checking for gcc
+configure:4573: result: gcc
+configure:4811: checking for C compiler version
+configure:4818: gcc --version >&5
 gcc (GCC) 4.1.2 (Gentoo 4.1.2)
 Copyright (C) 2006 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-configure:4823: $? = 0
-configure:4830: gcc -v >&5
+configure:4821: $? = 0
+configure:4828: gcc -v >&5
 Using built-in specs.
 Target: i686-pc-linux-gnu
 Configured with: /var/tmp/portage/sys-devel/gcc-4.1.2/work/gcc-4.1.2/configure --prefix=/usr --bindir=/usr/i686-pc-linux-gnu/gcc-bin/4.1.2 --includedir=/usr/lib/gcc/i686-pc-linux-gnu/4.1.2/include --datadir=/usr/share/gcc-data/i686-pc-linux-gnu/4.1.2 --mandir=/usr/share/gcc-data/i686-pc-linux-gnu/4.1.2/man --infodir=/usr/share/gcc-data/i686-pc-linux-gnu/4.1.2/info --with-gxx-include-dir=/usr/lib/gcc/i686-pc-linux-gnu/4.1.2/include/g++-v4 --host=i686-pc-linux-gnu --build=i686-pc-linux-gnu --disable-altivec --enable-nls --without-included-gettext --with-system-zlib --disable-checking --disable-werror --enable-secureplt --disable-libunwind-exceptions --disable-multilib --enable-libmudflap --disable-libssp --disable-libgcj --enable-languages=c,c++,fortran --enable-shared --enable-threads=posix --enable-__cxa_atexit --enable-clocale=gnu
 Thread model: posix
 gcc version 4.1.2 (Gentoo 4.1.2)
-configure:4833: $? = 0
-configure:4840: gcc -V >&5
+configure:4831: $? = 0
+configure:4838: gcc -V >&5
 gcc: '-V' option must have argument
-configure:4843: $? = 1
-configure:4846: checking whether we are using the GNU C compiler
-configure:4898: result: yes
-configure:4903: checking whether gcc accepts -g
-configure:5038: result: yes
-configure:5055: checking for gcc option to accept ISO C89
-configure:5158: result: none needed
-configure:5178: checking dependency style of gcc
-configure:5269: result: gcc3
-configure:5292: checking how to run the C preprocessor
-configure:5332: gcc -E  conftest.c
-configure:5338: $? = 0
-configure:5369: gcc -E  conftest.c
+configure:4841: $? = 1
+configure:4844: checking whether we are using the GNU C compiler
+configure:4896: result: yes
+configure:4901: checking whether gcc accepts -g
+configure:5036: result: yes
+configure:5053: checking for gcc option to accept ISO C89
+configure:5156: result: none needed
+configure:5176: checking dependency style of gcc
+configure:5267: result: gcc3
+configure:5290: checking how to run the C preprocessor
+configure:5330: gcc -E  conftest.c
+configure:5336: $? = 0
+configure:5367: gcc -E  conftest.c
 conftest.c:10:28: error: ac_nonexistent.h: No such file or directory
-configure:5375: $? = 1
+configure:5373: $? = 1
 configure: failed program was:
 | /* confdefs.h.  */
 | #define PACKAGE_NAME ""
@@ -186,16 +186,16 @@ configure: failed program was:
 | #define PACKAGE_VERSION ""
 | #define PACKAGE_STRING ""
 | #define PACKAGE_BUGREPORT ""
-| #define PACKAGE "exalt"
+| #define PACKAGE "module_exalt"
 | #define VERSION "0.0.1"
 | /* end confdefs.h.  */
 | #include <ac_nonexistent.h>
-configure:5408: result: gcc -E
-configure:5437: gcc -E  conftest.c
-configure:5443: $? = 0
-configure:5474: gcc -E  conftest.c
+configure:5406: result: gcc -E
+configure:5435: gcc -E  conftest.c
+configure:5441: $? = 0
+configure:5472: gcc -E  conftest.c
 conftest.c:10:28: error: ac_nonexistent.h: No such file or directory
-configure:5480: $? = 1
+configure:5478: $? = 1
 configure: failed program was:
 | /* confdefs.h.  */
 | #define PACKAGE_NAME ""
@@ -203,123 +203,123 @@ configure: failed program was:
 | #define PACKAGE_VERSION ""
 | #define PACKAGE_STRING ""
 | #define PACKAGE_BUGREPORT ""
-| #define PACKAGE "exalt"
+| #define PACKAGE "module_exalt"
 | #define VERSION "0.0.1"
 | /* end confdefs.h.  */
 | #include <ac_nonexistent.h>
-configure:5518: checking for grep that handles long lines and -e
-configure:5592: result: /bin/grep
-configure:5597: checking for egrep
-configure:5675: result: /bin/grep -E
-configure:5680: checking for ANSI C header files
-configure:5710: gcc -c -g -O2  conftest.c >&5
-configure:5716: $? = 0
-configure:5815: gcc -o conftest -g -O2   conftest.c  >&5
-configure:5818: $? = 0
-configure:5824: ./conftest
-configure:5827: $? = 0
-configure:5844: result: yes
-configure:5854: checking for an ANSI C-conforming const
-configure:5929: gcc -c -g -O2  conftest.c >&5
-configure:5935: $? = 0
-configure:5950: result: yes
-configure:6032: checking for a sed that does not truncate output
-configure:6086: result: /bin/sed
-configure:6100: checking for ld used by gcc
-configure:6167: result: /usr/i686-pc-linux-gnu/bin/ld
-configure:6176: checking if the linker (/usr/i686-pc-linux-gnu/bin/ld) is GNU ld
-configure:6191: result: yes
-configure:6196: checking for /usr/i686-pc-linux-gnu/bin/ld option to reload object files
-configure:6203: result: -r
-configure:6221: checking for BSD-compatible nm
-configure:6270: result: /usr/bin/nm -B
-configure:6274: checking whether ln -s works
-configure:6278: result: yes
-configure:6285: checking how to recognise dependent libraries
-configure:6461: result: pass_all
-configure:6703: checking for sys/types.h
-configure:6724: gcc -c -g -O2  conftest.c >&5
-configure:6730: $? = 0
-configure:6746: result: yes
-configure:6703: checking for sys/stat.h
-configure:6724: gcc -c -g -O2  conftest.c >&5
-configure:6730: $? = 0
-configure:6746: result: yes
-configure:6703: checking for stdlib.h
-configure:6724: gcc -c -g -O2  conftest.c >&5
-configure:6730: $? = 0
-configure:6746: result: yes
-configure:6703: checking for string.h
-configure:6724: gcc -c -g -O2  conftest.c >&5
-configure:6730: $? = 0
-configure:6746: result: yes
-configure:6703: checking for memory.h
-configure:6724: gcc -c -g -O2  conftest.c >&5
-configure:6730: $? = 0
-configure:6746: result: yes
-configure:6703: checking for strings.h
-configure:6724: gcc -c -g -O2  conftest.c >&5
-configure:6730: $? = 0
-configure:6746: result: yes
-configure:6703: checking for inttypes.h
-configure:6724: gcc -c -g -O2  conftest.c >&5
-configure:6730: $? = 0
-configure:6746: result: yes
-configure:6703: checking for stdint.h
-configure:6724: gcc -c -g -O2  conftest.c >&5
-configure:6730: $? = 0
-configure:6746: result: yes
-configure:6703: checking for unistd.h
-configure:6724: gcc -c -g -O2  conftest.c >&5
-configure:6730: $? = 0
-configure:6746: result: yes
-configure:6773: checking dlfcn.h usability
-configure:6790: gcc -c -g -O2  conftest.c >&5
-configure:6796: $? = 0
-configure:6810: result: yes
-configure:6814: checking dlfcn.h presence
-configure:6829: gcc -E  conftest.c
-configure:6835: $? = 0
-configure:6849: result: yes
-configure:6877: checking for dlfcn.h
-configure:6885: result: yes
-configure:6956: checking for g++
-configure:6972: found /usr/bin/g++
-configure:6983: result: g++
-configure:7014: checking for C++ compiler version
-configure:7021: g++ --version >&5
+configure:5516: checking for grep that handles long lines and -e
+configure:5590: result: /bin/grep
+configure:5595: checking for egrep
+configure:5673: result: /bin/grep -E
+configure:5678: checking for ANSI C header files
+configure:5708: gcc -c -g -O2  conftest.c >&5
+configure:5714: $? = 0
+configure:5813: gcc -o conftest -g -O2   conftest.c  >&5
+configure:5816: $? = 0
+configure:5822: ./conftest
+configure:5825: $? = 0
+configure:5842: result: yes
+configure:5852: checking for an ANSI C-conforming const
+configure:5927: gcc -c -g -O2  conftest.c >&5
+configure:5933: $? = 0
+configure:5948: result: yes
+configure:6030: checking for a sed that does not truncate output
+configure:6084: result: /bin/sed
+configure:6098: checking for ld used by gcc
+configure:6165: result: /usr/i686-pc-linux-gnu/bin/ld
+configure:6174: checking if the linker (/usr/i686-pc-linux-gnu/bin/ld) is GNU ld
+configure:6189: result: yes
+configure:6194: checking for /usr/i686-pc-linux-gnu/bin/ld option to reload object files
+configure:6201: result: -r
+configure:6219: checking for BSD-compatible nm
+configure:6268: result: /usr/bin/nm -B
+configure:6272: checking whether ln -s works
+configure:6276: result: yes
+configure:6283: checking how to recognise dependent libraries
+configure:6459: result: pass_all
+configure:6701: checking for sys/types.h
+configure:6722: gcc -c -g -O2  conftest.c >&5
+configure:6728: $? = 0
+configure:6744: result: yes
+configure:6701: checking for sys/stat.h
+configure:6722: gcc -c -g -O2  conftest.c >&5
+configure:6728: $? = 0
+configure:6744: result: yes
+configure:6701: checking for stdlib.h
+configure:6722: gcc -c -g -O2  conftest.c >&5
+configure:6728: $? = 0
+configure:6744: result: yes
+configure:6701: checking for string.h
+configure:6722: gcc -c -g -O2  conftest.c >&5
+configure:6728: $? = 0
+configure:6744: result: yes
+configure:6701: checking for memory.h
+configure:6722: gcc -c -g -O2  conftest.c >&5
+configure:6728: $? = 0
+configure:6744: result: yes
+configure:6701: checking for strings.h
+configure:6722: gcc -c -g -O2  conftest.c >&5
+configure:6728: $? = 0
+configure:6744: result: yes
+configure:6701: checking for inttypes.h
+configure:6722: gcc -c -g -O2  conftest.c >&5
+configure:6728: $? = 0
+configure:6744: result: yes
+configure:6701: checking for stdint.h
+configure:6722: gcc -c -g -O2  conftest.c >&5
+configure:6728: $? = 0
+configure:6744: result: yes
+configure:6701: checking for unistd.h
+configure:6722: gcc -c -g -O2  conftest.c >&5
+configure:6728: $? = 0
+configure:6744: result: yes
+configure:6771: checking dlfcn.h usability
+configure:6788: gcc -c -g -O2  conftest.c >&5
+configure:6794: $? = 0
+configure:6808: result: yes
+configure:6812: checking dlfcn.h presence
+configure:6827: gcc -E  conftest.c
+configure:6833: $? = 0
+configure:6847: result: yes
+configure:6875: checking for dlfcn.h
+configure:6883: result: yes
+configure:6954: checking for g++
+configure:6970: found /usr/bin/g++
+configure:6981: result: g++
+configure:7012: checking for C++ compiler version
+configure:7019: g++ --version >&5
 g++ (GCC) 4.1.2 (Gentoo 4.1.2)
 Copyright (C) 2006 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-configure:7024: $? = 0
-configure:7031: g++ -v >&5
+configure:7022: $? = 0
+configure:7029: g++ -v >&5
 Using built-in specs.
 Target: i686-pc-linux-gnu
 Configured with: /var/tmp/portage/sys-devel/gcc-4.1.2/work/gcc-4.1.2/configure --prefix=/usr --bindir=/usr/i686-pc-linux-gnu/gcc-bin/4.1.2 --includedir=/usr/lib/gcc/i686-pc-linux-gnu/4.1.2/include --datadir=/usr/share/gcc-data/i686-pc-linux-gnu/4.1.2 --mandir=/usr/share/gcc-data/i686-pc-linux-gnu/4.1.2/man --infodir=/usr/share/gcc-data/i686-pc-linux-gnu/4.1.2/info --with-gxx-include-dir=/usr/lib/gcc/i686-pc-linux-gnu/4.1.2/include/g++-v4 --host=i686-pc-linux-gnu --build=i686-pc-linux-gnu --disable-altivec --enable-nls --without-included-gettext --with-system-zlib --disable-checking --disable-werror --enable-secureplt --disable-libunwind-exceptions --disable-multilib --enable-libmudflap --disable-libssp --disable-libgcj --enable-languages=c,c++,fortran --enable-shared --enable-threads=posix --enable-__cxa_atexit --enable-clocale=gnu
 Thread model: posix
 gcc version 4.1.2 (Gentoo 4.1.2)
-configure:7034: $? = 0
-configure:7041: g++ -V >&5
+configure:7032: $? = 0
+configure:7039: g++ -V >&5
 g++: '-V' option must have argument
-configure:7044: $? = 1
-configure:7047: checking whether we are using the GNU C++ compiler
-configure:7076: g++ -c   conftest.cpp >&5
-configure:7082: $? = 0
-configure:7099: result: yes
-configure:7104: checking whether g++ accepts -g
-configure:7134: g++ -c -g  conftest.cpp >&5
-configure:7140: $? = 0
-configure:7239: result: yes
-configure:7264: checking dependency style of g++
-configure:7355: result: gcc3
-configure:7380: checking how to run the C++ preprocessor
-configure:7416: g++ -E  conftest.cpp
-configure:7422: $? = 0
-configure:7453: g++ -E  conftest.cpp
+configure:7042: $? = 1
+configure:7045: checking whether we are using the GNU C++ compiler
+configure:7074: g++ -c   conftest.cpp >&5
+configure:7080: $? = 0
+configure:7097: result: yes
+configure:7102: checking whether g++ accepts -g
+configure:7132: g++ -c -g  conftest.cpp >&5
+configure:7138: $? = 0
+configure:7237: result: yes
+configure:7262: checking dependency style of g++
+configure:7353: result: gcc3
+configure:7378: checking how to run the C++ preprocessor
+configure:7414: g++ -E  conftest.cpp
+configure:7420: $? = 0
+configure:7451: g++ -E  conftest.cpp
 conftest.cpp:21:28: error: ac_nonexistent.h: No such file or directory
-configure:7459: $? = 1
+configure:7457: $? = 1
 configure: failed program was:
 | /* confdefs.h.  */
 | #define PACKAGE_NAME ""
@@ -327,7 +327,7 @@ configure: failed program was:
 | #define PACKAGE_VERSION ""
 | #define PACKAGE_STRING ""
 | #define PACKAGE_BUGREPORT ""
-| #define PACKAGE "exalt"
+| #define PACKAGE "module_exalt"
 | #define VERSION "0.0.1"
 | #define STDC_HEADERS 1
 | #define HAVE_SYS_TYPES_H 1
@@ -342,12 +342,12 @@ configure: failed program was:
 | #define HAVE_DLFCN_H 1
 | /* end confdefs.h.  */
 | #include <ac_nonexistent.h>
-configure:7492: result: g++ -E
-configure:7521: g++ -E  conftest.cpp
-configure:7527: $? = 0
-configure:7558: g++ -E  conftest.cpp
+configure:7490: result: g++ -E
+configure:7519: g++ -E  conftest.cpp
+configure:7525: $? = 0
+configure:7556: g++ -E  conftest.cpp
 conftest.cpp:21:28: error: ac_nonexistent.h: No such file or directory
-configure:7564: $? = 1
+configure:7562: $? = 1
 configure: failed program was:
 | /* confdefs.h.  */
 | #define PACKAGE_NAME ""
@@ -355,7 +355,7 @@ configure: failed program was:
 | #define PACKAGE_VERSION ""
 | #define PACKAGE_STRING ""
 | #define PACKAGE_BUGREPORT ""
-| #define PACKAGE "exalt"
+| #define PACKAGE "module_exalt"
 | #define VERSION "0.0.1"
 | #define STDC_HEADERS 1
 | #define HAVE_SYS_TYPES_H 1
@@ -370,39 +370,39 @@ configure: failed program was:
 | #define HAVE_DLFCN_H 1
 | /* end confdefs.h.  */
 | #include <ac_nonexistent.h>
-configure:7657: checking for g77
-configure:7687: result: no
-configure:7657: checking for xlf
-configure:7687: result: no
-configure:7657: checking for f77
-configure:7687: result: no
-configure:7657: checking for frt
-configure:7687: result: no
-configure:7657: checking for pgf77
-configure:7687: result: no
-configure:7657: checking for cf77
-configure:7687: result: no
-configure:7657: checking for fort77
-configure:7687: result: no
-configure:7657: checking for fl32
-configure:7687: result: no
-configure:7657: checking for af77
-configure:7687: result: no
-configure:7657: checking for xlf90
-configure:7687: result: no
-configure:7657: checking for f90
-configure:7687: result: no
-configure:7657: checking for pgf90
-configure:7687: result: no
-configure:7657: checking for pghpf
-configure:7687: result: no
-configure:7657: checking for epcf90
-configure:7687: result: no
-configure:7657: checking for gfortran
-configure:7673: found /usr/bin/gfortran
-configure:7684: result: gfortran
-configure:7714: checking for Fortran 77 compiler version
-configure:7721: gfortran --version >&5
+configure:7655: checking for g77
+configure:7685: result: no
+configure:7655: checking for xlf
+configure:7685: result: no
+configure:7655: checking for f77
+configure:7685: result: no
+configure:7655: checking for frt
+configure:7685: result: no
+configure:7655: checking for pgf77
+configure:7685: result: no
+configure:7655: checking for cf77
+configure:7685: result: no
+configure:7655: checking for fort77
+configure:7685: result: no
+configure:7655: checking for fl32
+configure:7685: result: no
+configure:7655: checking for af77
+configure:7685: result: no
+configure:7655: checking for xlf90
+configure:7685: result: no
+configure:7655: checking for f90
+configure:7685: result: no
+configure:7655: checking for pgf90
+configure:7685: result: no
+configure:7655: checking for pghpf
+configure:7685: result: no
+configure:7655: checking for epcf90
+configure:7685: result: no
+configure:7655: checking for gfortran
+configure:7671: found /usr/bin/gfortran
+configure:7682: result: gfortran
+configure:7712: checking for Fortran 77 compiler version
+configure:7719: gfortran --version >&5
 GNU Fortran 95 (GCC) 4.1.2 (Gentoo 4.1.2)
 Copyright (C) 2006 Free Software Foundation, Inc.
 
@@ -411,166 +411,166 @@ You may redistribute copies of GNU Fortran
 under the terms of the GNU General Public License.
 For more information about these matters, see the file named COPYING
 
-configure:7724: $? = 0
-configure:7731: gfortran -v >&5
+configure:7722: $? = 0
+configure:7729: gfortran -v >&5
 Using built-in specs.
 Target: i686-pc-linux-gnu
 Configured with: /var/tmp/portage/sys-devel/gcc-4.1.2/work/gcc-4.1.2/configure --prefix=/usr --bindir=/usr/i686-pc-linux-gnu/gcc-bin/4.1.2 --includedir=/usr/lib/gcc/i686-pc-linux-gnu/4.1.2/include --datadir=/usr/share/gcc-data/i686-pc-linux-gnu/4.1.2 --mandir=/usr/share/gcc-data/i686-pc-linux-gnu/4.1.2/man --infodir=/usr/share/gcc-data/i686-pc-linux-gnu/4.1.2/info --with-gxx-include-dir=/usr/lib/gcc/i686-pc-linux-gnu/4.1.2/include/g++-v4 --host=i686-pc-linux-gnu --build=i686-pc-linux-gnu --disable-altivec --enable-nls --without-included-gettext --with-system-zlib --disable-checking --disable-werror --enable-secureplt --disable-libunwind-exceptions --disable-multilib --enable-libmudflap --disable-libssp --disable-libgcj --enable-languages=c,c++,fortran --enable-shared --enable-threads=posix --enable-__cxa_atexit --enable-clocale=gnu
 Thread model: posix
 gcc version 4.1.2 (Gentoo 4.1.2)
-configure:7734: $? = 0
-configure:7741: gfortran -V >&5
+configure:7732: $? = 0
+configure:7739: gfortran -V >&5
 gfortran: '-V' option must have argument
-configure:7744: $? = 1
-configure:7752: checking whether we are using the GNU Fortran 77 compiler
-configure:7771: gfortran -c  conftest.F >&5
-configure:7777: $? = 0
-configure:7794: result: yes
-configure:7800: checking whether gfortran accepts -g
-configure:7817: gfortran -c -g conftest.f >&5
-configure:7823: $? = 0
-configure:7839: result: yes
-configure:7869: checking the maximum length of command line arguments
-configure:7978: result: 32768
-configure:7989: checking command to parse /usr/bin/nm -B output from gcc object
-configure:8094: gcc -c -g -O2  conftest.c >&5
-configure:8097: $? = 0
-configure:8101: /usr/bin/nm -B conftest.o \| sed -n -e 's/^.*[ 	]\([ABCDGIRSTW][ABCDGIRSTW]*\)[ 	][ 	]*\([_A-Za-z][_A-Za-z0-9]*\)$/\1 \2 \2/p' \> conftest.nm
-configure:8104: $? = 0
-configure:8156: gcc -o conftest -g -O2   conftest.c conftstm.o >&5
-configure:8159: $? = 0
-configure:8197: result: ok
-configure:8201: checking for objdir
-configure:8216: result: .libs
-configure:8308: checking for ar
-configure:8324: found /usr/bin/ar
-configure:8335: result: ar
-configure:8404: checking for ranlib
-configure:8420: found /usr/bin/ranlib
-configure:8431: result: ranlib
-configure:8500: checking for strip
-configure:8516: found /usr/bin/strip
-configure:8527: result: strip
-configure:8764: checking for correct ltmain.sh version
-configure:8814: result: yes
-configure:8874: checking if gcc supports -fno-rtti -fno-exceptions
-configure:8892: gcc -c -g -O2  -fno-rtti -fno-exceptions conftest.c >&5
+configure:7742: $? = 1
+configure:7750: checking whether we are using the GNU Fortran 77 compiler
+configure:7769: gfortran -c  conftest.F >&5
+configure:7775: $? = 0
+configure:7792: result: yes
+configure:7798: checking whether gfortran accepts -g
+configure:7815: gfortran -c -g conftest.f >&5
+configure:7821: $? = 0
+configure:7837: result: yes
+configure:7867: checking the maximum length of command line arguments
+configure:7976: result: 32768
+configure:7987: checking command to parse /usr/bin/nm -B output from gcc object
+configure:8092: gcc -c -g -O2  conftest.c >&5
+configure:8095: $? = 0
+configure:8099: /usr/bin/nm -B conftest.o \| sed -n -e 's/^.*[ 	]\([ABCDGIRSTW][ABCDGIRSTW]*\)[ 	][ 	]*\([_A-Za-z][_A-Za-z0-9]*\)$/\1 \2 \2/p' \> conftest.nm
+configure:8102: $? = 0
+configure:8154: gcc -o conftest -g -O2   conftest.c conftstm.o >&5
+configure:8157: $? = 0
+configure:8195: result: ok
+configure:8199: checking for objdir
+configure:8214: result: .libs
+configure:8306: checking for ar
+configure:8322: found /usr/bin/ar
+configure:8333: result: ar
+configure:8402: checking for ranlib
+configure:8418: found /usr/bin/ranlib
+configure:8429: result: ranlib
+configure:8498: checking for strip
+configure:8514: found /usr/bin/strip
+configure:8525: result: strip
+configure:8762: checking for correct ltmain.sh version
+configure:8812: result: yes
+configure:8872: checking if gcc supports -fno-rtti -fno-exceptions
+configure:8890: gcc -c -g -O2  -fno-rtti -fno-exceptions conftest.c >&5
 cc1: warning: command line option "-fno-rtti" is valid for C++/ObjC++ but not for C
-configure:8896: $? = 0
-configure:8909: result: no
-configure:8924: checking for gcc option to produce PIC
-configure:9134: result: -fPIC
-configure:9142: checking if gcc PIC flag -fPIC works
-configure:9160: gcc -c -g -O2  -fPIC -DPIC conftest.c >&5
-configure:9164: $? = 0
-configure:9177: result: yes
-configure:9205: checking if gcc static flag -static works
-configure:9233: result: yes
-configure:9243: checking if gcc supports -c -o file.o
-configure:9264: gcc -c -g -O2  -o out/conftest2.o conftest.c >&5
-configure:9268: $? = 0
-configure:9290: result: yes
-configure:9316: checking whether the gcc linker (/usr/i686-pc-linux-gnu/bin/ld) supports shared libraries
-configure:10270: result: yes
-configure:10291: checking whether -lc should be explicitly linked in
-configure:10296: gcc -c -g -O2  conftest.c >&5
-configure:10299: $? = 0
-configure:10314: gcc -shared conftest.o  -v -Wl,-soname -Wl,conftest -o conftest 2\>\&1 \| grep  -lc  \>/dev/null 2\>\&1
-configure:10317: $? = 0
-configure:10329: result: no
-configure:10337: checking dynamic linker characteristics
-configure:10962: result: GNU/Linux ld.so
-configure:10971: checking how to hardcode library paths into programs
-configure:10996: result: immediate
-configure:11010: checking whether stripping libraries is possible
-configure:11015: result: yes
-configure:11816: checking if libtool supports shared libraries
-configure:11818: result: yes
-configure:11821: checking whether to build shared libraries
-configure:11842: result: yes
-configure:11845: checking whether to build static libraries
-configure:11849: result: yes
-configure:11941: creating libtool
-configure:12529: checking for ld used by g++
-configure:12596: result: /usr/i686-pc-linux-gnu/bin/ld
-configure:12605: checking if the linker (/usr/i686-pc-linux-gnu/bin/ld) is GNU ld
-configure:12620: result: yes
-configure:12671: checking whether the g++ linker (/usr/i686-pc-linux-gnu/bin/ld) supports shared libraries
-configure:13605: result: yes
-configure:13623: g++ -c -g -O2  conftest.cpp >&5
-configure:13626: $? = 0
-configure:13745: checking for g++ option to produce PIC
-configure:14019: result: -fPIC
-configure:14027: checking if g++ PIC flag -fPIC works
-configure:14045: g++ -c -g -O2  -fPIC -DPIC conftest.cpp >&5
-configure:14049: $? = 0
-configure:14062: result: yes
-configure:14090: checking if g++ static flag -static works
-configure:14118: result: yes
-configure:14128: checking if g++ supports -c -o file.o
-configure:14149: g++ -c -g -O2  -o out/conftest2.o conftest.cpp >&5
-configure:14153: $? = 0
-configure:14175: result: yes
-configure:14201: checking whether the g++ linker (/usr/i686-pc-linux-gnu/bin/ld) supports shared libraries
-configure:14226: result: yes
-configure:14293: checking dynamic linker characteristics
-configure:14918: result: GNU/Linux ld.so
-configure:14927: checking how to hardcode library paths into programs
-configure:14952: result: immediate
-configure:15478: checking if libtool supports shared libraries
-configure:15480: result: yes
-configure:15483: checking whether to build shared libraries
-configure:15503: result: yes
-configure:15506: checking whether to build static libraries
-configure:15510: result: yes
-configure:15520: checking for gfortran option to produce PIC
-configure:15730: result: -fPIC
-configure:15738: checking if gfortran PIC flag -fPIC works
-configure:15756: gfortran -c -g -O2 -fPIC conftest.f >&5
-configure:15760: $? = 0
-configure:15773: result: yes
-configure:15801: checking if gfortran static flag -static works
-configure:15829: result: yes
-configure:15839: checking if gfortran supports -c -o file.o
-configure:15860: gfortran -c -g -O2 -o out/conftest2.o conftest.f >&5
-configure:15864: $? = 0
-configure:15886: result: yes
-configure:15912: checking whether the gfortran linker (/usr/i686-pc-linux-gnu/bin/ld) supports shared libraries
-configure:16846: result: yes
-configure:16913: checking dynamic linker characteristics
-configure:17538: result: GNU/Linux ld.so
-configure:17547: checking how to hardcode library paths into programs
-configure:17572: result: immediate
-configure:21171: checking whether NLS is requested
-configure:21180: result: yes
-configure:21218: checking for msgfmt
+configure:8894: $? = 0
+configure:8907: result: no
+configure:8922: checking for gcc option to produce PIC
+configure:9132: result: -fPIC
+configure:9140: checking if gcc PIC flag -fPIC works
+configure:9158: gcc -c -g -O2  -fPIC -DPIC conftest.c >&5
+configure:9162: $? = 0
+configure:9175: result: yes
+configure:9203: checking if gcc static flag -static works
+configure:9231: result: yes
+configure:9241: checking if gcc supports -c -o file.o
+configure:9262: gcc -c -g -O2  -o out/conftest2.o conftest.c >&5
+configure:9266: $? = 0
+configure:9288: result: yes
+configure:9314: checking whether the gcc linker (/usr/i686-pc-linux-gnu/bin/ld) supports shared libraries
+configure:10268: result: yes
+configure:10289: checking whether -lc should be explicitly linked in
+configure:10294: gcc -c -g -O2  conftest.c >&5
+configure:10297: $? = 0
+configure:10312: gcc -shared conftest.o  -v -Wl,-soname -Wl,conftest -o conftest 2\>\&1 \| grep  -lc  \>/dev/null 2\>\&1
+configure:10315: $? = 0
+configure:10327: result: no
+configure:10335: checking dynamic linker characteristics
+configure:10960: result: GNU/Linux ld.so
+configure:10969: checking how to hardcode library paths into programs
+configure:10994: result: immediate
+configure:11008: checking whether stripping libraries is possible
+configure:11013: result: yes
+configure:11814: checking if libtool supports shared libraries
+configure:11816: result: yes
+configure:11819: checking whether to build shared libraries
+configure:11840: result: yes
+configure:11843: checking whether to build static libraries
+configure:11847: result: yes
+configure:11939: creating libtool
+configure:12527: checking for ld used by g++
+configure:12594: result: /usr/i686-pc-linux-gnu/bin/ld
+configure:12603: checking if the linker (/usr/i686-pc-linux-gnu/bin/ld) is GNU ld
+configure:12618: result: yes
+configure:12669: checking whether the g++ linker (/usr/i686-pc-linux-gnu/bin/ld) supports shared libraries
+configure:13603: result: yes
+configure:13621: g++ -c -g -O2  conftest.cpp >&5
+configure:13624: $? = 0
+configure:13743: checking for g++ option to produce PIC
+configure:14017: result: -fPIC
+configure:14025: checking if g++ PIC flag -fPIC works
+configure:14043: g++ -c -g -O2  -fPIC -DPIC conftest.cpp >&5
+configure:14047: $? = 0
+configure:14060: result: yes
+configure:14088: checking if g++ static flag -static works
+configure:14116: result: yes
+configure:14126: checking if g++ supports -c -o file.o
+configure:14147: g++ -c -g -O2  -o out/conftest2.o conftest.cpp >&5
+configure:14151: $? = 0
+configure:14173: result: yes
+configure:14199: checking whether the g++ linker (/usr/i686-pc-linux-gnu/bin/ld) supports shared libraries
+configure:14224: result: yes
+configure:14291: checking dynamic linker characteristics
+configure:14916: result: GNU/Linux ld.so
+configure:14925: checking how to hardcode library paths into programs
+configure:14950: result: immediate
+configure:15476: checking if libtool supports shared libraries
+configure:15478: result: yes
+configure:15481: checking whether to build shared libraries
+configure:15501: result: yes
+configure:15504: checking whether to build static libraries
+configure:15508: result: yes
+configure:15518: checking for gfortran option to produce PIC
+configure:15728: result: -fPIC
+configure:15736: checking if gfortran PIC flag -fPIC works
+configure:15754: gfortran -c -g -O2 -fPIC conftest.f >&5
+configure:15758: $? = 0
+configure:15771: result: yes
+configure:15799: checking if gfortran static flag -static works
+configure:15827: result: yes
+configure:15837: checking if gfortran supports -c -o file.o
+configure:15858: gfortran -c -g -O2 -o out/conftest2.o conftest.f >&5
+configure:15862: $? = 0
+configure:15884: result: yes
+configure:15910: checking whether the gfortran linker (/usr/i686-pc-linux-gnu/bin/ld) supports shared libraries
+configure:16844: result: yes
+configure:16911: checking dynamic linker characteristics
+configure:17536: result: GNU/Linux ld.so
+configure:17545: checking how to hardcode library paths into programs
+configure:17570: result: immediate
+configure:21169: checking whether NLS is requested
+configure:21178: result: yes
+configure:21216: checking for msgfmt
 configure: trying /usr/bin/msgfmt...
 0 translated messages.
-configure:21250: result: /usr/bin/msgfmt
-configure:21259: checking for gmsgfmt
-configure:21277: found /usr/bin/gmsgfmt
-configure:21290: result: /usr/bin/gmsgfmt
-configure:21341: checking for xgettext
+configure:21248: result: /usr/bin/msgfmt
+configure:21257: checking for gmsgfmt
+configure:21275: found /usr/bin/gmsgfmt
+configure:21288: result: /usr/bin/gmsgfmt
+configure:21339: checking for xgettext
 configure: trying /usr/bin/xgettext...
 /usr/bin/xgettext: warning: file `/dev/null' extension `' is unknown; will try C
-configure:21373: result: /usr/bin/xgettext
-configure:21419: checking for msgmerge
+configure:21371: result: /usr/bin/xgettext
+configure:21417: checking for msgmerge
 configure: trying /usr/bin/msgmerge...
-configure:21450: result: /usr/bin/msgmerge
-configure:21504: checking for ld used by GCC
-configure:21568: result: /usr/i686-pc-linux-gnu/bin/ld
-configure:21577: checking if the linker (/usr/i686-pc-linux-gnu/bin/ld) is GNU ld
-configure:21590: result: yes
-configure:21597: checking for shared library run path origin
-configure:21610: result: done
-configure:22067: checking for CFPreferencesCopyAppValue
-configure:22095: gcc -o conftest -g -O2   conftest.c  -Wl,-framework -Wl,CoreFoundation >&5
+configure:21448: result: /usr/bin/msgmerge
+configure:21502: checking for ld used by GCC
+configure:21566: result: /usr/i686-pc-linux-gnu/bin/ld
+configure:21575: checking if the linker (/usr/i686-pc-linux-gnu/bin/ld) is GNU ld
+configure:21588: result: yes
+configure:21595: checking for shared library run path origin
+configure:21608: result: done
+configure:22065: checking for CFPreferencesCopyAppValue
+configure:22093: gcc -o conftest -g -O2   conftest.c  -Wl,-framework -Wl,CoreFoundation >&5
 conftest.c:21:42: error: CoreFoundation/CFPreferences.h: No such file or directory
 conftest.c: In function 'main':
 conftest.c:25: error: 'NULL' undeclared (first use in this function)
 conftest.c:25: error: (Each undeclared identifier is reported only once
 conftest.c:25: error: for each function it appears in.)
-configure:22101: $? = 1
+configure:22099: $? = 1
 configure: failed program was:
 | /* confdefs.h.  */
 | #define PACKAGE_NAME ""
@@ -578,7 +578,7 @@ configure: failed program was:
 | #define PACKAGE_VERSION ""
 | #define PACKAGE_STRING ""
 | #define PACKAGE_BUGREPORT ""
-| #define PACKAGE "exalt"
+| #define PACKAGE "module_exalt"
 | #define VERSION "0.0.1"
 | #define STDC_HEADERS 1
 | #define HAVE_SYS_TYPES_H 1
@@ -600,11 +600,11 @@ configure: failed program was:
 |   ;
 |   return 0;
 | }
-configure:22119: result: no
-configure:22128: checking for CFLocaleCopyCurrent
-configure:22156: gcc -o conftest -g -O2   conftest.c  -Wl,-framework -Wl,CoreFoundation >&5
+configure:22117: result: no
+configure:22126: checking for CFLocaleCopyCurrent
+configure:22154: gcc -o conftest -g -O2   conftest.c  -Wl,-framework -Wl,CoreFoundation >&5
 conftest.c:21:37: error: CoreFoundation/CFLocale.h: No such file or directory
-configure:22162: $? = 1
+configure:22160: $? = 1
 configure: failed program was:
 | /* confdefs.h.  */
 | #define PACKAGE_NAME ""
@@ -612,7 +612,7 @@ configure: failed program was:
 | #define PACKAGE_VERSION ""
 | #define PACKAGE_STRING ""
 | #define PACKAGE_BUGREPORT ""
-| #define PACKAGE "exalt"
+| #define PACKAGE "module_exalt"
 | #define VERSION "0.0.1"
 | #define STDC_HEADERS 1
 | #define HAVE_SYS_TYPES_H 1
@@ -634,40 +634,40 @@ configure: failed program was:
 |   ;
 |   return 0;
 | }
-configure:22180: result: no
-configure:22231: checking for GNU gettext in libc
-configure:22261: gcc -o conftest -g -O2   conftest.c  >&5
-configure:22267: $? = 0
-configure:22285: result: yes
-configure:23001: checking whether to use NLS
-configure:23003: result: yes
-configure:23006: checking where the gettext function comes from
-configure:23017: result: libc
-configure:23266: checking for pkg-config
-configure:23284: found /usr/bin/pkg-config
-configure:23296: result: /usr/bin/pkg-config
-configure:23325: checking pkg-config is at least version 0.9.0
-configure:23328: result: yes
-configure:23339: checking for EDJE
-configure:23347: $PKG_CONFIG --exists --print-errors "edje >= 0.5.0"
-configure:23350: $? = 0
-configure:23365: $PKG_CONFIG --exists --print-errors "edje >= 0.5.0"
-configure:23368: $? = 0
-configure:23444: result: yes
-configure:23478: checking for enlightenment-config
-configure:23496: found /usr/bin/enlightenment-config
-configure:23509: result: /usr/bin/enlightenment-config
-configure:23529: checking for EXALT
-configure:23539: $PKG_CONFIG --exists --print-errors "
+configure:22178: result: no
+configure:22229: checking for GNU gettext in libc
+configure:22259: gcc -o conftest -g -O2   conftest.c  >&5
+configure:22265: $? = 0
+configure:22283: result: yes
+configure:22999: checking whether to use NLS
+configure:23001: result: yes
+configure:23004: checking where the gettext function comes from
+configure:23015: result: libc
+configure:23268: checking for pkg-config
+configure:23286: found /usr/bin/pkg-config
+configure:23298: result: /usr/bin/pkg-config
+configure:23327: checking pkg-config is at least version 0.9.0
+configure:23330: result: yes
+configure:23341: checking for EDJE
+configure:23349: $PKG_CONFIG --exists --print-errors "edje >= 0.5.0"
+configure:23352: $? = 0
+configure:23367: $PKG_CONFIG --exists --print-errors "edje >= 0.5.0"
+configure:23370: $? = 0
+configure:23446: result: yes
+configure:23480: checking for enlightenment-config
+configure:23498: found /usr/bin/enlightenment-config
+configure:23511: result: /usr/bin/enlightenment-config
+configure:23531: checking for EXALT
+configure:23541: $PKG_CONFIG --exists --print-errors "
    exalt >= 0.0.1
 "
-configure:23544: $? = 0
-configure:23563: $PKG_CONFIG --exists --print-errors "
+configure:23546: $? = 0
+configure:23565: $PKG_CONFIG --exists --print-errors "
    exalt >= 0.0.1
 "
-configure:23568: $? = 0
-configure:23654: result: yes
-configure:23812: creating ./config.status
+configure:23570: $? = 0
+configure:23656: result: yes
+configure:23814: creating ./config.status
 
 ## ---------------------- ##
 ## Running config.status. ##
@@ -684,16 +684,15 @@ generated by GNU Autoconf 2.61.  Invocation command line was
 
 on Watchwolf
 
-config.status:706: creating Makefile
-config.status:706: creating e_modules-exalt.spec
-config.status:706: creating po/Makefile
-config.status:706: creating data/Makefile
-config.status:706: creating data/icons/Makefile
-config.status:706: creating config.h
-config.status:941: config.h is unchanged
-config.status:987: executing depfiles commands
-config.status:987: executing po-directories commands
-config.status:987: executing default commands
+config.status:705: creating Makefile
+config.status:705: creating e_modules-exalt.spec
+config.status:705: creating po/Makefile
+config.status:705: creating data/Makefile
+config.status:705: creating data/icons/Makefile
+config.status:705: creating config.h
+config.status:986: executing depfiles commands
+config.status:986: executing po-directories commands
+config.status:986: executing default commands
 
 ## ---------------- ##
 ## Cache variables. ##
@@ -833,7 +832,7 @@ pkg_cv_EXALT_LIBS='-L/usr/local/lib -lexalt  '
 ## ----------------- ##
 
 ACLOCAL='${SHELL} /home/watchwolf/Projects/C/exalt/exalt_module/missing --run aclocal-1.10'
-ALL_LINGUAS='it sv'
+ALL_LINGUAS='fr'
 AMDEPBACKSLASH='\'
 AMDEP_FALSE='#'
 AMDEP_TRUE=''
@@ -888,7 +887,6 @@ LIBOBJS=''
 LIBS=''
 LIBTOOL='$(SHELL) $(top_builddir)/libtool'
 LN_S='ln -s'
-LOCALEDIR='/home/watchwolf/.e/e/locale'
 LTLIBICONV='-liconv'
 LTLIBINTL=''
 LTLIBOBJS=''
@@ -898,7 +896,7 @@ MSGFMT='/usr/bin/msgfmt'
 MSGFMT_015='/usr/bin/msgfmt'
 MSGMERGE='/usr/bin/msgmerge'
 OBJEXT='o'
-PACKAGE='exalt'
+PACKAGE='module_exalt'
 PACKAGE_BUGREPORT=''
 PACKAGE_NAME=''
 PACKAGE_STRING=''
@@ -928,14 +926,14 @@ am__leading_dot='.'
 am__quote=''
 am__tar='${AMTAR} chof - "$$tardir"'
 am__untar='${AMTAR} xf -'
-bindir='/home/watchwolf/.e/e/bin'
+bindir='/usr/local/bin'
 build='i686-pc-linux-gnu'
 build_alias=''
 build_cpu='i686'
 build_os='linux-gnu'
 build_vendor='pc'
-datadir='/home/watchwolf/.e/e/modules/exalt'
-datarootdir='/home/watchwolf/.e/e'
+datadir='/home/watchwolf/.e/e/modules/module_exalt'
+datarootdir='${prefix}/share'
 docdir='${datarootdir}/doc/${PACKAGE}'
 dvidir='${docdir}'
 e_cflags='-I/usr/include/enlightenment -DUSE_E_CONFIG_H -I/usr/include/efreet'
@@ -952,15 +950,15 @@ htmldir='${docdir}'
 includedir='${prefix}/include'
 infodir='${datarootdir}/info'
 install_sh='$(SHELL) /home/watchwolf/Projects/C/exalt/exalt_module/install-sh'
-libdir='/home/watchwolf/.e/e/lib'
+libdir='/usr/local/lib'
 libexecdir='${exec_prefix}/libexec'
-localedir='/home/watchwolf/.e/e/locale'
+localedir='/home/watchwolf/.e/e/modules/module_exalt'
 localstatedir='${prefix}/var'
 mandir='${datarootdir}/man'
 mkdir_p='/usr/bin/mkdir -p'
 oldincludedir='/usr/include'
 pdfdir='${docdir}'
-prefix='/home/watchwolf/.e/e'
+prefix='/usr/local'
 program_transform_name='s,x,x,'
 psdir='${docdir}'
 sbindir='${exec_prefix}/sbin'
@@ -977,7 +975,7 @@ target_alias=''
 #define PACKAGE_VERSION ""
 #define PACKAGE_STRING ""
 #define PACKAGE_BUGREPORT ""
-#define PACKAGE "exalt"
+#define PACKAGE "module_exalt"
 #define VERSION "0.0.1"
 #define STDC_HEADERS 1
 #define HAVE_SYS_TYPES_H 1
@@ -994,44 +992,9 @@ target_alias=''
 #define HAVE_GETTEXT 1
 #define HAVE_DCGETTEXT 1
 #define MODULE_ARCH "linux-gnu-i686"
-#define PACKAGE_BIN_DIR "/home/watchwolf/.e/e/bin"
-#define PACKAGE_LIB_DIR "/home/watchwolf/.e/e/lib"
-#define PACKAGE_DATA_DIR "/home/watchwolf/.e/e/modules/exalt"
-#define LOCALEDIR "/home/watchwolf/.e/e/locale"
+#define PACKAGE_BIN_DIR "/usr/local/bin"
+#define PACKAGE_LIB_DIR "/usr/local/lib"
+#define PACKAGE_DATA_DIR "/home/watchwolf/.e/e/modules/module_exalt"
+#define LOCALEDIR "/home/watchwolf/.e/e/modules/module_exalt/locale"
 
 configure: exit 0
-
-## ---------------------- ##
-## Running config.status. ##
-## ---------------------- ##
-
-This file was extended by config.status, which was
-generated by GNU Autoconf 2.61.  Invocation command line was
-
-  CONFIG_FILES    = 
-  CONFIG_HEADERS  = 
-  CONFIG_LINKS    = 
-  CONFIG_COMMANDS = 
-  $ ./config.status config.h
-
-on Watchwolf
-
-config.status:706: creating config.h
-config.status:941: config.h is unchanged
-
-## ---------------------- ##
-## Running config.status. ##
-## ---------------------- ##
-
-This file was extended by config.status, which was
-generated by GNU Autoconf 2.61.  Invocation command line was
-
-  CONFIG_FILES    = 
-  CONFIG_HEADERS  = 
-  CONFIG_LINKS    = 
-  CONFIG_COMMANDS = 
-  $ ./config.status data/icons/Makefile
-
-on Watchwolf
-
-config.status:706: creating data/icons/Makefile

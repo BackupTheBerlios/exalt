@@ -432,7 +432,7 @@ AMDEP_TRUE="" ac_aux_dir="."
 # Capture the value of obsolete ALL_LINGUAS because we need it to compute
     # POFILES, UPDATEPOFILES, DUMMYPOFILES, GMOFILES, CATALOGS. But hide it
     # from automake < 1.5.
-    eval 'OBSOLETE_ALL_LINGUAS''="it sv"'
+    eval 'OBSOLETE_ALL_LINGUAS''="fr"'
     # Capture the value of LINGUAS because we need it to compute CATALOGS.
     LINGUAS="%UNSET%"
 
@@ -516,13 +516,13 @@ s,@PACKAGE_VERSION@,|#_!!_#|,g
 s,@PACKAGE_STRING@,|#_!!_#|,g
 s,@PACKAGE_BUGREPORT@,|#_!!_#|,g
 s,@exec_prefix@,|#_!!_#|${prefix},g
-s,@prefix@,|#_!!_#|/home/watchwolf/.e/e,g
+s,@prefix@,|#_!!_#|/usr/local,g
 s,@program_transform_name@,|#_!!_#|s\,x\,x\,,g
-s,@bindir@,|#_!!_#|/home/watchwolf/.e/e/bin,g
+s,@bindir@,|#_!!_#|/usr/local/bin,g
 s,@sbindir@,|#_!!_#|${exec_prefix}/sbin,g
 s,@libexecdir@,|#_!!_#|${exec_prefix}/libexec,g
-s,@datarootdir@,|#_!!_#|/home/watchwolf/.e/e,g
-s,@datadir@,|#_!!_#|/home/watchwolf/.e/e/modules/exalt,g
+s,@datarootdir@,|#_!!_#|${prefix}/share,g
+s,@datadir@,|#_!!_#|/home/watchwolf/.e/e/modules/module_exalt,g
 s,@sysconfdir@,|#_!!_#|${prefix}/etc,g
 s,@sharedstatedir@,|#_!!_#|${prefix}/com,g
 s,@localstatedir@,|#_!!_#|${prefix}/var,g
@@ -534,8 +534,8 @@ s,@htmldir@,|#_!!_#|${docdir},g
 s,@dvidir@,|#_!!_#|${docdir},g
 s,@pdfdir@,|#_!!_#|${docdir},g
 s,@psdir@,|#_!!_#|${docdir},g
-s,@libdir@,|#_!!_#|/home/watchwolf/.e/e/lib,g
-s,@localedir@,|#_!!_#|/home/watchwolf/.e/e/locale,g
+s,@libdir@,|#_!!_#|/usr/local/lib,g
+s,@localedir@,|#_!!_#|/home/watchwolf/.e/e/modules/module_exalt,g
 s,@mandir@,|#_!!_#|${datarootdir}/man,g
 s,@DEFS@,|#_!!_#|-DHAVE_CONFIG_H,g
 s,@ECHO_C@,|#_!!_#|,g
@@ -558,7 +558,7 @@ s,@INSTALL_SCRIPT@,|#_!!_#|${INSTALL},g
 s,@INSTALL_DATA@,|#_!!_#|${INSTALL} -m 644,g
 s,@am__isrc@,|#_!!_#|,g
 s,@CYGPATH_W@,|#_!!_#|echo,g
-s,@PACKAGE@,|#_!!_#|exalt,g
+s,@PACKAGE@,|#_!!_#|module_exalt,g
 s,@VERSION@,|#_!!_#|0.0.1,g
 s,@ACLOCAL@,|#_!!_#|${SHELL} /home/watchwolf/Projects/C/exalt/exalt_module/missing --run aclocal-1.10,g
 s,@AUTOCONF@,|#_!!_#|${SHELL} /home/watchwolf/Projects/C/exalt/exalt_module/missing --run autoconf,g
@@ -612,7 +612,7 @@ s,@F77@,|#_!!_#|gfortran,g
 s,@FFLAGS@,|#_!!_#|-g -O2,g
 s,@ac_ct_F77@,|#_!!_#|gfortran,g
 s,@LIBTOOL@,|#_!!_#|$(SHELL) $(top_builddir)/libtool,g
-s,@ALL_LINGUAS@,|#_!!_#|it sv,g
+s,@ALL_LINGUAS@,|#_!!_#|fr,g
 s,@USE_NLS@,|#_!!_#|yes,g
 s,@MSGFMT@,|#_!!_#|/usr/bin/msgfmt,g
 s,@GMSGFMT@,|#_!!_#|/usr/bin/gmsgfmt,g
@@ -633,7 +633,6 @@ s,@BUILD_LINUX_TRUE@,|#_!!_#|,g
 s,@BUILD_LINUX_FALSE@,|#_!!_#|#,g
 s,@BUILD_FREEBSD_TRUE@,|#_!!_#|#,g
 s,@BUILD_FREEBSD_FALSE@,|#_!!_#|,g
-s,@LOCALEDIR@,|#_!!_#|/home/watchwolf/.e/e/locale,g
 s,@PKG_CONFIG@,|#_!!_#|/usr/bin/pkg-config,g
 s,@EDJE_CFLAGS@,|#_!!_#| ,g
 s,@EDJE_LIBS@,|#_!!_#|-ledje -levas  ,g
@@ -846,12 +845,12 @@ case `sed -n '/datarootdir/ {
   { echo "$as_me:$LINENO: WARNING: $ac_file_inputs seems to ignore the --datarootdir setting" >&5
 echo "$as_me: WARNING: $ac_file_inputs seems to ignore the --datarootdir setting" >&2;}
   ac_datarootdir_hack='
-  s&@datadir@&/home/watchwolf/.e/e/modules/exalt&g
+  s&@datadir@&/home/watchwolf/.e/e/modules/module_exalt&g
   s&@docdir@&${datarootdir}/doc/${PACKAGE}&g
   s&@infodir@&${datarootdir}/info&g
-  s&@localedir@&/home/watchwolf/.e/e/locale&g
+  s&@localedir@&/home/watchwolf/.e/e/modules/module_exalt&g
   s&@mandir@&${datarootdir}/man&g
-    s&\${datarootdir}&/home/watchwolf/.e/e&g' ;;
+    s&\${datarootdir}&${prefix}/share&g' ;;
 esac
   sed "/^[	 ]*VPATH[	 ]*=/{
 s/:*\$(srcdir):*/:/
@@ -908,7 +907,7 @@ s,^\([	 #]*\)[^	 ]*\([	 ]*PACKAGE_TARNAME\)[	 (].*,\1define\2 "" ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*PACKAGE_VERSION\)[	 (].*,\1define\2 "" ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*PACKAGE_STRING\)[	 (].*,\1define\2 "" ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*PACKAGE_BUGREPORT\)[	 (].*,\1define\2 "" ,
-s,^\([	 #]*\)[^	 ]*\([	 ]*PACKAGE\)[	 (].*,\1define\2 "exalt" ,
+s,^\([	 #]*\)[^	 ]*\([	 ]*PACKAGE\)[	 (].*,\1define\2 "module_exalt" ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*VERSION\)[	 (].*,\1define\2 "0.0.1" ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*STDC_HEADERS\)[	 (].*,\1define\2 1 ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_SYS_TYPES_H\)[	 (].*,\1define\2 1 ,
@@ -925,10 +924,10 @@ s,^\([	 #]*\)[^	 ]*\([	 ]*ENABLE_NLS\)[	 (].*,\1define\2 1 ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_GETTEXT\)[	 (].*,\1define\2 1 ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_DCGETTEXT\)[	 (].*,\1define\2 1 ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*MODULE_ARCH\)[	 (].*,\1define\2 "linux-gnu-i686" ,
-s,^\([	 #]*\)[^	 ]*\([	 ]*PACKAGE_BIN_DIR\)[	 (].*,\1define\2 "/home/watchwolf/.e/e/bin" ,
-s,^\([	 #]*\)[^	 ]*\([	 ]*PACKAGE_LIB_DIR\)[	 (].*,\1define\2 "/home/watchwolf/.e/e/lib" ,
-s,^\([	 #]*\)[^	 ]*\([	 ]*PACKAGE_DATA_DIR\)[	 (].*,\1define\2 "/home/watchwolf/.e/e/modules/exalt" ,
-s,^\([	 #]*\)[^	 ]*\([	 ]*LOCALEDIR\)[	 (].*,\1define\2 "/home/watchwolf/.e/e/locale" ,
+s,^\([	 #]*\)[^	 ]*\([	 ]*PACKAGE_BIN_DIR\)[	 (].*,\1define\2 "/usr/local/bin" ,
+s,^\([	 #]*\)[^	 ]*\([	 ]*PACKAGE_LIB_DIR\)[	 (].*,\1define\2 "/usr/local/lib" ,
+s,^\([	 #]*\)[^	 ]*\([	 ]*PACKAGE_DATA_DIR\)[	 (].*,\1define\2 "/home/watchwolf/.e/e/modules/module_exalt" ,
+s,^\([	 #]*\)[^	 ]*\([	 ]*LOCALEDIR\)[	 (].*,\1define\2 "/home/watchwolf/.e/e/modules/module_exalt/locale" ,
 s/ $//
 s,^[	 #]*u.*,/* & */,
 CEOF

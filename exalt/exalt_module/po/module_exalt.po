@@ -1,0 +1,62 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-07-04 17:27+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../e_mod_config.c:65
+#, c-format
+msgid "%i: the interface (eth0, wlan0 ...)"
+msgstr ""
+
+#: ../e_mod_config.c:67
+msgid "%w: the wireless network essid"
+msgstr ""
+
+#: ../e_mod_main.c:315
+msgid "(no networks)"
+msgstr ""
+
+#: ../e_mod_main.c:228
+msgid "Configuration"
+msgstr ""
+
+#: ../e_mod_main.c:117
+msgid "Exalt"
+msgstr ""
+
+#: ../e_mod_config.c:30
+msgid "Exalt Configuration"
+msgstr ""
+
+#: ../e_mod_main.c:500
+msgid "Exalt Module"
+msgstr ""
+
+#: ../e_mod_config.c:63
+msgid "Lauch Application:"
+msgstr ""
+
+#: ../e_mod_main.c:261
+msgid "Networks"
+msgstr ""
+
+#: ../e_mod_config.c:62
+msgid "Settings"
+msgstr ""
+
+#: ../e_mod_main.c:501
+msgid "This module allow you to configure yours networks cards."
+msgstr ""

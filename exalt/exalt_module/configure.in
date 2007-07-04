@@ -7,7 +7,7 @@ AC_INIT(configure.in)
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
 
-AM_INIT_AUTOMAKE(exalt, 0.0.1)
+AM_INIT_AUTOMAKE(module_exalt, 0.0.1)
 AM_CONFIG_HEADER(config.h)
 AC_ISC_POSIX
 AC_PROG_CC
@@ -17,7 +17,7 @@ AC_C_CONST
 AM_ENABLE_SHARED
 AM_PROG_LIBTOOL
 
-ALL_LINGUAS="it sv"
+ALL_LINGUAS="fr"
 AC_SUBST(ALL_LINGUAS)
 
 AM_GNU_GETTEXT([external])
@@ -31,6 +31,8 @@ uname=`uname`
 
 AM_CONDITIONAL(BUILD_LINUX, test x$uname = xLinux)
 AM_CONDITIONAL(BUILD_FREEBSD, test x$uname = xFreeBSD)
+
+
 
 if test "x${bindir}" = 'x${exec_prefix}/bin'; then
   if test "x${exec_prefix}" = "xNONE"; then
@@ -95,15 +97,14 @@ else
     datadir="${libdir}/enlightenment/modules/${PACKAGE}"    
 fi
 
-AC_PREFIX_DEFAULT(${HOME}/.e/e)
-if test "x$prefix" = "xNONE"; then
-  datarootdir=${ac_default_prefix}
+
+if test "x${prefix}" = "xNONE"; then
+    AC_DEFINE_UNQUOTED(LOCALEDIR, "${HOME}/.e/e/modules/${PACKAGE}/locale", "Locale installed data destination")
+    localedir="${HOME}/.e/e/modules/${PACKAGE}"
 else
-  datarootdir=${prefix}/share
+    AC_DEFINE_UNQUOTED(LOCALEDIR, "${libdir}/enlightenment/modules/${PACKAGE}/locale", "Locale installed data destination")
+    localedir="${libdir}/enlightenment/modules/${PACKAGE}"    
 fi
-localedir=${datarootdir}/locale
-AC_SUBST(LOCALEDIR, "${localedir}")
-AC_DEFINE_UNQUOTED(LOCALEDIR, "${localedir}", [Module Locale Directory])
 
 #AC_CHECK_LIB(dl, dlopen, dlopen_libs=-ldl)
 #AC_SUBST(dlopen_libs)

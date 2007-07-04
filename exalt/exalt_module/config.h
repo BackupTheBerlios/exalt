@@ -53,26 +53,26 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #define HAVE_UNISTD_H 1
 
-/* Module Locale Directory */
-#define LOCALEDIR "/home/watchwolf/.e/e/locale"
+/* "Locale installed data destination" */
+#define LOCALEDIR "/home/watchwolf/.e/e/modules/module_exalt/locale"
 
 /* "Module architecture" */
 #define MODULE_ARCH "linux-gnu-i686"
 
 /* Name of package */
-#define PACKAGE "exalt"
+#define PACKAGE "module_exalt"
 
 /* "Package installed binaries destination" */
-#define PACKAGE_BIN_DIR "/home/watchwolf/.e/e/bin"
+#define PACKAGE_BIN_DIR "/usr/local/bin"
 
 /* Define to the address where bug reports for this package should be sent. */
 #define PACKAGE_BUGREPORT ""
 
 /* "Package installed data destination" */
-#define PACKAGE_DATA_DIR "/home/watchwolf/.e/e/modules/exalt"
+#define PACKAGE_DATA_DIR "/home/watchwolf/.e/e/modules/module_exalt"
 
 /* "Package installed libraries destination" */
-#define PACKAGE_LIB_DIR "/home/watchwolf/.e/e/lib"
+#define PACKAGE_LIB_DIR "/usr/local/lib"
 
 /* Define to the full name of this package. */
 #define PACKAGE_NAME ""

@@ -52,7 +52,7 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
 
-/* Module Locale Directory */
+/* "Locale installed data destination" */
 #undef LOCALEDIR
 
 /* "Module architecture" */
