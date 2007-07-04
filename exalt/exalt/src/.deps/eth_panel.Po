@@ -33,9 +33,9 @@ eth_panel.o eth_panel.o: eth_panel.c eth_panel.h /usr/include/etk/Etk.h \
   /usr/include/etk/etk_stock.h /usr/include/etk/etk_cache.h \
   /usr/include/etk/etk_canvas.h /usr/include/etk/etk_check_button.h \
   /usr/include/etk/etk_toggle_button.h /usr/include/etk/etk_colorpicker.h \
-  /usr/include/etk/etk_combobox.h /usr/include/etk/etk_dialog.h \
-  /usr/include/etk/etk_window.h /usr/include/Ecore.h \
-  /usr/include/signal.h /usr/include/bits/signum.h \
+  /usr/include/etk/etk_combobox.h /usr/include/etk/etk_combobox_entry.h \
+  /usr/include/etk/etk_dialog.h /usr/include/etk/etk_window.h \
+  /usr/include/Ecore.h /usr/include/signal.h /usr/include/bits/signum.h \
   /usr/include/bits/siginfo.h /usr/include/bits/sigaction.h \
   /usr/include/bits/sigcontext.h /usr/include/asm/sigcontext.h \
   /usr/include/linux/compiler.h /usr/include/bits/sigstack.h \
@@ -67,16 +67,17 @@ eth_panel.o eth_panel.o: eth_panel.c eth_panel.h /usr/include/etk/Etk.h \
   /usr/local/include/exalt/libexalt.h \
   /usr/local/include/exalt/exalt_ethernet.h \
   /usr/local/include/exalt/libexalt.h \
-  /usr/local/include/exalt/exalt_wifi.h \
-  /usr/local/include/exalt/exalt_wifi_info.h /usr/include/Ecore_Data.h \
-  /usr/local/include/exalt/iwlib.h /usr/include/sys/ioctl.h \
-  /usr/include/bits/ioctls.h /usr/include/asm/ioctls.h \
-  /usr/include/asm/ioctl.h /usr/include/asm-generic/ioctl.h \
-  /usr/include/bits/ioctl-types.h /usr/include/sys/ttydefaults.h \
-  /usr/include/errno.h /usr/include/bits/errno.h \
-  /usr/include/linux/errno.h /usr/include/asm/errno.h \
-  /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
-  /usr/include/fcntl.h /usr/include/bits/fcntl.h /usr/include/bits/uio.h \
+  /usr/local/include/exalt/exalt_wireless.h \
+  /usr/local/include/exalt/exalt_wireless_info.h \
+  /usr/include/Ecore_Data.h /usr/local/include/exalt/iwlib.h \
+  /usr/include/sys/ioctl.h /usr/include/bits/ioctls.h \
+  /usr/include/asm/ioctls.h /usr/include/asm/ioctl.h \
+  /usr/include/asm-generic/ioctl.h /usr/include/bits/ioctl-types.h \
+  /usr/include/sys/ttydefaults.h /usr/include/errno.h \
+  /usr/include/bits/errno.h /usr/include/linux/errno.h \
+  /usr/include/asm/errno.h /usr/include/asm-generic/errno.h \
+  /usr/include/asm-generic/errno-base.h /usr/include/fcntl.h \
+  /usr/include/bits/fcntl.h /usr/include/bits/uio.h \
   /usr/include/sys/stat.h /usr/include/bits/stat.h /usr/include/ctype.h \
   /usr/include/string.h /usr/include/bits/string.h \
   /usr/include/bits/string2.h /usr/include/unistd.h \
@@ -99,13 +100,15 @@ eth_panel.o eth_panel.o: eth_panel.c eth_panel.h /usr/include/etk/Etk.h \
   /usr/include/asm/posix_types.h /usr/include/asm/types.h \
   /usr/include/sys/time.h /usr/include/linux/version.h \
   /usr/include/net/if_arp.h /usr/include/netinet/if_ether.h \
-  /usr/include/net/if.h /usr/include/wireless.h /usr/include/arpa/inet.h \
-  /usr/local/include/exalt/exalt_command.h \
+  /usr/include/net/if.h /usr/local/include/exalt/wireless.h \
+  /usr/local/include/exalt/proc.h /usr/include/arpa/inet.h \
+  /usr/include/net/route.h /usr/local/include/exalt/exalt_command.h \
   /usr/local/include/exalt/exalt_dns.h \
   /usr/local/include/exalt/exalt_save_load.h /usr/include/Ecore_Config.h \
   /usr/local/include/exalt/exalt_regexp.h /usr/include/regex.h \
-  main_window.h wifi_panel.h /usr/include/pthread.h /usr/include/sched.h \
-  /usr/include/bits/sched.h /usr/include/bits/setjmp.h general_panel.h
+  main_window.h wireless_panel.h /usr/include/pthread.h \
+  /usr/include/sched.h /usr/include/bits/sched.h \
+  /usr/include/bits/setjmp.h general_panel.h
 
 eth_panel.h:
 
@@ -255,6 +258,8 @@ eth_panel.h:
 
 /usr/include/etk/etk_combobox.h:
 
+/usr/include/etk/etk_combobox_entry.h:
+
 /usr/include/etk/etk_dialog.h:
 
 /usr/include/etk/etk_window.h:
@@ -385,9 +390,9 @@ config.h:
 
 /usr/local/include/exalt/libexalt.h:
 
-/usr/local/include/exalt/exalt_wifi.h:
+/usr/local/include/exalt/exalt_wireless.h:
 
-/usr/local/include/exalt/exalt_wifi_info.h:
+/usr/local/include/exalt/exalt_wireless_info.h:
 
 /usr/include/Ecore_Data.h:
 
@@ -513,9 +518,13 @@ config.h:
 
 /usr/include/net/if.h:
 
-/usr/include/wireless.h:
+/usr/local/include/exalt/wireless.h:
+
+/usr/local/include/exalt/proc.h:
 
 /usr/include/arpa/inet.h:
+
+/usr/include/net/route.h:
 
 /usr/local/include/exalt/exalt_command.h:
 
@@ -531,7 +540,7 @@ config.h:
 
 main_window.h:
 
-wifi_panel.h:
+wireless_panel.h:
 
 /usr/include/pthread.h:
 

@@ -19,7 +19,7 @@ int exalt_eth_init()
 {
 	if(ecore_config_init("econfig") != ECORE_CONFIG_ERR_SUCC)
 	{
-	 	fprintf(stderr,"exalt_wifi_save_load_bywifiinfo(): error can't init ecore config\n");
+	 	fprintf(stderr,"exalt_eth_init(): error can't init ecore config\n");
 		return -1;
 	}
 	
@@ -31,9 +31,8 @@ int exalt_eth_init()
 	exalt_eth_interfaces.eth_cb_timer = NULL;
 	exalt_eth_interfaces.eth_cb_user_data = NULL;
 
-	exalt_eth_interfaces.wifi_scan_cb = NULL;
-	exalt_eth_interfaces.wifi_scan_cb_timer = NULL;
-	exalt_eth_interfaces.wifi_scan_cb_user_data = NULL;
+	exalt_eth_interfaces.wireless_scan_cb = NULL;
+	exalt_eth_interfaces.wireless_scan_cb_user_data = NULL;
  
   	exalt_eth_interfaces.we_version = iw_get_kernel_we_version(); 
 	return 1;
@@ -57,7 +56,7 @@ exalt_ethernet* exalt_eth_create()
 	eth->name =NULL;
 	eth->ip = NULL;
 	eth->netmask = NULL;
-	eth->wifi = NULL;
+	eth->wireless = NULL;
 	eth->gateway = NULL;
 
 	return eth;
@@ -70,7 +69,8 @@ exalt_ethernet* exalt_eth_create()
  */
 void exalt_eth_ethernets_free()
 {
- 	ecore_list_destroy(exalt_eth_interfaces.ethernets);	
+ 	ecore_list_destroy(exalt_eth_interfaces.ethernets);
+	EXALT_DELETE_TIMER(exalt_eth_interfaces.eth_cb_timer)
 }
 // }}}
 
@@ -82,10 +82,11 @@ void exalt_eth_ethernets_free()
 void exalt_eth_free(void *data)
 {
 	exalt_ethernet* eth = EXALT_ETHERNET(data);
+	EXALT_FREE(eth->name)
 	EXALT_FREE(eth->ip)
 		EXALT_FREE(eth->netmask)
 		EXALT_FREE(eth->gateway)
-		if(eth->wifi) exalt_wifi_free(eth->wifi);
+		if(exalt_eth_is_wireless(eth)) exalt_wireless_free(exalt_eth_get_wireless(eth));
 }
 // }}}
 
@@ -129,9 +130,9 @@ void exalt_eth_load_state()
 	 	exalt_ethernet* eth = EXALT_ETHERNET(data);
 		exalt_eth_load_activate(eth);
 
-		if(exalt_eth_is_wifi(eth))
+		if(exalt_eth_is_wireless(eth))
 		{
-			exalt_wifi_load_radio_button(eth);
+			exalt_wireless_load_radio_button(eth);
 		}
 
 		data = ecore_list_next(l);
@@ -173,6 +174,7 @@ void exalt_eth_load_remove()
 			ecore_list_append(l,strdup(r->res[1]));
 	}
 	exalt_regex_free(&r);
+ 	fclose(f);
 
 	//remove olds interfaces
 	ecore_list_goto_first(exalt_eth_interfaces.ethernets);
@@ -202,8 +204,6 @@ void exalt_eth_load_remove()
  	ecore_list_destroy(l);
 }
 // }}}
-
-
 
 // {{{ void exalt_eth_load()
 /**
@@ -289,8 +289,8 @@ void exalt_eth_load_configuration_byeth(exalt_ethernet* eth, short load_file)
 		return ;
 	}
 
-	//wifi ?
-	exalt_wifi_reload(eth);
+	//wireless ?
+	exalt_wireless_reload(eth);
 
  	//interface load ?
 	exalt_eth_load_activate(eth);
@@ -340,6 +340,7 @@ short exalt_eth_load_activate(exalt_ethernet * eth)
 	if( ioctl(fd, SIOCGIFFLAGS, (caddr_t)&ifr) < 0)
 	{
 	 	perror("exalt_eth_load_activate(): ioctl (SIOCGIFFLAGS)");
+		close(fd);
 		return -1;
 	}
 	close(fd);
@@ -435,6 +436,7 @@ int exalt_eth_load_ip(exalt_ethernet* eth)
 	if( ioctl(fd, SIOCGIFADDR, (caddr_t)&ifr) < 0)
 	{
 	 	perror("exalt_eth_load_ip(): ioctl (SIOCGIFADDR)");
+		close(fd);
 		return -1;
 	}
 	sin = *(struct sockaddr_in*) &ifr.ifr_addr;
@@ -475,6 +477,7 @@ int exalt_eth_load_netmask(exalt_ethernet* eth)
 	if( ioctl(fd, SIOCGIFNETMASK, (caddr_t)&ifr) < 0)
 	{
 	 	perror("exalt_eth_load_netmask(): ioctl (SIOCGIFNETMASK)");
+		close(fd);
 		return -1;
 	}
 	sin = *(struct sockaddr_in*) &ifr.ifr_addr;
@@ -771,31 +774,31 @@ short exalt_eth_is_activate(exalt_ethernet* eth)
 }
 // }}}
 
-// {{{ short exalt_eth_is_wifi(exalt_ethernet* eth)
+// {{{ short exalt_eth_is_wireless(exalt_ethernet* eth)
 /**
  * @brief get if the card "eth" is a wireless card
  * @param eth the card
  * @return Returns 1 if the card is a wireless card, else 0
  */
-short exalt_eth_is_wifi(exalt_ethernet* eth)
+short exalt_eth_is_wireless(exalt_ethernet* eth)
 {
 	if(eth)
-		return eth->wifi!=NULL;
+		return eth->wireless!=NULL;
 	else
 		return 0;
 }
 // }}}
 
-// {{{ exalt_wifi* exalt_eth_get_wifi(exalt_ethernet* eth)
+// {{{ exalt_wireless* exalt_eth_get_wireless(exalt_ethernet* eth)
 /**
- * @brief get the wifi structure of the card "eth" 
+ * @brief get the wireless structure of the card "eth" 
  * @param eth the card
- * @return Returns the wifi structure
+ * @return Returns the wireless structure
  */
-exalt_wifi* exalt_eth_get_wifi(exalt_ethernet* eth)
+exalt_wireless* exalt_eth_get_wireless(exalt_ethernet* eth)
 {
 	if(eth)
-		return eth->wifi;
+		return eth->wireless;
 	else
 		return NULL;
 }
@@ -960,8 +963,8 @@ int exalt_eth_set_cb(Exalt_Eth_Cb fct, void * user_data)
  */
 int exalt_eth_set_scan_cb(Exalt_Wifi_Scan_Cb fct, void * user_data)
 {
- 	exalt_eth_interfaces.wifi_scan_cb = fct;
-	exalt_eth_interfaces.wifi_scan_cb_user_data = user_data;
+ 	exalt_eth_interfaces.wireless_scan_cb = fct;
+	exalt_eth_interfaces.wireless_scan_cb_user_data = user_data;
 	return 1;
 }
 // }}}
@@ -995,8 +998,8 @@ int exalt_eth_apply_conf(exalt_ethernet* eth)
 
 	exalt_eth_save_byeth(eth);
 	
-	if(exalt_eth_is_wifi(eth))
-	 	exalt_wifi_apply_conf(eth);
+	if(exalt_eth_is_wireless(eth))
+	 	exalt_wireless_apply_conf(eth);
 	
 	//remove old gateway
 	fd=iw_sockets_open();
@@ -1164,11 +1167,11 @@ void exalt_eth_printf()
 		printf("ip: %s\n",eth->ip);
 		printf("mask: %s\n",eth->netmask);
 		printf("gateway: %s\n",eth->gateway);
-		printf("Wifi: %s\n",(eth->wifi==NULL?"no":"yes"));
-		if(eth->wifi!=NULL)
+		printf("Wifi: %s\n",(eth->wireless==NULL?"no":"yes"));
+		if(eth->wireless!=NULL)
 		{
-			exalt_wifi_scan(eth);
-			exalt_wifi_printf(*(eth->wifi));
+			exalt_wireless_scan(eth);
+			exalt_wireless_printf(*(eth->wireless));
 		}
 		data = ecore_list_next(exalt_eth_interfaces.ethernets);
 	}

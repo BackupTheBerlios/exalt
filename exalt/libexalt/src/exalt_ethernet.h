@@ -5,8 +5,8 @@
 typedef struct exalt_ethernet exalt_ethernet;
 
 #include "libexalt.h"
-#include "exalt_wifi.h"
-#include "exalt_wifi_info.h"
+#include "exalt_wireless.h"
+#include "exalt_wireless_info.h"
 #include "iwlib.h"
 #include "proc.h"
 
@@ -31,11 +31,11 @@ typedef struct exalt_ethernet exalt_ethernet;
 #define EXALT_ETH_CB_REMOVE 2
 #define EXALT_ETH_CB_ACTIVATE 3
 #define EXALT_ETH_CB_DESACTIVATE 4
-#define EXALT_ETH_CB_WIFI_RADIO_ON 5
-#define EXALT_ETH_CB_WIFI_RADIO_OFF 6
+#define EXALT_ETH_CB_WIRELESS_RADIO_ON 5
+#define EXALT_ETH_CB_WIRELESS_RADIO_OFF 6
 
-#define EXALT_WIFI_SCAN_CB_NEW 1
-#define EXALT_WIFI_SCAN_CB_REMOVE 2
+#define EXALT_WIRELESS_SCAN_CB_NEW 1
+#define EXALT_WIRELESS_SCAN_CB_REMOVE 2
 
 #define EXALT_ETHERNET(a) (exalt_ethernet*)a
 
@@ -43,9 +43,9 @@ typedef struct exalt_ethernet exalt_ethernet;
 typedef void (*Exalt_Eth_Cb) (exalt_ethernet* eth, int action, void* user_data);
 #define EXALT_ETH_CB(a) (Exalt_Eth_Cb)a
 
-#define EXALT_WIFI_SCAN_UPDATE_TIME 10
-typedef void (*Exalt_Wifi_Scan_Cb) (exalt_wifi_info* wi, int action, void* user_data);
-#define EXALT_WIFI_SCAN_CB(a) (Exalt_Wifi_Scan_Cb)a
+#define EXALT_WIRELESS_SCAN_UPDATE_TIME 10
+typedef void (*Exalt_Wifi_Scan_Cb) (exalt_wireless_info* wi, int action, void* user_data);
+#define EXALT_WIRELESS_SCAN_CB(a) (Exalt_Wifi_Scan_Cb)a
 
 
 
@@ -61,7 +61,7 @@ struct exalt_ethernet
 	char* netmask;
 	char* gateway;
 	short dhcp; //1 -> dhcp mode, 0 -> static mode
-	exalt_wifi* wifi; //if null, the interface is not wireless
+	exalt_wireless* wireless; //if null, the interface is not wireless
 };
 
 /** 
@@ -76,9 +76,8 @@ typedef struct Exalt_Ethernets
 	void * eth_cb_user_data;
 	Ecore_Timer* eth_cb_timer;
 
- 	Exalt_Wifi_Scan_Cb wifi_scan_cb;
-	void* wifi_scan_cb_user_data;
-	Ecore_Timer* wifi_scan_cb_timer;
+ 	Exalt_Wifi_Scan_Cb wireless_scan_cb;
+	void* wireless_scan_cb_user_data;
 
 	int we_version;
 
@@ -89,6 +88,7 @@ Exalt_Ethernets exalt_eth_interfaces;
 
 
 int exalt_eth_init();
+void exalt_eth_ethernets_free();
 void exalt_eth_free(void* data);
 int exalt_eth_update(void* data);
 void exalt_eth_load();
@@ -117,8 +117,8 @@ char* exalt_eth_get_netmask(exalt_ethernet* eth);
 char* exalt_eth_get_gateway(exalt_ethernet* eth);
 short exalt_eth_is_activate(exalt_ethernet * eth);
 short exalt_eth_is_dhcp(exalt_ethernet * eth);
-short exalt_eth_is_wifi(exalt_ethernet* eth);
-exalt_wifi* exalt_eth_get_wifi(exalt_ethernet* eth);
+short exalt_eth_is_wireless(exalt_ethernet* eth);
+exalt_wireless* exalt_eth_get_wireless(exalt_ethernet* eth);
 
 int exalt_eth_load_ip(exalt_ethernet* eth);
 int exalt_eth_load_netmask(exalt_ethernet* eth);

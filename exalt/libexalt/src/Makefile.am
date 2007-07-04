@@ -24,8 +24,8 @@ exalt_dns.h \
 exalt_ethernet.h \
 exalt_regexp.h \
 exalt_save_load.h \
-exalt_wifi.h \
-exalt_wifi_info.h 
+exalt_wireless.h \
+exalt_wireless_info.h 
 
 libexalt_la_SOURCES = \
 nettools/proc.c \
@@ -36,8 +36,8 @@ exalt_dns.c \
 exalt_ethernet.c \
 exalt_regexp.c \
 exalt_save_load.c \
-exalt_wifi.c \
-exalt_wifi_info.c \
+exalt_wireless.c \
+exalt_wireless_info.c \
 $(EXALTHEADERS)
 
 installed_headersdir = $(prefix)/include/exalt

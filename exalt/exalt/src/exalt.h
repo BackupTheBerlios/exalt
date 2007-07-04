@@ -10,9 +10,9 @@
 
 #define ICONS_NETWORK_CONFIG "/icons/network-config.png"
 #define ICONS_ETHERNET_ACTIVATE "/icons/ethernet.png"
-#define ICONS_WIFI_ACTIVATE "/icons/wifi.png"
+#define ICONS_WIRELESS_ACTIVATE "/icons/wireless.png"
 #define ICONS_ETHERNET_NOT_ACTIVATE "/icons/ethernet_not_activate.png"
-#define ICONS_WIFI_NOT_ACTIVATE "/icons/wifi_not_activate.png"
+#define ICONS_WIRELESS_NOT_ACTIVATE "/icons/wireless_not_activate.png"
 
 #define ICONS_ENCRYPTION "/icons/encryption.png"
 #define ICONS_QUALITY_LESS_100 "/icons/quality_100-.png"
@@ -30,7 +30,7 @@
 
 #include "main_window.h"
 #include "eth_panel.h"
-#include "wifi_panel.h"
+#include "wireless_panel.h"
 #include "general_panel.h"
 
 

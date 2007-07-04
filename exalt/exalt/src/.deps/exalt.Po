@@ -7,13 +7,14 @@ exalt.o exalt.o: exalt.c exalt.h config.h /usr/include/libintl.h \
   /usr/local/include/exalt/libexalt.h \
   /usr/local/include/exalt/exalt_ethernet.h \
   /usr/local/include/exalt/libexalt.h \
-  /usr/local/include/exalt/exalt_wifi.h /usr/include/stdio.h \
+  /usr/local/include/exalt/exalt_wireless.h /usr/include/stdio.h \
   /usr/include/bits/types.h /usr/include/bits/typesizes.h \
   /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h \
   /usr/include/bits/wchar.h /usr/include/gconv.h \
   /usr/lib/gcc/i686-pc-linux-gnu/4.1.2/include/stdarg.h \
   /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
-  /usr/include/bits/stdio.h /usr/local/include/exalt/exalt_wifi_info.h \
+  /usr/include/bits/stdio.h \
+  /usr/local/include/exalt/exalt_wireless_info.h \
   /usr/include/Ecore_Data.h /usr/include/Ecore.h /usr/include/sys/types.h \
   /usr/include/time.h /usr/include/endian.h /usr/include/bits/endian.h \
   /usr/include/sys/select.h /usr/include/bits/select.h \
@@ -61,8 +62,9 @@ exalt.o exalt.o: exalt.c exalt.h config.h /usr/include/libintl.h \
   /usr/include/asm/posix_types.h /usr/include/asm/types.h \
   /usr/include/sys/time.h /usr/include/linux/version.h \
   /usr/include/net/if_arp.h /usr/include/netinet/if_ether.h \
-  /usr/include/net/if.h /usr/include/wireless.h /usr/include/arpa/inet.h \
-  /usr/local/include/exalt/exalt_command.h \
+  /usr/include/net/if.h /usr/local/include/exalt/wireless.h \
+  /usr/local/include/exalt/proc.h /usr/include/arpa/inet.h \
+  /usr/include/net/route.h /usr/local/include/exalt/exalt_command.h \
   /usr/local/include/exalt/exalt_dns.h \
   /usr/local/include/exalt/exalt_save_load.h /usr/include/Ecore_Config.h \
   /usr/include/Evas.h /usr/local/include/exalt/exalt_regexp.h \
@@ -80,32 +82,33 @@ exalt.o exalt.o: exalt.c exalt.h config.h /usr/include/libintl.h \
   /usr/include/etk/etk_cache.h /usr/include/etk/etk_canvas.h \
   /usr/include/etk/etk_check_button.h \
   /usr/include/etk/etk_toggle_button.h /usr/include/etk/etk_colorpicker.h \
-  /usr/include/etk/etk_combobox.h /usr/include/etk/etk_dialog.h \
-  /usr/include/etk/etk_window.h /usr/include/etk/etk_toplevel.h \
-  /usr/include/etk/etk_dnd.h /usr/include/etk/etk_drag.h \
-  /usr/include/etk/etk_editable.h /usr/include/etk/etk_embed.h \
-  /usr/include/etk/etk_engine.h /usr/include/etk/etk_event.h \
-  /usr/include/etk/etk_selection.h /usr/include/etk/etk_entry.h \
-  /usr/include/etk/etk_filechooser_widget.h /usr/include/etk/etk_fixed.h \
-  /usr/include/etk/etk_frame.h /usr/include/etk/etk_iconbox.h \
-  /usr/include/etk/etk_image.h /usr/include/etk/etk_label.h \
-  /usr/include/etk/etk_menu.h /usr/include/etk/etk_menu_shell.h \
-  /usr/include/etk/etk_popup_window.h /usr/include/etk/etk_menu_bar.h \
-  /usr/include/etk/etk_menu_item.h /usr/include/etk/etk_message_dialog.h \
-  /usr/include/etk/etk_notebook.h /usr/include/etk/etk_paned.h \
-  /usr/include/etk/etk_progress_bar.h /usr/include/etk/etk_radio_button.h \
-  /usr/include/etk/etk_range.h /usr/include/etk/etk_scrollbar.h \
-  /usr/include/etk/etk_scrolled_view.h /usr/include/etk/etk_separator.h \
-  /usr/include/etk/etk_shadow.h /usr/include/etk/etk_slider.h \
-  /usr/include/etk/etk_spinner.h /usr/include/etk/etk_statusbar.h \
-  /usr/include/etk/etk_table.h /usr/include/etk/etk_textblock.h \
-  /usr/include/etk/etk_text_view.h /usr/include/etk/etk_theme.h \
-  /usr/include/etk/etk_tool_button.h /usr/include/etk/etk_toolbar.h \
-  /usr/include/etk/etk_tooltips.h /usr/include/etk/etk_tree.h \
-  /usr/include/Ecore_Job.h /usr/include/etk/etk_tree_model.h \
-  /usr/include/etk/etk_viewport.h eth_panel.h /usr/include/sys/wait.h \
-  /usr/include/sys/resource.h /usr/include/bits/resource.h wifi_panel.h \
-  /usr/include/pthread.h /usr/include/sched.h /usr/include/bits/sched.h \
+  /usr/include/etk/etk_combobox.h /usr/include/etk/etk_combobox_entry.h \
+  /usr/include/etk/etk_dialog.h /usr/include/etk/etk_window.h \
+  /usr/include/etk/etk_toplevel.h /usr/include/etk/etk_dnd.h \
+  /usr/include/etk/etk_drag.h /usr/include/etk/etk_editable.h \
+  /usr/include/etk/etk_embed.h /usr/include/etk/etk_engine.h \
+  /usr/include/etk/etk_event.h /usr/include/etk/etk_selection.h \
+  /usr/include/etk/etk_entry.h /usr/include/etk/etk_filechooser_widget.h \
+  /usr/include/etk/etk_fixed.h /usr/include/etk/etk_frame.h \
+  /usr/include/etk/etk_iconbox.h /usr/include/etk/etk_image.h \
+  /usr/include/etk/etk_label.h /usr/include/etk/etk_menu.h \
+  /usr/include/etk/etk_menu_shell.h /usr/include/etk/etk_popup_window.h \
+  /usr/include/etk/etk_menu_bar.h /usr/include/etk/etk_menu_item.h \
+  /usr/include/etk/etk_message_dialog.h /usr/include/etk/etk_notebook.h \
+  /usr/include/etk/etk_paned.h /usr/include/etk/etk_progress_bar.h \
+  /usr/include/etk/etk_radio_button.h /usr/include/etk/etk_range.h \
+  /usr/include/etk/etk_scrollbar.h /usr/include/etk/etk_scrolled_view.h \
+  /usr/include/etk/etk_separator.h /usr/include/etk/etk_shadow.h \
+  /usr/include/etk/etk_slider.h /usr/include/etk/etk_spinner.h \
+  /usr/include/etk/etk_statusbar.h /usr/include/etk/etk_table.h \
+  /usr/include/etk/etk_textblock.h /usr/include/etk/etk_text_view.h \
+  /usr/include/etk/etk_theme.h /usr/include/etk/etk_tool_button.h \
+  /usr/include/etk/etk_toolbar.h /usr/include/etk/etk_tooltips.h \
+  /usr/include/etk/etk_tree.h /usr/include/Ecore_Job.h \
+  /usr/include/etk/etk_tree_model.h /usr/include/etk/etk_viewport.h \
+  eth_panel.h /usr/include/sys/wait.h /usr/include/sys/resource.h \
+  /usr/include/bits/resource.h wireless_panel.h /usr/include/pthread.h \
+  /usr/include/sched.h /usr/include/bits/sched.h \
   /usr/include/bits/setjmp.h general_panel.h
 
 exalt.h:
@@ -138,7 +141,7 @@ config.h:
 
 /usr/local/include/exalt/libexalt.h:
 
-/usr/local/include/exalt/exalt_wifi.h:
+/usr/local/include/exalt/exalt_wireless.h:
 
 /usr/include/stdio.h:
 
@@ -164,7 +167,7 @@ config.h:
 
 /usr/include/bits/stdio.h:
 
-/usr/local/include/exalt/exalt_wifi_info.h:
+/usr/local/include/exalt/exalt_wireless_info.h:
 
 /usr/include/Ecore_Data.h:
 
@@ -358,9 +361,13 @@ config.h:
 
 /usr/include/net/if.h:
 
-/usr/include/wireless.h:
+/usr/local/include/exalt/wireless.h:
+
+/usr/local/include/exalt/proc.h:
 
 /usr/include/arpa/inet.h:
+
+/usr/include/net/route.h:
 
 /usr/local/include/exalt/exalt_command.h:
 
@@ -431,6 +438,8 @@ main_window.h:
 /usr/include/etk/etk_colorpicker.h:
 
 /usr/include/etk/etk_combobox.h:
+
+/usr/include/etk/etk_combobox_entry.h:
 
 /usr/include/etk/etk_dialog.h:
 
@@ -532,7 +541,7 @@ eth_panel.h:
 
 /usr/include/bits/resource.h:
 
-wifi_panel.h:
+wireless_panel.h:
 
 /usr/include/pthread.h:
 

@@ -126,7 +126,7 @@ int exalt_eth_save_byeth(exalt_ethernet* eth)
 	}
 
 
- 	if(exalt_eth_is_wifi(eth))
+ 	if(exalt_eth_is_wireless(eth))
 	{
  	 	fprintf(fw,"wpa-conf /etc/wpa_supplicant.conf\n");
 		fprintf(fw,"wpa-driver wext\n");
@@ -150,9 +150,9 @@ int exalt_eth_save_byeth(exalt_ethernet* eth)
 	remove(FILE_TEMP);
 
 
-	if(exalt_eth_is_wifi(eth))
+	if(exalt_eth_is_wireless(eth))
 	{
-	 	return exalt_wifi_save_wpasupplicant(eth);
+	 	return exalt_wireless_save_wpasupplicant(eth);
 	}
 	return 1;
 }
@@ -180,7 +180,7 @@ int exalt_eth_save_load_byeth(exalt_ethernet* eth)
 		return 0;
 	}
 
- 	if(exalt_eth_is_wifi(eth))
+ 	if(exalt_eth_is_wireless(eth))
 	{
 	 	fprintf(stderr,"exalt_eth_save_load_byeth(): the card is a wireless card ! \n");
 		return 0;
@@ -219,15 +219,15 @@ int exalt_eth_save_load_byeth(exalt_ethernet* eth)
 		 	exalt_eth_set_gateway(eth,r->res[0]);
 	}
 
-	/*if(exalt_eth_is_wifi(eth))
+	/*if(exalt_eth_is_wireless(eth))
 	{
- 	 	exalt_wifi* w = exalt_eth_get_wifi(eth);
+ 	 	exalt_wireless* w = exalt_eth_get_wireless(eth);
  	 	//get the essid
 		fgets(buf,1024,fr);
 		exalt_regex_set_request(r,buf);
 		exalt_regex_set_regex(r,REGEXP_SAVE_DEBIAN_GET_ESSID);
 		if(exalt_regex_execute(r) && r->nmatch>0)
-		 	exalt_wifi_set_current_essid(w,r->res[0]);
+		 	exalt_wireless_set_current_essid(w,r->res[0]);
 
  	 	//get the password
 		fgets(buf,1024,fr);
@@ -235,12 +235,12 @@ int exalt_eth_save_load_byeth(exalt_ethernet* eth)
 		exalt_regex_set_regex(r,REGEXP_SAVE_DEBIAN_GET_PASSWD);
 		if(exalt_regex_execute(r) && r->nmatch>0)
 		{
-		 	exalt_wifi_set_current_passwd_mode(w,WIFI_ENCRYPTION_WEP_ASCII);
-			exalt_wifi_set_current_passwd(w,r->res[0]);
+		 	exalt_wireless_set_current_passwd_mode(w,WIRELESS_ENCRYPTION_WEP_ASCII);
+			exalt_wireless_set_current_passwd(w,r->res[0]);
 		}
 		else
 		{
-		 	exalt_wifi_set_current_passwd_mode(w,WIFI_ENCRYPTION_NONE);
+		 	exalt_wireless_set_current_passwd_mode(w,WIRELESS_ENCRYPTION_NONE);
 		}
  	 }*/
 
@@ -371,7 +371,7 @@ int exalt_eth_save_byeth(exalt_ethernet* eth)
 		fprintf(fw,"%s \"%s netmask %s\" )\n",save,exalt_eth_get_ip(eth), exalt_eth_get_netmask(eth));
 
 
- 	if(exalt_eth_is_wifi(eth))
+ 	if(exalt_eth_is_wireless(eth))
 	{
  	 	fprintf(fw,"modules=( \"wpa_supplicant\" )\n");
 		fprintf(fw,"wpa_supplicant_%s=\"-Dwext\"\n",exalt_eth_get_name(eth));
@@ -410,9 +410,9 @@ int exalt_eth_save_byeth(exalt_ethernet* eth)
 	remove(FILE_TEMP);
 
 
-	if(exalt_eth_is_wifi(eth))
+	if(exalt_eth_is_wireless(eth))
 	{
-	 	exalt_wifi_save_wpasupplicant(eth);
+	 	exalt_wireless_save_wpasupplicant(eth);
 	}
 	return 1;
 }
@@ -440,7 +440,7 @@ int exalt_eth_save_load_byeth(exalt_ethernet* eth)
 		return 0;
 	}
 
- 	if(exalt_eth_is_wifi(eth))
+ 	if(exalt_eth_is_wireless(eth))
 	{
 	 	fprintf(stderr,"exalt_eth_save_load_byeth(): the card is a wireless card ! \n");
 		return 0;
@@ -550,28 +550,28 @@ int exalt_eth_save_autoload(exalt_ethernet* eth)
 #endif
 #endif
 
-// {{{ int exalt_wifi_save_wpasupplicant(exalt_ethernet* eth)
-int exalt_wifi_save_wpasupplicant(exalt_ethernet* eth)
+// {{{ int exalt_wireless_save_wpasupplicant(exalt_ethernet* eth)
+int exalt_wireless_save_wpasupplicant(exalt_ethernet* eth)
 {
  	FILE* fr,*fw;
 	char buf[1024];
 	int jump;
-	exalt_wifi* w;
+	exalt_wireless* w;
  	int enc_mode;
 
 	if(!eth)
 	{
-	 	fprintf(stderr,"exalt_wifi_save_wpasupplicant(): eth==null ! \n");
+	 	fprintf(stderr,"exalt_wireless_save_wpasupplicant(): eth==null ! \n");
 		return -1;
 	}
 
-	if(!exalt_eth_is_wifi(eth))
+	if(!exalt_eth_is_wireless(eth))
 	{
-	 	fprintf(stderr,"exalt_wifi_save_wpasupplicant(): eth is not a wireless card ! \n");
+	 	fprintf(stderr,"exalt_wireless_save_wpasupplicant(): eth is not a wireless card ! \n");
 	}
 
- 	w = exalt_eth_get_wifi(eth);
- 	enc_mode = exalt_wifi_get_current_passwd_mode(w);
+ 	w = exalt_eth_get_wireless(eth);
+ 	enc_mode = exalt_wireless_get_current_passwd_mode(w);
 	
 	//save the configuration in wpa_cupplicant.conf in the top of the file
 	if(!exalt_eth_save_file_exist(WPA_CONF_FILE))
@@ -608,35 +608,35 @@ int exalt_wifi_save_wpasupplicant(exalt_ethernet* eth)
 
 	//add the new essid
 	fprintf(fw,"network={\n");
-	fprintf(fw,"\tssid=\"%s\"\n",exalt_wifi_get_current_essid(w));
+	fprintf(fw,"\tssid=\"%s\"\n",exalt_wireless_get_current_essid(w));
 
-	if(enc_mode == WIFI_ENCRYPTION_WEP_ASCII) 
+	if(enc_mode == WIRELESS_ENCRYPTION_WEP_ASCII) 
 	{
 		fprintf(fw,"\tkey_mgmt=NONE\n");
-		fprintf(fw,"\twep_key0=\"%s\"\n",exalt_wifi_get_current_passwd(w));
+		fprintf(fw,"\twep_key0=\"%s\"\n",exalt_wireless_get_current_passwd(w));
 		fprintf(fw,"\twep_tx_keyidx=0\n");
 	}
-	else if(enc_mode == WIFI_ENCRYPTION_WEP_HEXA)
+	else if(enc_mode == WIRELESS_ENCRYPTION_WEP_HEXA)
 	{
 		fprintf(fw,"\tkey_mgmt=NONE\n");
-		fprintf(fw,"\twep_key0=%s\n",exalt_wifi_get_current_passwd(w));
+		fprintf(fw,"\twep_key0=%s\n",exalt_wireless_get_current_passwd(w));
 		fprintf(fw,"\twep_tx_keyidx=0\n");
 	}
-	else if(enc_mode == WIFI_ENCRYPTION_WPA_PSK_ASCII)
+	else if(enc_mode == WIRELESS_ENCRYPTION_WPA_PSK_ASCII)
 	{
 		fprintf(fw,"\tscan_ssid=1\n");
 		fprintf(fw,"\tproto=WPA\n");
 		fprintf(fw,"\tkey_mgmt=WPA-PSK\n");
-		fprintf(fw,"\tpsk=\"%s\"\n",exalt_wifi_get_current_passwd(w));
+		fprintf(fw,"\tpsk=\"%s\"\n",exalt_wireless_get_current_passwd(w));
 	}
-	else if(enc_mode==WIFI_ENCRYPTION_WPA_PSK_TKIP_ASCII)
+	else if(enc_mode==WIRELESS_ENCRYPTION_WPA_PSK_TKIP_ASCII)
 	{
 		fprintf(fw,"\tscan_ssid=1\n");
 		fprintf(fw,"\tproto=WPA\n");
 		fprintf(fw,"\tkey_mgmt=WPA-PSK\n");
 		fprintf(fw,"\tpairwise=TKIP\n");
 		fprintf(fw,"\tgroup=TKIP\n");
-		fprintf(fw,"\tpsk=\"%s\"\n",exalt_wifi_get_current_passwd(w));
+		fprintf(fw,"\tpsk=\"%s\"\n",exalt_wireless_get_current_passwd(w));
 	}
 	else
 		fprintf(fw,"\tkey_mgmt=NONE\n");
@@ -651,58 +651,58 @@ int exalt_wifi_save_wpasupplicant(exalt_ethernet* eth)
 }
 // }}}
 
-// {{{ int exalt_wifi_save_byeth(exalt_ethernet* eth)
-int exalt_wifi_save_byeth(exalt_ethernet* eth)
+// {{{ int exalt_wireless_save_byeth(exalt_ethernet* eth)
+int exalt_wireless_save_byeth(exalt_ethernet* eth)
 {
 	char buf[1024];
-	exalt_wifi* w;
+	exalt_wireless* w;
 
 	if(!eth)
 	{
-		fprintf(stderr,"exalt_wifi_save_byeth(): eth==null ! \n");
+		fprintf(stderr,"exalt_wireless_save_byeth(): eth==null ! \n");
 		return -1;
 	}
 
-	if(!exalt_eth_is_wifi(eth))
+	if(!exalt_eth_is_wireless(eth))
 	{
-		fprintf(stderr,"exalt_wifi_save_byeth(): eth is not a wifi card! \n");
+		fprintf(stderr,"exalt_wireless_save_byeth(): eth is not a wireless card! \n");
 		return -1;
 	}
-	w = exalt_eth_get_wifi(eth);
+	w = exalt_eth_get_wireless(eth);
 
 	ecore_config_file_load(EXALT_CONF_FILE);
 
-	sprintf(buf,"essid_%s",exalt_wifi_get_current_essid(w));
-	if(ecore_config_string_set(buf,exalt_wifi_get_current_essid(w)) != ECORE_CONFIG_ERR_SUCC)
+	sprintf(buf,"essid_%s",exalt_wireless_get_current_essid(w));
+	if(ecore_config_string_set(buf,exalt_wireless_get_current_essid(w)) != ECORE_CONFIG_ERR_SUCC)
 	{
-		fprintf(stderr,"exalt_wifi_save_byeth(): error set essid\n");
+		fprintf(stderr,"exalt_wireless_save_byeth(): error set essid\n");
 		return -1;
 	}
 
-	sprintf(buf,"address_mode_%s",exalt_wifi_get_current_essid(w));
+	sprintf(buf,"address_mode_%s",exalt_wireless_get_current_essid(w));
 	ecore_config_int_set(buf,exalt_eth_is_dhcp(eth));
 
 	if(!exalt_eth_is_dhcp(eth))
 	{
-		sprintf(buf,"ip_%s",exalt_wifi_get_current_essid(w));
+		sprintf(buf,"ip_%s",exalt_wireless_get_current_essid(w));
 		ecore_config_string_set(buf,exalt_eth_get_ip(eth));
 
-		sprintf(buf,"mask_%s",exalt_wifi_get_current_essid(w));
+		sprintf(buf,"mask_%s",exalt_wireless_get_current_essid(w));
 		ecore_config_string_set(buf,exalt_eth_get_netmask(eth));
 
-		sprintf(buf,"gateway_%s",exalt_wifi_get_current_essid(w));
+		sprintf(buf,"gateway_%s",exalt_wireless_get_current_essid(w));
 		ecore_config_string_set(buf,exalt_eth_get_gateway(eth));
 	}
 
-	sprintf(buf,"encryption_mode_%s",exalt_wifi_get_current_essid(w));
-	ecore_config_int_set(buf,exalt_wifi_get_current_passwd_mode(w));
+	sprintf(buf,"encryption_mode_%s",exalt_wireless_get_current_essid(w));
+	ecore_config_int_set(buf,exalt_wireless_get_current_passwd_mode(w));
 
-	sprintf(buf,"key_%s",exalt_wifi_get_current_essid(w));
-	ecore_config_string_set(buf,exalt_wifi_get_current_passwd(w));
+	sprintf(buf,"key_%s",exalt_wireless_get_current_essid(w));
+	ecore_config_string_set(buf,exalt_wireless_get_current_passwd(w));
 
 	if(ecore_config_file_save(EXALT_CONF_FILE) != ECORE_CONFIG_ERR_SUCC)
 	{
-		fprintf(stderr,"exalt_wifi_save_byeth(): error can't save the config\n");
+		fprintf(stderr,"exalt_wireless_save_byeth(): error can't save the config\n");
 		return -1;
 	}
 
@@ -711,56 +711,56 @@ int exalt_wifi_save_byeth(exalt_ethernet* eth)
 }
 // }}}
 
-// {{{ int exalt_wifi_save_load_bywifiinfo(exalt_wifi_info* wi)
-int exalt_wifi_save_load_bywifiinfo(exalt_wifi_info* wi)
+// {{{ int exalt_wireless_save_load_bywirelessinfo(exalt_wireless_info* wi)
+int exalt_wireless_save_load_bywirelessinfo(exalt_wireless_info* wi)
 {
  	char buf[1024];
 	char* res;
 	int res_i;
 	if(!wi)
 	{
-	 	fprintf(stderr,"exalt_wifi_save_load_bywifiinfo(): wi == null!\n");
+	 	fprintf(stderr,"exalt_wireless_save_load_bywirelessinfo(): wi == null!\n");
 		return -1;
 	}
 
 
  	ecore_config_file_load(EXALT_CONF_FILE);
 
- 	sprintf(buf,"essid_%s",exalt_wifiinfo_get_essid(wi));
+ 	sprintf(buf,"essid_%s",exalt_wirelessinfo_get_essid(wi));
 	if(!ecore_config_string_get(buf))
 		//the network have no configuration in the file
 		return 0;
 
-	sprintf(buf,"address_mode_%s",exalt_wifiinfo_get_essid(wi));
+	sprintf(buf,"address_mode_%s",exalt_wirelessinfo_get_essid(wi));
 	res_i = ecore_config_int_get(buf);
- 	exalt_wifiinfo_set_default_dhcp(wi,res_i);
+ 	exalt_wirelessinfo_set_default_dhcp(wi,res_i);
 
 	if(!res_i)
 	{
-		sprintf(buf,"ip_%s",exalt_wifiinfo_get_essid(wi));
+		sprintf(buf,"ip_%s",exalt_wirelessinfo_get_essid(wi));
 		res = ecore_config_string_get(buf);
-		exalt_wifiinfo_set_default_ip(wi,res);
+		exalt_wirelessinfo_set_default_ip(wi,res);
 
-		sprintf(buf,"mask_%s",exalt_wifiinfo_get_essid(wi));
+		sprintf(buf,"mask_%s",exalt_wirelessinfo_get_essid(wi));
 		res = ecore_config_string_get(buf);
-		exalt_wifiinfo_set_default_netmask(wi,res);
+		exalt_wirelessinfo_set_default_netmask(wi,res);
 
-		sprintf(buf,"gateway_%s",exalt_wifiinfo_get_essid(wi));
+		sprintf(buf,"gateway_%s",exalt_wirelessinfo_get_essid(wi));
 		res = ecore_config_string_get(buf);
-		exalt_wifiinfo_set_default_gateway(wi,res);
+		exalt_wirelessinfo_set_default_gateway(wi,res);
 	}
 
- 	sprintf(buf,"encryption_mode_%s",exalt_wifiinfo_get_essid(wi));
+ 	sprintf(buf,"encryption_mode_%s",exalt_wirelessinfo_get_essid(wi));
 	res_i = ecore_config_int_get(buf);
-	exalt_wifiinfo_set_default_passwd_mode(wi,res_i);
+	exalt_wirelessinfo_set_default_passwd_mode(wi,res_i);
 
- 	sprintf(buf,"key_%s",exalt_wifiinfo_get_essid(wi));
+ 	sprintf(buf,"key_%s",exalt_wirelessinfo_get_essid(wi));
 	res = ecore_config_string_get(buf);
-	exalt_wifiinfo_set_default_passwd(wi,res);
+	exalt_wirelessinfo_set_default_passwd(wi,res);
 
 	if(ecore_config_file_save(EXALT_CONF_FILE) != ECORE_CONFIG_ERR_SUCC)
 	{
-	 	fprintf(stderr,"exalt_wifi_save_byeth(): error can't save the config\n");
+	 	fprintf(stderr,"exalt_wireless_save_byeth(): error can't save the config\n");
 		return -1;
 	}
 

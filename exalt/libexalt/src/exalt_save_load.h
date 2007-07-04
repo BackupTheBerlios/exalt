@@ -19,9 +19,9 @@ int exalt_eth_save_file_exist(char* file);
 int exalt_eth_save_byeth(exalt_ethernet* eth);
 int exalt_eth_save_load_byeth(exalt_ethernet* eth);
 int exalt_eth_save_autoload(exalt_ethernet* eth);
-int exalt_wifi_save_byeth(exalt_ethernet* eth);
-int exalt_wifi_save_load_bywifiinfo(exalt_wifi_info* wi);
-int exalt_wifi_save_wpasupplicant(exalt_ethernet* eth);
+int exalt_wireless_save_byeth(exalt_ethernet* eth);
+int exalt_wireless_save_load_bywirelessinfo(exalt_wireless_info* wi);
+int exalt_wireless_save_wpasupplicant(exalt_ethernet* eth);
 
 #endif
 

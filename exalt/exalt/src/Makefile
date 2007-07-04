@@ -53,7 +53,7 @@ binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
 am_exalt_OBJECTS = exalt.$(OBJEXT) main_window.$(OBJEXT) \
 	eth_panel.$(OBJEXT) general_panel.$(OBJEXT) \
-	wifi_panel.$(OBJEXT)
+	wireless_panel.$(OBJEXT)
 exalt_OBJECTS = $(am_exalt_OBJECTS)
 exalt_DEPENDENCIES =
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I.
@@ -205,14 +205,14 @@ exalt.h            \
 main_window.h        \
 eth_panel.h     \
 general_panel.h     \
-wifi_panel.h 
+wireless_panel.h 
 
 exalt_SOURCES = \
 exalt.c \
 main_window.c        \
 eth_panel.c     \
 general_panel.c     \
-wifi_panel.c 
+wireless_panel.c 
 
 exalt_LDFLAGS = -export-dynamic
 exalt_LDADD = -L/usr/local/lib -letk -lecore_file -ledje -lecore_x -lecore -levas -lexalt   
@@ -310,7 +310,7 @@ include ./$(DEPDIR)/eth_panel.Po
 include ./$(DEPDIR)/exalt.Po
 include ./$(DEPDIR)/general_panel.Po
 include ./$(DEPDIR)/main_window.Po
-include ./$(DEPDIR)/wifi_panel.Po
+include ./$(DEPDIR)/wireless_panel.Po
 
 .c.o:
 	if $(COMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \

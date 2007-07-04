@@ -55,7 +55,7 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 am__objects_1 =
 am_libexalt_la_OBJECTS = proc.lo iwlib.lo libexalt.lo exalt_command.lo \
 	exalt_dns.lo exalt_ethernet.lo exalt_regexp.lo \
-	exalt_save_load.lo exalt_wifi.lo exalt_wifi_info.lo \
+	exalt_save_load.lo exalt_wireless.lo exalt_wireless_info.lo \
 	$(am__objects_1)
 libexalt_la_OBJECTS = $(am_libexalt_la_OBJECTS)
 libexalt_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
@@ -203,13 +203,14 @@ EXALTHEADERS = \
 nettools/proc.h \
 iw/iwlib.h \
 libexalt.h \
+iw/wireless.h \
 exalt_command.h \
 exalt_dns.h \
 exalt_ethernet.h \
 exalt_regexp.h \
 exalt_save_load.h \
-exalt_wifi.h \
-exalt_wifi_info.h 
+exalt_wireless.h \
+exalt_wireless_info.h 
 
 libexalt_la_SOURCES = \
 nettools/proc.c \
@@ -220,8 +221,8 @@ exalt_dns.c \
 exalt_ethernet.c \
 exalt_regexp.c \
 exalt_save_load.c \
-exalt_wifi.c \
-exalt_wifi_info.c \
+exalt_wireless.c \
+exalt_wireless_info.c \
 $(EXALTHEADERS)
 
 installed_headersdir = $(prefix)/include/exalt
@@ -303,8 +304,8 @@ include ./$(DEPDIR)/exalt_dns.Plo
 include ./$(DEPDIR)/exalt_ethernet.Plo
 include ./$(DEPDIR)/exalt_regexp.Plo
 include ./$(DEPDIR)/exalt_save_load.Plo
-include ./$(DEPDIR)/exalt_wifi.Plo
-include ./$(DEPDIR)/exalt_wifi_info.Plo
+include ./$(DEPDIR)/exalt_wireless.Plo
+include ./$(DEPDIR)/exalt_wireless_info.Plo
 include ./$(DEPDIR)/iwlib.Plo
 include ./$(DEPDIR)/libexalt.Plo
 include ./$(DEPDIR)/proc.Plo

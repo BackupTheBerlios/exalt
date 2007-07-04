@@ -47,8 +47,8 @@ main_window* mainwindow_create()
 	win->eth_panel = ethpanel_create(win);
 	etk_box_append(ETK_BOX(hbox),win->eth_panel->frame , ETK_BOX_START, ETK_BOX_EXPAND_FILL, 0);
 
-	win->wifi_panel = wifipanel_create(win);
-	etk_box_append(ETK_BOX(hbox),win->wifi_panel->frame , ETK_BOX_START, ETK_BOX_EXPAND_FILL, 0);
+	win->wireless_panel = wirelesspanel_create(win);
+	etk_box_append(ETK_BOX(hbox),win->wireless_panel->frame , ETK_BOX_START, ETK_BOX_EXPAND_FILL, 0);
 
 	win->general_panel = generalpanel_create();
 	etk_box_append(ETK_BOX(hbox),win->general_panel->frame , ETK_BOX_START, ETK_BOX_EXPAND_FILL, 0);
@@ -73,6 +73,7 @@ Etk_Bool mainWindow_free(main_window** win)
 
 Etk_Bool mainWindow_close(Etk_Object *object, void *data)
 {/*{{{*/
+	exalt_eth_ethernets_free();
 	main_window* win = (main_window*)data;
 	etk_object_destroy(ETK_OBJECT(win->win));
 	exit(1);
@@ -80,8 +81,8 @@ Etk_Bool mainWindow_close(Etk_Object *object, void *data)
 
 void mainWindow_eth_cb(exalt_ethernet* eth, int action, void* user_data)
 {/*{{{*/
-	char wifi_img[] = PACKAGE_DATA_DIR ICONS_WIFI_ACTIVATE;
-	char wifi_img_not_activate[] = PACKAGE_DATA_DIR ICONS_WIFI_NOT_ACTIVATE;
+	char wireless_img[] = PACKAGE_DATA_DIR ICONS_WIRELESS_ACTIVATE;
+	char wireless_img_not_activate[] = PACKAGE_DATA_DIR ICONS_WIRELESS_NOT_ACTIVATE;
 	char eth_img[] = PACKAGE_DATA_DIR ICONS_ETHERNET_ACTIVATE;
 	char eth_img_not_activate[] = PACKAGE_DATA_DIR ICONS_ETHERNET_NOT_ACTIVATE;
 
@@ -90,12 +91,12 @@ void mainWindow_eth_cb(exalt_ethernet* eth, int action, void* user_data)
 	if(action == EXALT_ETH_CB_NEW)
 	{
 	 	char* img;
-	 	if(exalt_eth_is_wifi(eth))
+	 	if(exalt_eth_is_wireless(eth))
 		{
-		 	if(exalt_eth_is_activate(eth) && exalt_wifi_raddiobutton_ison(exalt_eth_get_wifi(eth)))
-			 	img = wifi_img;
+		 	if(exalt_eth_is_activate(eth) && exalt_wireless_raddiobutton_ison(exalt_eth_get_wireless(eth)))
+			 	img = wireless_img;
 			else
-			 	img = wifi_img_not_activate;
+			 	img = wireless_img_not_activate;
 		}
 		else if(exalt_eth_is_activate(eth))
 		 	img = eth_img;
@@ -113,20 +114,20 @@ void mainWindow_eth_cb(exalt_ethernet* eth, int action, void* user_data)
 	 	if(row)
 		 	etk_tree_row_delete(row);
 	}
-	else if(action == EXALT_ETH_CB_ACTIVATE || EXALT_ETH_CB_DESACTIVATE || EXALT_ETH_CB_WIFI_RADIO_ON || EXALT_ETH_CB_WIFI_RADIO_OFF)
+	else if(action == EXALT_ETH_CB_ACTIVATE || EXALT_ETH_CB_DESACTIVATE || EXALT_ETH_CB_WIRELESS_RADIO_ON || EXALT_ETH_CB_WIRELESS_RADIO_OFF)
 	{
 		Etk_Tree_Row *row;
 		row = mainWindow_findrow(win, eth);
 	 	if(row)
 		{
-			if(exalt_eth_is_wifi(eth))
+			if(exalt_eth_is_wireless(eth))
 			{
 				short radio;
-				radio = exalt_wifi_raddiobutton_ison(exalt_eth_get_wifi(eth));
+				radio = exalt_wireless_raddiobutton_ison(exalt_eth_get_wireless(eth));
 				if(radio && exalt_eth_is_activate(eth))
-					etk_tree_row_fields_set(row, 0, win->eth_col0,wifi_img,NULL,exalt_eth_get_name(eth), NULL);
+					etk_tree_row_fields_set(row, 0, win->eth_col0,wireless_img,NULL,exalt_eth_get_name(eth), NULL);
 				else
-					etk_tree_row_fields_set(row, 0, win->eth_col0,wifi_img_not_activate,NULL,exalt_eth_get_name(eth), NULL);
+					etk_tree_row_fields_set(row, 0, win->eth_col0,wireless_img_not_activate,NULL,exalt_eth_get_name(eth), NULL);
 			}
 			else
 				if(exalt_eth_is_activate(eth))
@@ -139,10 +140,10 @@ void mainWindow_eth_cb(exalt_ethernet* eth, int action, void* user_data)
  	 	eth_panel* pnl = win->eth_panel;
 		if(pnl->eth == eth)
 		 	ethpanel_set_eth(pnl,eth);
-		//update the wifi panel
-		wifi_panel* wpnl = win->wifi_panel;
+		//update the wireless panel
+		wireless_panel* wpnl = win->wireless_panel;
 		if(wpnl->eth == eth)
-		 	wifipanel_set_eth(wpnl,eth);
+		 	wirelesspanel_set_eth(wpnl,eth);
 	}
 }/*}}}*/
 
@@ -183,15 +184,15 @@ int mainWindow_eth_state_timer(void* data)
 		eth=exalt_eth_get_ethernet_byname(row_name);
 		if(eth)
 		{
-			if(exalt_eth_is_wifi(eth))
+			if(exalt_eth_is_wireless(eth))
 			{
 				short radio;
-				exalt_wifi_load_radio_button(eth);
-				radio = exalt_wifi_raddiobutton_ison(exalt_eth_get_wifi(eth));
+				exalt_wireless_load_radio_button(eth);
+				radio = exalt_wireless_raddiobutton_ison(exalt_eth_get_wireless(eth));
 				if(radio && exalt_eth_is_activate(eth))
-					etk_tree_row_fields_set(row, 0, win->eth_col0,PACKAGE_DATA_DIR ICONS_WIFI_ACTIVATE,NULL,row_name, NULL);
+					etk_tree_row_fields_set(row, 0, win->eth_col0,PACKAGE_DATA_DIR ICONS_WIRELESS_ACTIVATE,NULL,row_name, NULL);
 				else
-					etk_tree_row_fields_set(row, 0, win->eth_col0,PACKAGE_DATA_DIR ICONS_WIFI_NOT_ACTIVATE,NULL,row_name, NULL);
+					etk_tree_row_fields_set(row, 0, win->eth_col0,PACKAGE_DATA_DIR ICONS_WIRELESS_NOT_ACTIVATE,NULL,row_name, NULL);
 			}
 			else
 				if(exalt_eth_is_activate(eth))
@@ -221,7 +222,7 @@ void mainWindow_ethList_row_clicked_cb(Etk_Object *object, Etk_Tree_Row *row, Et
 
 	if(strcmp(row_name,_("General")) == 0 )
 	{
-		wifipanel_hide(win->wifi_panel);
+		wirelesspanel_hide(win->wireless_panel);
 		ethpanel_hide(win->eth_panel);
 		generalpanel_show(win->general_panel);
 		
@@ -229,19 +230,19 @@ void mainWindow_ethList_row_clicked_cb(Etk_Object *object, Etk_Tree_Row *row, Et
 	else
 	{
 		eth = exalt_eth_get_ethernet_byname(row_name);
-		if(!exalt_eth_is_wifi(eth))
+		if(!exalt_eth_is_wireless(eth))
 		{
 			ethpanel_set_eth(win->eth_panel,eth);
-			wifipanel_hide(win->wifi_panel);
+			wirelesspanel_hide(win->wireless_panel);
 			generalpanel_hide(win->general_panel);
 			ethpanel_show(win->eth_panel);
 		}
 		else
 		{
-			wifipanel_set_eth(win->wifi_panel,eth);
+			wirelesspanel_set_eth(win->wireless_panel,eth);
 			ethpanel_hide(win->eth_panel);
 			generalpanel_hide(win->general_panel);
-			wifipanel_show(win->wifi_panel);
+			wirelesspanel_show(win->wireless_panel);
 		}
 	}
 

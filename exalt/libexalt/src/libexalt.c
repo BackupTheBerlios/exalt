@@ -23,13 +23,13 @@ short exalt_is_passwd(const char* passwd, int passwd_mode)
 {
  	exalt_regex *r;
 	short res;
-	if(passwd_mode == WIFI_ENCRYPTION_NONE) 
+	if(passwd_mode == WIRELESS_ENCRYPTION_NONE) 
 	 	return 1;
 	
 	if(!passwd) 
 	 	return -1;
 
- 	if(passwd_mode == WIFI_ENCRYPTION_WEP_ASCII)
+ 	if(passwd_mode == WIRELESS_ENCRYPTION_WEP_ASCII)
 	{
 	 	if(strlen(passwd)>0) 
 		 	return 1;
@@ -37,7 +37,7 @@ short exalt_is_passwd(const char* passwd, int passwd_mode)
 		 	return 0;
  	}
 
-	if(passwd_mode == WIFI_ENCRYPTION_WEP_HEXA)
+	if(passwd_mode == WIRELESS_ENCRYPTION_WEP_HEXA)
 	{
 	 	r = exalt_regex_create(strdup(passwd), REGEXP_IS_WEP_HEXA, 0);
 		res = exalt_regex_execute(r);
@@ -45,9 +45,9 @@ short exalt_is_passwd(const char* passwd, int passwd_mode)
 	 	return res;
 	}
 
-	if(passwd_mode == WIFI_ENCRYPTION_WPA_PSK_TKIP_ASCII || passwd_mode==WIFI_ENCRYPTION_WPA_PSK_ASCII)
+	if(passwd_mode == WIRELESS_ENCRYPTION_WPA_PSK_TKIP_ASCII || passwd_mode==WIRELESS_ENCRYPTION_WPA_PSK_ASCII)
 	{
-	 	if(strlen(passwd)>0 && strlen(passwd)<26) 
+	 	if(strlen(passwd)>0) 
 		 	return 1;
 		else 	
 		 	return 0;

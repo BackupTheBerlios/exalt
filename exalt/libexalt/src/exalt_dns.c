@@ -91,6 +91,7 @@ int exalt_dns_add(const char* dns)
 	f = exalt_execute_command(buf);
 	while(fgets(buf,1024,f))
 		;
+	EXALT_PCLOSE(f);
 	return 1;
 }
 // }}}

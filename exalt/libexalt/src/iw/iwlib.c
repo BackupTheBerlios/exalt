@@ -2894,7 +2894,12 @@ iw_process_scan(int			skfd,
       wrq.u.data.flags = 0;
       wrq.u.data.length = 0;
       if(iw_set_ext(skfd, ifname, SIOCSIWSCAN, &wrq) < 0)
-	return(-1);
+      //// EXALT EDIT /////////////////////
+      {                               /////
+       	if(errno != EPERM)            /////
+	 	return(-1);           /////
+      }                               /////
+      /////////////////////////////////////
       /* Success : now, just wait for event or results */
       return(250);	/* Wait 250 ms */
     }

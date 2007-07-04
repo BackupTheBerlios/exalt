@@ -10,7 +10,7 @@ typedef struct _main_window main_window;
 
 #include "exalt.h"
 #include "eth_panel.h"
-#include "wifi_panel.h"
+#include "wireless_panel.h"
 #include "general_panel.h"
 
 #define MAINWINDOW_ETH_STATE_TIME_MAX 2
@@ -23,7 +23,7 @@ struct _main_window
 	Etk_Tree_Col* eth_col0;
 
 	eth_panel* eth_panel;
-	wifi_panel* wifi_panel;
+	wireless_panel* wireless_panel;
 	general_panel* general_panel;
 
 };
