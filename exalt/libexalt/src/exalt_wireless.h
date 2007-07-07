@@ -30,6 +30,7 @@ typedef struct exalt_wireless exalt_wireless;
 #include <Ecore_Data.h>
 #include <Ecore.h>
 #include "iwlib.h"
+#include "wpa_ctrl.h"
 
 /**
  * @brief informations about a wireless card
@@ -44,6 +45,8 @@ struct exalt_wireless
 	int passwd_mode;
 	Ecore_List* networks;
 
+        char* driver;
+
 	//use for scanning
 	Ecore_Timer* scan_cb_timer;
 	wireless_scan_head *context;
@@ -57,6 +60,10 @@ void exalt_wireless_free(exalt_wireless* w);
 void exalt_wireless_scan_execute(exalt_ethernet * eth);
 void exalt_wireless_scan_load(exalt_ethernet* eth);
 int exalt_wireless_scan(void* data);
+
+
+void exalt_wireless_set_driver(exalt_wireless* w, const char* driver);
+char* exalt_wireless_get_driver(exalt_wireless* w);
 
 void exalt_wireless_scan_start(exalt_ethernet* eth);
 void exalt_wireless_scan_stop(exalt_ethernet* eth);
@@ -90,6 +97,9 @@ void exalt_wireless_printf_scan(exalt_wireless w);
 
 
 void exalt_wireless_scan_free(wireless_scan **w);
+
+struct wpa_ctrl * exalt_wpa_open_connection(const char *ifname);
+int exalt_wpa_ctrl_command(struct wpa_ctrl *ctrl, char *cmd);
 
 /** @} */
 

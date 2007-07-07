@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include "libexalt.h"
 
-#define COMMAND_WPA_RELOAD "wpa_cli -i%s reconfigure"
+#define COMMAND_WPA "wpa_supplicant -D%s -i%s -c%s -B"
 
 #define COMMAND_DHCLIENT "dhclient"
 

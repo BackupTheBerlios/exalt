@@ -53,10 +53,10 @@ am__installdirs = "$(DESTDIR)$(libdir)" \
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
 am__objects_1 =
-am_libexalt_la_OBJECTS = proc.lo iwlib.lo libexalt.lo exalt_command.lo \
-	exalt_dns.lo exalt_ethernet.lo exalt_regexp.lo \
-	exalt_save_load.lo exalt_wireless.lo exalt_wireless_info.lo \
-	$(am__objects_1)
+am_libexalt_la_OBJECTS = proc.lo iwlib.lo wpa_ctrl.lo libexalt.lo \
+	exalt_command.lo exalt_dns.lo exalt_ethernet.lo \
+	exalt_regexp.lo exalt_save_load.lo exalt_wireless.lo \
+	exalt_wireless_info.lo $(am__objects_1)
 libexalt_la_OBJECTS = $(am_libexalt_la_OBJECTS)
 libexalt_la_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
@@ -195,13 +195,14 @@ top_srcdir = ..
 MAINTAINERCLEANFILES = Makefile.in
 AUTOMAKE_OPTIONS = 1.4 foreign
 INCLUDES = \
- -Wall -g   -Iiw/ -Inettools/
+ -Wall -g   -Iiw/ -Inettools/ -Iwpa_supplicant/ -Idistrib/
 
 lib_LTLIBRARIES = libexalt.la
 EXTRA_DIST = 
 EXALTHEADERS = \
 nettools/proc.h \
 iw/iwlib.h \
+wpa_supplicant/wpa_ctrl.h \
 libexalt.h \
 iw/wireless.h \
 exalt_command.h \
@@ -210,11 +211,15 @@ exalt_ethernet.h \
 exalt_regexp.h \
 exalt_save_load.h \
 exalt_wireless.h \
-exalt_wireless_info.h 
+exalt_wireless_info.h \
+distrib/default.h \
+distrib/gentoo.h \
+distrib/debian.h
 
 libexalt_la_SOURCES = \
 nettools/proc.c \
 iw/iwlib.c \
+wpa_supplicant/wpa_ctrl.c \
 libexalt.c \
 exalt_command.c \
 exalt_dns.c \
@@ -309,6 +314,7 @@ include ./$(DEPDIR)/exalt_wireless_info.Plo
 include ./$(DEPDIR)/iwlib.Plo
 include ./$(DEPDIR)/libexalt.Plo
 include ./$(DEPDIR)/proc.Plo
+include ./$(DEPDIR)/wpa_ctrl.Plo
 
 .c.o:
 	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -344,6 +350,13 @@ iwlib.lo: iw/iwlib.c
 #	source='iw/iwlib.c' object='iwlib.lo' libtool=yes \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o iwlib.lo `test -f 'iw/iwlib.c' || echo '$(srcdir)/'`iw/iwlib.c
+
+wpa_ctrl.lo: wpa_supplicant/wpa_ctrl.c
+	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT wpa_ctrl.lo -MD -MP -MF $(DEPDIR)/wpa_ctrl.Tpo -c -o wpa_ctrl.lo `test -f 'wpa_supplicant/wpa_ctrl.c' || echo '$(srcdir)/'`wpa_supplicant/wpa_ctrl.c
+	mv -f $(DEPDIR)/wpa_ctrl.Tpo $(DEPDIR)/wpa_ctrl.Plo
+#	source='wpa_supplicant/wpa_ctrl.c' object='wpa_ctrl.lo' libtool=yes \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o wpa_ctrl.lo `test -f 'wpa_supplicant/wpa_ctrl.c' || echo '$(srcdir)/'`wpa_supplicant/wpa_ctrl.c
 
 mostlyclean-libtool:
 	-rm -f *.lo

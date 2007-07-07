@@ -63,8 +63,9 @@ exalt.o exalt.o: exalt.c exalt.h config.h /usr/include/libintl.h \
   /usr/include/sys/time.h /usr/include/linux/version.h \
   /usr/include/net/if_arp.h /usr/include/netinet/if_ether.h \
   /usr/include/net/if.h /usr/local/include/exalt/wireless.h \
-  /usr/local/include/exalt/proc.h /usr/include/arpa/inet.h \
-  /usr/include/net/route.h /usr/local/include/exalt/exalt_command.h \
+  /usr/local/include/exalt/wpa_ctrl.h /usr/local/include/exalt/proc.h \
+  /usr/include/arpa/inet.h /usr/include/net/route.h \
+  /usr/local/include/exalt/exalt_command.h \
   /usr/local/include/exalt/exalt_dns.h \
   /usr/local/include/exalt/exalt_save_load.h /usr/include/Ecore_Config.h \
   /usr/include/Evas.h /usr/local/include/exalt/exalt_regexp.h \
@@ -362,6 +363,8 @@ config.h:
 /usr/include/net/if.h:
 
 /usr/local/include/exalt/wireless.h:
+
+/usr/local/include/exalt/wpa_ctrl.h:
 
 /usr/local/include/exalt/proc.h:
 

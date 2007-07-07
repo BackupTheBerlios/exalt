@@ -14,9 +14,9 @@
  * @debug 1 if you want use the debug mode, else 0
  * @return Return a exalt_regex structure
  */
-exalt_regex* exalt_regex_create(char* str_request, char* str_regex, short debug)
+exalt_regex* exalt_regex_create(const char* str_request, const char* str_regex, short debug)
 {
-    exalt_regex *r = (exalt_regex*)malloc((unsigned int)sizeof(exalt_regex)); 
+    exalt_regex *r = (exalt_regex*)malloc((unsigned int)sizeof(exalt_regex));
 
     r->str_request = NULL;
     r->str_regex = NULL;
@@ -39,7 +39,7 @@ exalt_regex* exalt_regex_create(char* str_request, char* str_regex, short debug)
  * @param r the exalt_regex
  * @param str_request the new request string
  */
-void exalt_regex_set_request(exalt_regex* r,char* str_request)
+void exalt_regex_set_request(exalt_regex* r,const char* str_request)
 {
     EXALT_FREE(r->str_request);
     r->str_request = strdup(str_request);
@@ -52,7 +52,7 @@ void exalt_regex_set_request(exalt_regex* r,char* str_request)
  * @param r the exalt_regex
  * @param str_regex the new regular expression
  */
-void exalt_regex_set_regex(exalt_regex* r,char* str_regex)
+void exalt_regex_set_regex(exalt_regex* r,const char* str_regex)
 {
     EXALT_FREE(r->str_regex);
     r->str_regex = strdup(str_regex);
@@ -108,7 +108,7 @@ void exalt_regex_free(exalt_regex **r)
 	    free(r2->str_request);
 	if(r2->str_regex)
 	    free(r2->str_regex);
-	
+
 	free(r2);
 	r=NULL;
     }
@@ -131,16 +131,16 @@ int exalt_regex_execute(exalt_regex* r)
 
     if(r==NULL)
         return -1;
-    
+
     exalt_regex_clear_result(r);
-    
+
     err = regcomp (&preg, r->str_regex, REG_EXTENDED);
     if (err != 0)
         return 0;
 
     nmatch = preg.re_nsub + 1;
     pmatch = (regmatch_t*)malloc (sizeof (regmatch_t) * nmatch);
-    
+
     if (pmatch)
     {
         match = regexec (&preg, r->str_request, nmatch, pmatch, 0);
@@ -149,13 +149,13 @@ int exalt_regex_execute(exalt_regex* r)
         if (match == 0)
         {
             unsigned int i ;
-	    r->res = (char**)malloc(sizeof(char*) * r->nmatch); 
+	    r->res = (char**)malloc(sizeof(char*) * r->nmatch);
 	    for(i=0;i<r->nmatch;i++)
 	    {
             	int start = pmatch[i].rm_so;
             	int end = pmatch[i].rm_eo;
             	size_t size = end - start;
-					
+
 		r->res[i] = (char*)malloc (sizeof (char) * (size + 1));
             	if (r->res[i])
             	{
@@ -166,7 +166,7 @@ int exalt_regex_execute(exalt_regex* r)
             	{
 		    fprintf (stderr, "regex_execute(): Memoire insuffisante\n");
 		    return 0;
-            	}		
+            	}
             }
 
 	    return 1;
