@@ -1,4 +1,4 @@
-
+/** @file exalt_save_load.c */
 #include "exalt_save_load.h"
 #include "config.h"
 
@@ -15,6 +15,17 @@
 #endif
 #endif
 
+/**
+ * @addgroup Exalt_save_load
+ *@{
+ */
+
+
+
+/**
+ * @brief save the configuration of all interfaces
+ * @return Return 1 if succes, else -1
+ */
 int exalt_eth_save()
 {
 	void *data;
@@ -33,26 +44,26 @@ int exalt_eth_save()
 	return 1;
 }
 
-int exalt_wireless_save_wpasupplicant(exalt_ethernet* eth)
+/**
+ * @brief save the wpa_supplicant configuration for a wireless interface
+ * @param w the wireless card
+ * @return Return 1 if success, else -1
+ */
+int exalt_wireless_save_wpasupplicant(exalt_wireless *w)
 {
  	FILE* fr,*fw;
 	char buf[1024];
 	int jump;
-	exalt_wireless* w;
+	exalt_ethernet *eth;
  	int enc_mode;
 
-	if(!eth)
+	if(!w)
 	{
-	 	fprintf(stderr,"exalt_wireless_save_wpasupplicant(): eth==null ! \n");
+	 	fprintf(stderr,"exalt_wireless_save_wpasupplicant(): w==null ! \n");
 		return -1;
 	}
 
-	if(!exalt_eth_is_wireless(eth))
-	{
-	 	fprintf(stderr,"exalt_wireless_save_wpasupplicant(): eth is not a wireless card ! \n");
-	}
-
- 	w = exalt_eth_get_wireless(eth);
+ 	eth = exalt_wireless_get_eth(w);
  	enc_mode = exalt_wireless_get_current_passwd_mode(w);
 
 	//save the configuration in wpa_cupplicant.conf in the top of the file
@@ -132,24 +143,22 @@ int exalt_wireless_save_wpasupplicant(exalt_ethernet* eth)
 	return 1;
 }
 
-int exalt_wireless_save_byeth(exalt_ethernet* eth)
+/**
+ * @brief save the configuration for one interface
+ * @param eth the interface
+ * @return Return 1 if success, else -1
+ */
+int exalt_wireless_save_byeth(exalt_wireless* w)
 {
 	char buf[1024];
-	exalt_wireless* w;
+        exalt_ethernet* eth;
 
-	if(!eth)
-	{
-		fprintf(stderr,"exalt_wireless_save_byeth(): eth==null ! \n");
-		return -1;
-	}
-
-	if(!exalt_eth_is_wireless(eth))
-	{
-		fprintf(stderr,"exalt_wireless_save_byeth(): eth is not a wireless card! \n");
-		return -1;
-	}
-	w = exalt_eth_get_wireless(eth);
-
+        if(!w)
+        {
+            fprintf(stderr,"exalt_wireless_save_byeth(): w==null !");
+            return -1;
+        }
+        eth = exalt_wireless_get_eth(w);
 	ecore_config_file_load(EXALT_CONF_FILE);
 
 	sprintf(buf,"essid_%s",exalt_wireless_get_current_essid(w));
@@ -190,6 +199,11 @@ int exalt_wireless_save_byeth(exalt_ethernet* eth)
 	return 1;
 }
 
+/**
+ * @brief load the default configuration for a wireless network
+ * @param wi the wireless network
+ * @return Return 1 if success, else -1
+ */
 int exalt_wireless_save_load_bywirelessinfo(exalt_wireless_info* wi)
 {
  	char buf[1024];
@@ -246,6 +260,12 @@ int exalt_wireless_save_load_bywirelessinfo(exalt_wireless_info* wi)
 	return 1;
 }
 
+/**
+ * @brief create a file
+ * @param file the file path and name
+ * @param header the header's file
+ * @return Return 1 if success, else -1
+ */
 int exalt_eth_save_file_create(char* file,char * header)
 {
 	int f;
@@ -261,6 +281,11 @@ int exalt_eth_save_file_create(char* file,char * header)
 	}
 }
 
+/**
+ * @brief test if a file exist
+ * @param file the file path and name
+ * @return Return 1 if success, else -1
+ */
 int exalt_eth_save_file_exist(char* file)
 {
 	int f;
@@ -273,4 +298,6 @@ int exalt_eth_save_file_exist(char* file)
 		return 1;
 	}
 }
+
+/** @} */
 

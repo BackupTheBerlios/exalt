@@ -6,7 +6,7 @@
  * @{
  */
 
-// {{{ char** exalt_dns_get_list(int* nb_dns)
+
 /**
  * @brief get the dns list
  * @param nb_dns the number of dns
@@ -22,7 +22,7 @@ char** exalt_dns_get_list(int* nb_dns)
 		fprintf(stderr,"dns_get_list(): nb_dns == null !\n");
 		return NULL;
 	}
-	
+
 	*nb_dns = 0;
 	tab=(char**)malloc((unsigned int)sizeof(char*)*NB_DNS_MAX);
 	if(!tab)
@@ -32,8 +32,8 @@ char** exalt_dns_get_list(int* nb_dns)
 
 	for(i=0;i<NB_DNS_MAX;i++)
 		tab[i] = (char*)malloc((unsigned int)sizeof(char)*DNS_LENGTH);
-	
-	
+
+
 	f = exalt_execute_command(DNS_GET_LIST);
 
 	while(fgets(tab[*nb_dns],DNS_LENGTH,f) && *nb_dns<NB_DNS_MAX)
@@ -44,9 +44,9 @@ char** exalt_dns_get_list(int* nb_dns)
 	EXALT_PCLOSE(f);
 	return tab;
 }
-// }}}
 
-// {{{ void exalt_dns_free_list(char** t, int nb_dns)
+
+
 /**
  * @brief free the dns list
  * @param t the dns list
@@ -63,9 +63,9 @@ void exalt_dns_free_list(char** t, int nb_dns)
 		EXALT_FREE(t[i]);
 	EXALT_FREE(t);
 }
-// }}}
 
-// {{{ int exalt_dns_add(const char* dns)
+
+
 /**
  * @brief add a dns
  * @param dns the news dns
@@ -80,13 +80,13 @@ int exalt_dns_add(const char* dns)
 		fprintf(stderr,"dns_add(): dns==null! \n");
 		return -1;
 	}
-	
+
 	if(!exalt_is_address(dns))
 	{
 	 	fprintf(stderr,"dns_add(): dns(%s) is not a valid address !\n",dns);
 		return -1;
 	}
-	
+
 	sprintf(buf,DNS_ADD,dns);
 	f = exalt_execute_command(buf);
 	while(fgets(buf,1024,f))
@@ -94,9 +94,9 @@ int exalt_dns_add(const char* dns)
 	EXALT_PCLOSE(f);
 	return 1;
 }
-// }}}
 
-// {{{ int exalt_dns_delete(const char* dns)
+
+
 /**
  * @brief delete a dns
  * @param dns the dns
@@ -111,7 +111,7 @@ int exalt_dns_delete(const char* dns)
 		fprintf(stderr,"dns_delete(): dns==null! \n");
 		return -1;
 	}
-	
+
 	sprintf(buf,DNS_DELETE,dns);
 	f = exalt_execute_command(buf);
 	while(fgets(buf,1024,f))
@@ -119,14 +119,14 @@ int exalt_dns_delete(const char* dns)
 	EXALT_PCLOSE(f);
 	return 1;
 }
-// }}}
 
-// {{{ int exalt_dns_replace(const char* old_dns, const char* new_dns)
+
+
 /**
  * @brief replace a dns by a new
  * @param old_dns the old dns
  * @param new_dns the new dns
- * return Return 1 if the dns is repalce, else -1
+ * @return Return 1 if the dns is repalce, else -1
  */
 int exalt_dns_replace(const char* old_dns, const char* new_dns)
 {
@@ -137,13 +137,13 @@ int exalt_dns_replace(const char* old_dns, const char* new_dns)
 		fprintf(stderr,"dns_delete(): old_dns==%p  new_dns=%p ! \n",old_dns, new_dns);
 		return -1;
 	}
-	
+
 	if(!exalt_is_address(new_dns))
 	{
 	 	fprintf(stderr,"dns_replace(): dns(%s) is not a valid address !\n",new_dns);
 		return -1;
 	}
-	
+
 	sprintf(buf,DNS_REPLACE,old_dns,new_dns);
 	f = exalt_execute_command(buf);
 	while(fgets(buf,1024,f))
@@ -151,9 +151,9 @@ int exalt_dns_replace(const char* old_dns, const char* new_dns)
 	EXALT_PCLOSE(f);
 	return 1;
 }
-// }}}
 
-// {{{ void exalt_dns_printf()
+
+
 /**
  * @brief print the dns list in the standard output
  */
@@ -167,7 +167,7 @@ void exalt_dns_printf()
 		printf("%s\n",t[i]);
 	exalt_dns_free_list(t,nb_dns);
 }
-// }}}
+
 
 /** @} */
 

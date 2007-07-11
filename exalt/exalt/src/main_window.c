@@ -22,11 +22,11 @@ main_window* mainwindow_create()
 
 	win->eth_list = etk_tree_new();
 	etk_widget_size_request_set(win->eth_list, 120, 50);
-	
+
 	win->eth_col0 = etk_tree_col_new(ETK_TREE(win->eth_list), _("Interfaces"), 80, 0.0);
    	etk_tree_col_model_add(win->eth_col0, etk_tree_model_image_new());
    	etk_tree_col_model_add(win->eth_col0, etk_tree_model_text_new());
-	
+
 	etk_tree_rows_height_set(ETK_TREE(win->eth_list),40);
 	etk_tree_mode_set(ETK_TREE(win->eth_list), ETK_TREE_MODE_LIST);
 	etk_tree_build(ETK_TREE(win->eth_list));
@@ -55,7 +55,7 @@ main_window* mainwindow_create()
 
 	//launch the timer to update the network state
 	//win->eth_state_timer = ecore_timer_add(MAINWINDOW_ETH_STATE_TIME_MAX ,mainWindow_eth_state_timer,win);
-	
+
 	return win;
 }/*}}}*/
 
@@ -100,7 +100,7 @@ void mainWindow_eth_cb(exalt_ethernet* eth, int action, void* user_data)
 		}
 		else if(exalt_eth_is_activate(eth))
 		 	img = eth_img;
-		else 
+		else
 		 	img = eth_img_not_activate;
 
 		etk_tree_row_append(ETK_TREE(win->eth_list), NULL,
@@ -114,7 +114,7 @@ void mainWindow_eth_cb(exalt_ethernet* eth, int action, void* user_data)
 	 	if(row)
 		 	etk_tree_row_delete(row);
 	}
-	else if(action == EXALT_ETH_CB_ACTIVATE || EXALT_ETH_CB_DESACTIVATE || EXALT_ETH_CB_WIRELESS_RADIO_ON || EXALT_ETH_CB_WIRELESS_RADIO_OFF)
+	else if(action == EXALT_ETH_CB_ACTIVATE || EXALT_ETH_CB_DEACTIVATE || EXALT_ETH_CB_WIRELESS_RADIO_ON || EXALT_ETH_CB_WIRELESS_RADIO_OFF)
 	{
 		Etk_Tree_Row *row;
 		row = mainWindow_findrow(win, eth);
@@ -215,7 +215,7 @@ void mainWindow_ethList_row_clicked_cb(Etk_Object *object, Etk_Tree_Row *row, Et
 
 	if (!(tree = ETK_TREE(object)) || !row || !event || !data)
 		return;
-	
+
 	win = (main_window*)data;
 
 	etk_tree_row_fields_get(row, etk_tree_nth_col_get(tree, 0), NULL, NULL, &row_name, NULL);
@@ -225,7 +225,7 @@ void mainWindow_ethList_row_clicked_cb(Etk_Object *object, Etk_Tree_Row *row, Et
 		wirelesspanel_hide(win->wireless_panel);
 		ethpanel_hide(win->eth_panel);
 		generalpanel_show(win->general_panel);
-		
+
 	}
 	else
 	{

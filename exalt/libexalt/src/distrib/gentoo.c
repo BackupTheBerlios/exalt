@@ -105,7 +105,7 @@ int exalt_eth_save_byeth(exalt_ethernet* eth)
 
 	if(exalt_eth_is_wireless(eth))
 	{
-	 	exalt_wireless_save_wpasupplicant(eth);
+	 	exalt_wireless_save_wpasupplicant(exalt_eth_get_wireless(eth));
 	}
 	return 1;
 }

@@ -286,7 +286,7 @@ exalt_ethernet* exalt_wireless_get_ethernet(exalt_wireless* w)
 
 /**
  * @brief return the wireless networks list
- * @param w the wireless card
+ * @param w the wireless interface
  */
 Ecore_List* exalt_wireless_get_networks_list(exalt_wireless* w)
 {
@@ -298,6 +298,20 @@ Ecore_List* exalt_wireless_get_networks_list(exalt_wireless* w)
 	return w->networks;
 }
 
+/**
+ * @brief return the exalt_ethernet struct
+ * @param w the wireless interface
+ * @return Return null if fail, else the exalt_ethernet struct
+ */
+exalt_ethernet* exalt_wireless_get_eth(exalt_wireless* w)
+{
+    if(!w)
+    {
+        fprintf(stderr,"exalt_wireless_get_eth(): w==null ! \n");
+        return NULL;
+    }
+    return w->eth;
+}
 
 /*
  * Set/get functions for exalt_wireless_info
@@ -845,7 +859,7 @@ int exalt_wireless_apply_conf(exalt_ethernet* eth)
 	ctrl_conn=NULL;
 
  	//save the configuration of the current network
-	exalt_wireless_save_byeth(eth);
+	exalt_wireless_save_byeth(exalt_eth_get_wireless(eth));
 
  	return 1;
 }

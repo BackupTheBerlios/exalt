@@ -10,7 +10,7 @@
 
 /**
  * @defgroup Exalt_regexp
- * @brief The exalt_regex contans all functions to execute a regular expression on a request string
+ * @brief The exalt_regex contains all functions to execute a regular expression on a request string
  * @{
  */
 
@@ -20,12 +20,11 @@
 #define REGEXP_IP   REGEXP_IP_PARTIAL "\\."  REGEXP_IP_PARTIAL "\\."  REGEXP_IP_PARTIAL "\\."  REGEXP_IP_PARTIAL
 /** ip regexp when the string request contains only a ip */
 #define REGEXP_IS_IP "^"  REGEXP_IP "$"
-/** retrive the interface name since /proc/net/dev */
+/** retrieve the interface name from /proc/net/dev */
 #define REGEXP_PROCNNET_GET_NAME " *(.+):"
 
 /** regexp to test if a key is a correct WEP hexadecimal key */
 #define REGEXP_IS_WEP_HEXA "^[0-9A-F]{10}$|^[0-91-F]{26}$"
-
 
 
 /**

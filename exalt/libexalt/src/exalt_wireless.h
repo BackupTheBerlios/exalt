@@ -79,6 +79,7 @@ int exalt_wireless_get_current_passwd_mode(exalt_wireless* w);
 void exalt_wireless_set_current_passwd_mode(exalt_wireless* w,int passwd_mode);
 exalt_ethernet* exalt_wireless_get_ethernet(exalt_wireless* w);
 Ecore_List* exalt_wireless_get_networks_list(exalt_wireless* w);
+exalt_ethernet* exalt_wireless_get_eth(exalt_wireless* w);
 
 void exalt_set_button_state(exalt_wireless* w);
 void exalt_wireless_set_raddio_button(exalt_wireless* w,short on);

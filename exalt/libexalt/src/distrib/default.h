@@ -1,5 +1,13 @@
+/** @file default.h */
 #ifndef DIST_DEFAULT_H
 #define DIST_DEFAULT_H
+
+/**
+ * @addgroup Exalt_save_load
+ *@{
+ */
+
+
 
 #define CONF_FILE ""
 
@@ -14,4 +22,5 @@
 #define COMMAND_WPA "wpa_supplicant -D%s -i%s -c%s -B"
 
 #endif
+/** @} */
 

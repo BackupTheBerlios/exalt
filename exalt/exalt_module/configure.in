@@ -7,7 +7,7 @@ AC_INIT(configure.in)
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
 
-AM_INIT_AUTOMAKE(module_exalt, 0.0.1)
+AM_INIT_AUTOMAKE(module_exalt, 0.5)
 AM_CONFIG_HEADER(config.h)
 AC_ISC_POSIX
 AC_PROG_CC
@@ -94,7 +94,7 @@ if test "x${prefix}" = "xNONE"; then
     datadir="${HOME}/.e/e/modules/${PACKAGE}"
 else
     AC_DEFINE_UNQUOTED(PACKAGE_DATA_DIR, "${libdir}/enlightenment/modules/${PACKAGE}", "Package installed data destination")
-    datadir="${libdir}/enlightenment/modules/${PACKAGE}"    
+    datadir="${libdir}/enlightenment/modules/${PACKAGE}"
 fi
 
 
@@ -103,7 +103,7 @@ if test "x${prefix}" = "xNONE"; then
     localedir="${HOME}/.e/e/modules/${PACKAGE}"
 else
     AC_DEFINE_UNQUOTED(LOCALEDIR, "${libdir}/enlightenment/modules/${PACKAGE}/locale", "Locale installed data destination")
-    localedir="${libdir}/enlightenment/modules/${PACKAGE}"    
+    localedir="${libdir}/enlightenment/modules/${PACKAGE}"
 fi
 
 #AC_CHECK_LIB(dl, dlopen, dlopen_libs=-ldl)
@@ -142,7 +142,7 @@ AC_SUBST(e_modules)
 PKG_CHECK_MODULES(EXALT, [
    exalt >= 0.0.1
 ])
-  
+
 AC_OUTPUT([
 Makefile
 e_modules-exalt.spec

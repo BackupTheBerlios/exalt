@@ -1,7 +1,18 @@
-
+/** @file libexalt.c */
 #include "libexalt.h"
 #include "config.h"
 
+/**
+ * @addtogroup Exalt_common
+ * @{
+ */
+
+
+/**
+ * @brief test if a string is a correct adress
+ * @param ip the string ip
+ * return Return 1 if sucess, else 0
+ */
 short exalt_is_address(const char* ip)
 {
     exalt_regex *r;
@@ -15,12 +26,23 @@ short exalt_is_address(const char* ip)
     return res;
 }
 
+/**
+ * @brief test if a string is a correct essid
+ * @param essid the essid
+ * @return Return 1 if success, else 0
+ */
 short exalt_is_essid(const char* essid)
 {
     if(!essid) return 0;
     return strlen(essid);
 }
 
+/**
+ * @brief test if a string is a correct password
+ * @param passwd the password
+ * @param passwd_mode the password mode (WEP, WPA ...)
+ * @return Return 1 if success, else 0
+ */
 short exalt_is_passwd(const char* passwd, int passwd_mode)
 {
     exalt_regex *r;
@@ -58,7 +80,11 @@ short exalt_is_passwd(const char* passwd, int passwd_mode)
     return 0;
 }
 
-
+/**
+ * @brief convert a hexadecimal address to a decimal address (xxx.xxx.xxx.xxx)
+ * @param addr the address
+ * @return Return the address in decimal format
+ */
 char* exalt_addr_hexa_to_dec(char* addr)
 {
     char *res;
@@ -88,7 +114,12 @@ char* exalt_addr_hexa_to_dec(char* addr)
     return res;
 }
 
-
+/**
+ * @brief remove a substring in a string
+ * @param s1 the string
+ * @param ct the substring
+ * @return Return the new string
+ */
 char *str_remove (const char *s1, const char *ct)
 {
     char* s = strdup(s1);

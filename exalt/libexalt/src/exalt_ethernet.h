@@ -27,23 +27,34 @@ typedef struct exalt_ethernet exalt_ethernet;
  * @{
  */
 
+/** when we have a new card */
 #define EXALT_ETH_CB_NEW 1
+/** when we have a remove card */
 #define EXALT_ETH_CB_REMOVE 2
+/** when a known card is activated */
 #define EXALT_ETH_CB_ACTIVATE 3
-#define EXALT_ETH_CB_DESACTIVATE 4
+/** when a known card is deactivated */
+#define EXALT_ETH_CB_DEACTIVATE 4
+/** when a wireless card is turned off */
 #define EXALT_ETH_CB_WIRELESS_RADIO_ON 5
+/** when a wireless card is turned on */
 #define EXALT_ETH_CB_WIRELESS_RADIO_OFF 6
 
+/** when a new wireless network appears */
 #define EXALT_WIRELESS_SCAN_CB_NEW 1
+/** when a new wireless network disappears */
 #define EXALT_WIRELESS_SCAN_CB_REMOVE 2
 
 #define EXALT_ETHERNET(a) (exalt_ethernet*)a
 
 #define EXALT_ETH_UPDATE_TIME 2
+
+/** action = EXALT_ETH_CB_* */
 typedef void (*Exalt_Eth_Cb) (exalt_ethernet* eth, int action, void* user_data);
 #define EXALT_ETH_CB(a) (Exalt_Eth_Cb)a
 
 #define EXALT_WIRELESS_SCAN_UPDATE_TIME 10
+/**action = EXALT_WIRELESS_SCAN_CB_* */
 typedef void (*Exalt_Wifi_Scan_Cb) (exalt_wireless_info* wi, int action, void* user_data);
 #define EXALT_WIRELESS_SCAN_CB(a) (Exalt_Wifi_Scan_Cb)a
 
@@ -53,18 +64,18 @@ typedef void (*Exalt_Wifi_Scan_Cb) (exalt_wireless_info* wi, int action, void* u
  * @brief informations about a card
  * @structinfo
  */
-struct exalt_ethernet 
+struct exalt_ethernet
 {
 	char* name; //eth0, eth1...
 	short activate;
-	char* ip;   
+	char* ip;
 	char* netmask;
 	char* gateway;
 	short dhcp; //1 -> dhcp mode, 0 -> static mode
 	exalt_wireless* wireless; //if null, the interface is not wireless
 };
 
-/** 
+/**
  * @brief all cards
  * @structinfo
  */
@@ -100,7 +111,7 @@ void exalt_eth_load_gateway_byeth(exalt_ethernet* eth);
 short exalt_eth_load_activate(exalt_ethernet * eth);
 
 void exalt_eth_activate(exalt_ethernet* eth);
-void exalt_eth_desactivate(exalt_ethernet* eth);
+void exalt_eth_deactivate(exalt_ethernet* eth);
 short exalt_eth_is_ethernet(char* name);
 
 

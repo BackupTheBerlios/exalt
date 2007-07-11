@@ -11,7 +11,7 @@
  * Constructor / Destructor
  */
 
-// {{{ void exalt_eth_init()
+
 /**
  * @brief intialise the library
  */
@@ -22,7 +22,7 @@ int exalt_eth_init()
 	 	fprintf(stderr,"exalt_eth_init(): error can't init ecore config\n");
 		return -1;
 	}
-	
+
 	exalt_eth_interfaces.ethernets = ecore_list_new();
 	exalt_eth_interfaces.ethernets->free_func =  ECORE_FREE_CB(exalt_eth_free);
 	ecore_list_init(exalt_eth_interfaces.ethernets);
@@ -33,13 +33,13 @@ int exalt_eth_init()
 
 	exalt_eth_interfaces.wireless_scan_cb = NULL;
 	exalt_eth_interfaces.wireless_scan_cb_user_data = NULL;
- 
-  	exalt_eth_interfaces.we_version = iw_get_kernel_we_version(); 
+
+  	exalt_eth_interfaces.we_version = iw_get_kernel_we_version();
 	return 1;
 }
-// }}}
 
-// {{{ exalt_ethernet* exalt_eth_create()
+
+
 /**
  * @brief create a exalt_ethernet structure
  * @return Return a new exalt_ethernet structure
@@ -61,9 +61,9 @@ exalt_ethernet* exalt_eth_create()
 
 	return eth;
 }
-// }}}
 
-// {{{ void exalt_eth_ethernets_free()
+
+
 /**
  * @brief free the "library" (exalt_eth_interfaces)
  */
@@ -72,9 +72,9 @@ void exalt_eth_ethernets_free()
  	ecore_list_destroy(exalt_eth_interfaces.ethernets);
 	EXALT_DELETE_TIMER(exalt_eth_interfaces.eth_cb_timer)
 }
-// }}}
 
-// {{{ void exalt_eth_free(void* data)
+
+
 /**
  * @brief free a exalt_ethernet structure
  * @param data a exalt_ethernet* structure
@@ -88,16 +88,16 @@ void exalt_eth_free(void *data)
 		EXALT_FREE(eth->gateway)
 		if(exalt_eth_is_wireless(eth)) exalt_wireless_free(exalt_eth_get_wireless(eth));
 }
-// }}}
+
 
 /*
  * Load ethernet informations
  */
 
-// {{{ int exalt_eth_update(void* data)
+
 /**
  * @brief update all interfaces list (load new card, unload old cards, test if the card is activated or not)
- * @param data just for fun
+ * @param data just for fun (because Ecore_Timer need one)
  * @return Return 1
  */
 int exalt_eth_update(void* data)
@@ -113,9 +113,9 @@ int exalt_eth_update(void* data)
 
  	return 1;
 }
-// }}}
 
-// {{{ void exalt_eth_load_state()
+
+
 /*
  * @brief load the state of  all interfaces
  */
@@ -140,7 +140,7 @@ void exalt_eth_load_state()
 }
 //}}}
 
-// {{{ void exalt_eth_load_remove()
+
 /**
  * @brief remove olds interfaces
  */
@@ -203,9 +203,8 @@ void exalt_eth_load_remove()
 	}
  	ecore_list_destroy(l);
 }
-// }}}
 
-// {{{ void exalt_eth_load()
+
 /**
  * @brief load all the network card (wired & wireless)
  */
@@ -214,7 +213,7 @@ void exalt_eth_load()
 	FILE* f;
 	char buf[1024];
 	exalt_regex *r;
-	
+
 	r = exalt_regex_create("",REGEXP_PROCNNET_GET_NAME,0);
 
 	f = fopen(EXALT_PATH_PROCNET_DEV, "r");
@@ -254,11 +253,11 @@ void exalt_eth_load()
 	fclose(f);
 	exalt_regex_free(&r);
 }
-// }}}
 
-// {{{ void exalt_eth_load_configuration()
-/** 
- * @brief reload the configuration of all cards (call exalt_eth_load() before)
+
+
+/**
+ * @brief reload the configuration of all cards
  */
 void exalt_eth_load_configuration()
 {
@@ -273,9 +272,9 @@ void exalt_eth_load_configuration()
 		data = ecore_list_next(exalt_eth_interfaces.ethernets);
 	}
 }
-// }}}
 
-// {{{ void exalt_eth_load_configuration_byeth(exalt_ethernet* eth, short load_file)
+
+
 /**
  * @brief load the configuration of "eth" card
  * @param eth the card
@@ -296,23 +295,23 @@ void exalt_eth_load_configuration_byeth(exalt_ethernet* eth, short load_file)
 	exalt_eth_load_activate(eth);
 
 	//get the ip address
-	exalt_eth_load_ip(eth);				
+	exalt_eth_load_ip(eth);
 
 	//get the netmask
 	exalt_eth_load_netmask(eth);
 
  	//get the gateway
 	exalt_eth_load_gateway_byeth(eth);
- 	
+
 	//load the conf file
 	if(load_file)
 		exalt_eth_save_load_byeth(eth);
 }
-// }}}
 
-// {{{ short exalt_eth_load_activate(exalt_ethernet * eth)
+
+
 /**
- * @brief test if the card is activated
+ * @brief load the state of a card (activate or no)
  * @param eth the card
  * @return Return 1 ok, else 0
  */
@@ -330,7 +329,7 @@ short exalt_eth_load_activate(exalt_ethernet * eth)
 
  	fd=iw_sockets_open();
  	strncpy(ifr.ifr_name,exalt_eth_get_name(eth),sizeof(ifr.ifr_name));
- 	if (fd < 0) 
+ 	if (fd < 0)
 	{
 	 	fprintf(stderr,"exalt_eth_load_activate(): fd==%d",fd);
 		return -1;
@@ -350,11 +349,11 @@ short exalt_eth_load_activate(exalt_ethernet * eth)
 	 	exalt_eth_set_activate(eth,0);
 	return 1;
 }
-// }}}
 
-// {{{ void exalt_eth_load_gateway_byeth(exalt_ethernet* eth)
+
+
 /**
- * @brief load the gateway address of the card "eth"
+ * @brief load the default gateway address of the card "eth"
  * @param eth the card
  */
 void exalt_eth_load_gateway_byeth(exalt_ethernet* eth)
@@ -382,8 +381,8 @@ void exalt_eth_load_gateway_byeth(exalt_ethernet* eth)
 	fmt = proc_gen_fmt(EXALT_PATH_ROUTE, 0, f,
 			"Iface", "%16s",
 			"Destination", "%128s",
-			"Gateway", "%128s", 
-			"Flags", "%X",  
+			"Gateway", "%128s",
+			"Flags", "%X",
 			"RefCnt", "%d",
 			"Use", "%d",
 			"Metric", "%d",
@@ -391,7 +390,7 @@ void exalt_eth_load_gateway_byeth(exalt_ethernet* eth)
 			"MTU", "%d",
 			"Window", "%d",
 			"IRTT", "%d",
-			NULL);       
+			NULL);
 
 	while(fgets(buf,1024,f))
 	{
@@ -404,9 +403,9 @@ void exalt_eth_load_gateway_byeth(exalt_ethernet* eth)
 	}
 	fclose(f);
 }
-// }}}
 
-// {{{ int exalt_eth_load_ip(exalt_ethernet* eth)
+
+
 /**
  * @brief load the ip address of eth
  * @param eth exalt_ethernet
@@ -426,7 +425,7 @@ int exalt_eth_load_ip(exalt_ethernet* eth)
 
  	fd=iw_sockets_open();
  	strncpy(ifr.ifr_name,exalt_eth_get_name(eth),sizeof(ifr.ifr_name));
- 	if (fd < 0) 
+ 	if (fd < 0)
 	{
 	 	fprintf(stderr,"exalt_eth_load_ip(): fd==%d",fd);
 		return -1;
@@ -445,9 +444,9 @@ int exalt_eth_load_ip(exalt_ethernet* eth)
 
 	return 1;
 }
-// }}}
 
-// {{{ int exalt_eth_load_netmask(exalt_ethernet* eth)
+
+
 /**
  * @brief load the netmask of eth
  * @param eth exalt_ethernet
@@ -467,7 +466,7 @@ int exalt_eth_load_netmask(exalt_ethernet* eth)
 
  	fd=iw_sockets_open();
  	strncpy(ifr.ifr_name,exalt_eth_get_name(eth),sizeof(ifr.ifr_name));
- 	if (fd < 0) 
+ 	if (fd < 0)
 	{
 	 	fprintf(stderr,"exalt_eth_load_netmask(): fd==%d",fd);
 		return -1;
@@ -486,9 +485,9 @@ int exalt_eth_load_netmask(exalt_ethernet* eth)
 
 	return 1;
 }
-// }}}
 
-// {{{ short exalt_eth_is_ethernet(char* name)
+
+
 /**
  * @brief test if a interface is a ethernet interface
  * @param name the name of the interface
@@ -508,7 +507,7 @@ short exalt_eth_is_ethernet(char* name)
 
  	fd=iw_sockets_open();
  	strncpy(ifr.ifr_name,name,sizeof(ifr.ifr_name));
- 	if (fd < 0) 
+ 	if (fd < 0)
 	{
 	 	fprintf(stderr,"exalt_eth_is_ethernet(): fd==%d",fd);
 		return -1;
@@ -524,13 +523,13 @@ short exalt_eth_is_ethernet(char* name)
 
 	return ifr.ifr_hwaddr.sa_family == ARPHRD_ETHER;
 }
-// }}}
+
 
 /*
- * activate / desactivate a card
+ * activate / deactivate a card
  */
 
-// {{{ void exalt_eth_activate(exalt_ethernet* eth)
+
 /**
  * @brief activate the card "eth"
  * @param eth the card
@@ -549,7 +548,7 @@ void exalt_eth_activate(exalt_ethernet* eth)
 
  	fd=iw_sockets_open();
  	strncpy(ifr.ifr_name,exalt_eth_get_name(eth),sizeof(ifr.ifr_name));
- 	if (fd < 0) 
+ 	if (fd < 0)
 	{
 	 	fprintf(stderr,"exalt_eth_activate(): fd==%d",fd);
 		return ;
@@ -574,14 +573,14 @@ void exalt_eth_activate(exalt_ethernet* eth)
 	exalt_eth_set_activate(eth,1);
 	exalt_eth_save_autoload(eth);
 }
-// }}}
 
-// {{{ void exalt_eth_desactivate(exalt_ethernet* eth)
+
+
 /**
- * @brief desactivate the card eth"
+ * @brief deactivate the card eth"
  * @param eth the card
  */
-void exalt_eth_desactivate(exalt_ethernet* eth)
+void exalt_eth_deactivate(exalt_ethernet* eth)
 {
 	struct sockaddr_in sin = { AF_INET };
 	struct ifreq ifr;
@@ -589,29 +588,29 @@ void exalt_eth_desactivate(exalt_ethernet* eth)
 
 	if(!eth)
 	{
-	 	fprintf(stderr,"exalt_eth_desactivate(): eth==null ! \n");
+	 	fprintf(stderr,"exalt_eth_deactivate(): eth==null ! \n");
 		return ;
 	}
 
  	fd=iw_sockets_open();
  	strncpy(ifr.ifr_name,exalt_eth_get_name(eth),sizeof(ifr.ifr_name));
- 	if (fd < 0) 
+ 	if (fd < 0)
 	{
-	 	fprintf(stderr,"exalt_eth_desactivate(): fd==%d",fd);
+	 	fprintf(stderr,"exalt_eth_deactivate(): fd==%d",fd);
 		return ;
 	}
 
  	ifr.ifr_addr = *(struct sockaddr *) &sin;
 	if( ioctl(fd, SIOCGIFFLAGS, (caddr_t)&ifr) < 0)
 	{
-	 	perror("exalt_eth_desactivate(): ioctl (SIOCGIFFLAGS)");
+	 	perror("exalt_eth_deactivate(): ioctl (SIOCGIFFLAGS)");
 		return ;
 	}
 
  	ifr.ifr_flags &= ~IFF_UP;
 	if( ioctl(fd, SIOCSIFFLAGS, (caddr_t)&ifr) < 0)
 	{
-	 	perror("exalt_eth_desactivate(): ioctl (SIOCSIFFLAGS)");
+	 	perror("exalt_eth_deactivate(): ioctl (SIOCSIFFLAGS)");
 		return ;
 	}
 	close(fd);
@@ -620,7 +619,7 @@ void exalt_eth_desactivate(exalt_ethernet* eth)
  	exalt_eth_set_activate(eth,0);
  	exalt_eth_save_autoload(eth);
 }
-// }}}
+
 
 
 /*
@@ -628,7 +627,7 @@ void exalt_eth_desactivate(exalt_ethernet* eth)
  */
 
 
-// {{{ Ecore_List* exalt_eth_get_list()
+
 /**
  * @brief get the interface ecore list
  * @return Return the ecore list
@@ -637,10 +636,10 @@ Ecore_List* exalt_eth_get_list()
 {
  	return exalt_eth_interfaces.ethernets;
 }
-// }}}
 
 
-// {{{ exalt_ethernet* exalt_eth_get_ethernet_bypos(int pos)
+
+
 /**
  * @brief get a card by his position in the card list
  * @param pos the position
@@ -650,9 +649,9 @@ exalt_ethernet* exalt_eth_get_ethernet_bypos(int pos)
 {
 	return EXALT_ETHERNET(ecore_list_goto_index(exalt_eth_interfaces.ethernets,pos));
 }
-// }}}
 
-// {{{ exalt_ethernet* exalt_eth_get_ethernet_byname(char* name)
+
+
 /**
  * @brief get a card by his name
  * @param name the name
@@ -676,17 +675,17 @@ exalt_ethernet* exalt_eth_get_ethernet_byname(char* name)
 	 	eth = EXALT_ETHERNET(data);
 		if(strcmp(exalt_eth_get_name(eth),name) == 0)
 			return eth;
-		
+
 		data = ecore_list_next(exalt_eth_interfaces.ethernets);
 	}
 
 	return NULL;
 }
-// }}}
 
-// {{{ char* exalt_eth_get_name(exalt_ethernet* eth)
+
+
 /**
- * @brief get the name of the card "eth" (eth0, eth1 or or others)
+ * @brief get the name of the card "eth" (eth0, eth1 ...)
  * @param eth the card
  * @return Returns the name
  */
@@ -697,11 +696,11 @@ char* exalt_eth_get_name(exalt_ethernet* eth)
 	else
 		return NULL;
 }
-// }}}
 
-// {{{ char* exalt_eth_get_ip(exalt_ethernet* eth)
+
+
 /**
- * @brief get the ip address of the card "eth" 
+ * @brief get the ip address of the card "eth"
  * @param eth the card
  * @return Returns the ip address
  */
@@ -712,11 +711,11 @@ char* exalt_eth_get_ip(exalt_ethernet* eth)
 	else
 		return NULL;
 }
-// }}}
 
-// {{{ char* exalt_eth_get_netmask(exalt_ethernet* eth)
+
+
 /**
- * @brief get the netmask address of the card "eth" 
+ * @brief get the netmask address of the card "eth"
  * @param eth the card
  * @return Returns the netmask address
  */
@@ -727,11 +726,11 @@ char* exalt_eth_get_netmask(exalt_ethernet* eth)
 	else
 		return NULL;
 }
-// }}}
 
-// {{{ char* exalt_eth_get_gateway(exalt_ethernet* eth)
+
+
 /**
- * @brief get the gateway address of the card "eth" 
+ * @brief get the default gateway address of the card "eth"
  * @param eth the card
  * @return Returns the gateway address
  */
@@ -742,9 +741,9 @@ char* exalt_eth_get_gateway(exalt_ethernet* eth)
 	else
 		return NULL;
 }
-// }}}
 
-// {{{ short exalt_eth_is_dhcp(exalt_ethernet* eth)
+
+
 /**
  * @brief get if the card "eth" use DHCP or static
  * @param eth the card
@@ -757,9 +756,9 @@ short exalt_eth_is_dhcp(exalt_ethernet* eth)
 	else
 		return 0;
 }
-// }}}
 
-// {{{ short exalt_eth_is_activate(exalt_ethernet* eth)
+
+
 /**
  * @brief get if the card is activated
  * @param eth the card
@@ -772,9 +771,9 @@ short exalt_eth_is_activate(exalt_ethernet* eth)
 	else
 		return 0;
 }
-// }}}
 
-// {{{ short exalt_eth_is_wireless(exalt_ethernet* eth)
+
+
 /**
  * @brief get if the card "eth" is a wireless card
  * @param eth the card
@@ -787,11 +786,11 @@ short exalt_eth_is_wireless(exalt_ethernet* eth)
 	else
 		return 0;
 }
-// }}}
 
-// {{{ exalt_wireless* exalt_eth_get_wireless(exalt_ethernet* eth)
+
+
 /**
- * @brief get the wireless structure of the card "eth" 
+ * @brief get the wireless structure of the card "eth"
  * @param eth the card
  * @return Returns the wireless structure
  */
@@ -802,11 +801,11 @@ exalt_wireless* exalt_eth_get_wireless(exalt_ethernet* eth)
 	else
 		return NULL;
 }
-// }}}
 
-// {{{ int exalt_eth_set_ip(exalt_ethernet* eth, const char* ip)
+
+
 /**
- * @brief set the ip address of the card "eth" 
+ * @brief set the ip address of the card "eth"
  * @param eth the card
  * @param ip the new ip address
  * @return Returns 1 if the new ip address is apply, 0 if the "ip" doesn't have a correct format else -1
@@ -828,11 +827,11 @@ int exalt_eth_set_ip(exalt_ethernet* eth, const char* ip)
 	eth->ip=strdup(ip);
 	return 1;
 }
-// }}}
 
-// {{{ int exalt_eth_set_netmask(exalt_ethernet* eth, const char* netmask)
+
+
 /**
- * @brief set the netmask address of the card "eth" 
+ * @brief set the netmask address of the card "eth"
  * @param eth the card
  * @param netmask the new netmask address
  * @return Returns 1 if the new netmask address is apply, 0 if the "netmask" doesn't have a correct format else -1
@@ -854,11 +853,11 @@ int exalt_eth_set_netmask(exalt_ethernet* eth, const char* netmask)
 		eth->netmask=strdup(netmask);
 	return 1;
 }
-// }}}
 
-// {{{ int exalt_eth_set_gateway(exalt_ethernet* eth, const char* gateway)
+
+
 /**
- * @brief set the gateway address of the card "eth" 
+ * @brief set the gateway address of the card "eth"
  * @param eth the card
  * @param gateway the new gateway address
  * @return Returns 1 if the new gateway address is apply, 0 if the "gateway" doesn't have a correct format else -1
@@ -879,11 +878,11 @@ int exalt_eth_set_gateway(exalt_ethernet* eth, const char* gateway)
 		eth->gateway=strdup(gateway);
 	return 1;
 }
-// }}}
 
-// {{{ int exalt_eth_set_name(exalt_ethernet* eth, const char* name)
+
+
 /**
- * @brief set the name of the card "eth" 
+ * @brief set the name of the card "eth"
  * @param eth the card
  * @param name the new name
  * @return Returns 1 if the new name is apply, else 0
@@ -899,11 +898,11 @@ int exalt_eth_set_name(exalt_ethernet* eth, const char* name)
 	else
 		return 0;
 }
-// }}}
 
-// {{{ int exalt_eth_set_dhcp(exalt_ethernet* eth, short dhcp)
+
+
 /**
- * @brief set the the dhcp mode of the card "eth" 
+ * @brief set the the dhcp mode of the card "eth"
  * @param eth the card
  * @param dhcp the mode: 1 -> dhcp, 0 -> static
  * @return Returns 1 if the mode is apply, else 0
@@ -918,11 +917,11 @@ int exalt_eth_set_dhcp(exalt_ethernet* eth, short dhcp)
 	else
 		return 0;
 }
-// }}}
 
-// {{{ int exalt_eth_set_activate(exalt_ethernet* eth, short activate)
+
+
 /**
- * @brief set if the card "eth" is activate or no 
+ * @brief set if the card "eth" is activate or no
  * @param eth the card
  * @param activate 1 if activate, else 0
  * @return Returns 1 if the operation is apply, else 0
@@ -933,18 +932,18 @@ int exalt_eth_set_activate(exalt_ethernet* eth, short activate)
 	{
 		eth->activate=activate;
 		if(exalt_eth_interfaces.eth_cb)
-			 exalt_eth_interfaces.eth_cb(eth,(activate==1?EXALT_ETH_CB_ACTIVATE:EXALT_ETH_CB_DESACTIVATE),exalt_eth_interfaces.eth_cb_user_data);
+			 exalt_eth_interfaces.eth_cb(eth,(activate==1?EXALT_ETH_CB_ACTIVATE:EXALT_ETH_CB_DEACTIVATE),exalt_eth_interfaces.eth_cb_user_data);
 		return 1;
 	}
 	else
 		return 0;
 }
-// }}}
 
-// {{{ int exalt_eth_set_cb(Exalt_Eth_Cb fct, void* user_data)
+
+
 /**
  * @brief set the callback function
- * @param fct function call when a new interface is add
+ * @param fct function call when we have a new or remove interface
  * @param user_data user data
  */
 int exalt_eth_set_cb(Exalt_Eth_Cb fct, void * user_data)
@@ -953,12 +952,12 @@ int exalt_eth_set_cb(Exalt_Eth_Cb fct, void * user_data)
 	exalt_eth_interfaces.eth_cb_user_data = user_data;
 	return 1;
 }
-// }}}
 
-// {{{ int exalt_eth_set_scan_cb(Exalt_Wifi_Scan_Cb fct, void* user_data)
+
+
 /**
  * @brief set the callback scan function
- * @param fct function call when a new interface is add
+ * @param fct function call when we have a new or old wireless network
  * @param user_data user data
  */
 int exalt_eth_set_scan_cb(Exalt_Wifi_Scan_Cb fct, void * user_data)
@@ -967,7 +966,7 @@ int exalt_eth_set_scan_cb(Exalt_Wifi_Scan_Cb fct, void * user_data)
 	exalt_eth_interfaces.wireless_scan_cb_user_data = user_data;
 	return 1;
 }
-// }}}
+
 
 
 
@@ -976,18 +975,18 @@ int exalt_eth_set_scan_cb(Exalt_Wifi_Scan_Cb fct, void * user_data)
  */
 
 
-// {{{ int exalt_eth_apply_conf(exalt_ethernet* eth)
+
 /**
- * @brief apply the configuration for the card "eth" 
+ * @brief apply the configuration for the card "eth"
  * @param eth the card
- * @return Returns 1 if the confogiration is apply, else 0
+ * @return Returns 1 if the configuration is apply, else 0
  */
 int exalt_eth_apply_conf(exalt_ethernet* eth)
 {
 	int res;
  	struct rtentry rt;
 	int fd;
-	struct sockaddr_in sin = { AF_INET };	
+	struct sockaddr_in sin = { AF_INET };
 	if(!eth)
 	{
 		fprintf(stderr,"eth_apply(): eth==null! \n");
@@ -997,13 +996,13 @@ int exalt_eth_apply_conf(exalt_ethernet* eth)
 	printf("## Apply configuration for %s ##\n",exalt_eth_get_name(eth));
 
 	exalt_eth_save_byeth(eth);
-	
+
 	if(exalt_eth_is_wireless(eth))
 	 	exalt_wireless_apply_conf(eth);
-	
+
 	//remove old gateway
 	fd=iw_sockets_open();
- 	if (fd < 0) 
+ 	if (fd < 0)
 	{
 	 	fprintf(stderr,"exalt_eth_apply_static(): fd==%d",fd);
 		return -1;
@@ -1013,23 +1012,23 @@ int exalt_eth_apply_conf(exalt_ethernet* eth)
  	sin.sin_addr.s_addr = inet_addr ("0.0.0.0");
 	rt.rt_dst = *(struct sockaddr *) &sin;
 
-	while (ioctl(fd, SIOCDELRT, &rt) >= 0) 
+	while (ioctl(fd, SIOCDELRT, &rt) >= 0)
 	 	;
- 	close(fd);	
-	
+ 	close(fd);
+
 	if(exalt_eth_is_dhcp(eth))
 		res = exalt_eth_apply_dhcp(eth);
 	else
 		res = exalt_eth_apply_static(eth);
-	
+
 	printf("## End configuration ## \n");
 	return res;
 }
-// }}}
 
-// {{{ int exalt_eth_apply_static(exalt_ethernet *eth)
+
+
 /**
- * @brief apply static address for the card "eth" 
+ * @brief apply static address for the card "eth"
  * @param eth the card
  * @return Returns 1 if static address are apply, else 0
  */
@@ -1048,7 +1047,7 @@ int exalt_eth_apply_static(exalt_ethernet *eth)
 
  	fd=iw_sockets_open();
  	strncpy(ifr.ifr_name,exalt_eth_get_name(eth),sizeof(ifr.ifr_name));
- 	if (fd < 0) 
+ 	if (fd < 0)
 	{
 	 	fprintf(stderr,"exalt_eth_apply_static(): fd==%d",fd);
 		return -1;
@@ -1073,8 +1072,8 @@ int exalt_eth_apply_static(exalt_ethernet *eth)
 	 	close(fd);
 	 	return -1;
 	}
-	
-	
+
+
 	if(!exalt_eth_get_gateway(eth))
 	 	return 1;
 
@@ -1096,26 +1095,26 @@ int exalt_eth_apply_static(exalt_ethernet *eth)
 
 
  	close(fd);
-	
+
 	/*//A CHANGER !!
 	char command[1024];
 	FILE* f;
-	sprintf(command, "%s %s", 
+	sprintf(command, "%s %s",
 			COMMAND_ROUTE, "del default");
 	printf("\t%s\n",command);
-	f = exalt_execute_command(command);	
+	f = exalt_execute_command(command);
 	EXALT_PCLOSE(f);
 
-	
+
 	exalt_eth_apply_gateway(eth);
  	*/
 	return 1;
 }
-// }}}
 
-// {{{ int exalt_eth_apply_dhcp(exalt_ethernet* eth)
+
+
 /**
- * @brief apply the dhcp mode for the card "eth" 
+ * @brief apply the dhcp mode for the card "eth"
  * @param eth the card
  * @return Returns 1 if the dhcp is apply, else 0
  */
@@ -1139,13 +1138,13 @@ int exalt_eth_apply_dhcp(exalt_ethernet* eth)
 
 	return 1;
 }
-// }}}
+
 
 /*
  * Others
  */
 
-// {{{ void exalt_eth_printf()
+
 /**
  * @brief print card informations in the standard output
  */
@@ -1176,7 +1175,7 @@ void exalt_eth_printf()
 		data = ecore_list_next(exalt_eth_interfaces.ethernets);
 	}
 }
-// }}}
+
 
 /** @} */
 
