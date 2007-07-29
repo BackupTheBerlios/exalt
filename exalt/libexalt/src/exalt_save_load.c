@@ -31,7 +31,7 @@ int exalt_eth_save()
 	void *data;
 	exalt_ethernet* eth;
 
-	data = ecore_list_goto_first(exalt_eth_interfaces.ethernets);
+	data = ecore_list_first_goto(exalt_eth_interfaces.ethernets);
 	while(data)
 	{
 	 	eth = EXALT_ETHERNET(data);

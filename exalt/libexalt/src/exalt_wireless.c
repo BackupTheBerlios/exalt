@@ -332,7 +332,7 @@ exalt_wireless_info* exalt_wireless_get_networkinfo(exalt_wireless* w, int nb)
 	 	return NULL;
 	}
 
-	return EXALT_WIRELESS_INFO(ecore_list_goto_index(w->networks,nb));
+	return EXALT_WIRELESS_INFO(ecore_list_index_goto(w->networks,nb));
 }
 
 
@@ -353,7 +353,7 @@ exalt_wireless_info* exalt_wireless_get_networkinfo_by_essid(exalt_wireless* w,c
 		return NULL;
 	}
 
-	ecore_list_goto_first(w->networks);
+	ecore_list_first_goto(w->networks);
 	data = ecore_list_next(w->networks);
 	while(data)
 	{
@@ -436,7 +436,7 @@ int exalt_wireless_scan(void *data)
 				exalt_wirelessinfo_set_known(wi,0);
 
 				//search if the essid is in the list
-				ecore_list_goto_first(l);
+				ecore_list_first_goto(l);
 				data_l = ecore_list_next(l);
 				find = 0;
 				while(data_l && !find)
@@ -468,13 +468,13 @@ int exalt_wireless_scan(void *data)
 		//if a network is in w->networks & not in l, it's a old network
 
 		//new networks
-		ecore_list_goto_first(l);
+		ecore_list_first_goto(l);
 		data_l = ecore_list_next(l);
 		while(data_l)
 		{
 			find = 0;
 			wi_l = EXALT_WIRELESS_INFO(data_l);
-			ecore_list_goto_first(w->networks);
+			ecore_list_first_goto(w->networks);
 			data_n = ecore_list_next(w->networks);
 			while(data_n)
 			{
@@ -494,13 +494,13 @@ int exalt_wireless_scan(void *data)
 		}
 
 		//old networks
-		ecore_list_goto_first(w->networks);
+		ecore_list_first_goto(w->networks);
 		data_n = ecore_list_next(w->networks);
 		while(data_n)
 		{
 			find = 0;
 			wi_n = EXALT_WIRELESS_INFO(data_n);
-			ecore_list_goto_first(l);
+			ecore_list_first_goto(l);
 			data_l = ecore_list_next(l);
 			while(data_l)
 			{
@@ -545,7 +545,11 @@ int exalt_wireless_scan(void *data)
 void exalt_wireless_scan_start(exalt_ethernet* eth)
 {
  	exalt_wireless* w;
-	if(!eth)
+        int* c = 0;
+          printf("About to crash....\n");
+            *c = 4;
+
+        if(!eth)
 	{
 	 	fprintf(stderr,"exalt_wireless_scan_start(): eth==null ! \n");
 		return;
@@ -651,7 +655,7 @@ int exalt_wireless_scan_wait(exalt_ethernet* eth)
 			exalt_wirelessinfo_set_known(wi,0);
 
 			//search if the essid is in the list
-			ecore_list_goto_first(l);
+			ecore_list_first_goto(l);
 			data_l = ecore_list_next(l);
 			find = 0;
 			while(data_l && !find)
@@ -886,7 +890,7 @@ void exalt_wireless_printf(exalt_wireless w)
 void exalt_wireless_printf_scan(exalt_wireless w)
 {
 	void* data;
-	ecore_list_goto_first(w.networks);
+	ecore_list_first_goto(w.networks);
 	data = ecore_list_next(w.networks);
 	while(data)
 	{

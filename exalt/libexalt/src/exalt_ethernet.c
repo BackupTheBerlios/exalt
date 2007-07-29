@@ -123,7 +123,7 @@ void exalt_eth_load_state()
 {
 	void *data;
 	Ecore_List *l = exalt_eth_interfaces.ethernets;
-	ecore_list_goto_first(l);
+	ecore_list_first_goto(l);
 	data = ecore_list_next(l);
 	while(data)
 	{
@@ -177,14 +177,14 @@ void exalt_eth_load_remove()
  	fclose(f);
 
 	//remove olds interfaces
-	ecore_list_goto_first(exalt_eth_interfaces.ethernets);
+	ecore_list_first_goto(exalt_eth_interfaces.ethernets);
 	data = ecore_list_next(exalt_eth_interfaces.ethernets);
  	while(data)
 	{
 	 	short find = 0;
  	 	exalt_ethernet* eth = EXALT_ETHERNET(data);
 
- 	 	ecore_list_goto_first(l);
+ 	 	ecore_list_first_goto(l);
 		data2 = ecore_list_next(l);
 		while(data2 && !find)
 		{
@@ -196,7 +196,7 @@ void exalt_eth_load_remove()
 		{
 			if(exalt_eth_interfaces.eth_cb)
 			 	exalt_eth_interfaces.eth_cb(eth,EXALT_ETH_CB_REMOVE,exalt_eth_interfaces.eth_cb_user_data);
-			ecore_list_goto_index(exalt_eth_interfaces.ethernets, ecore_list_index(exalt_eth_interfaces.ethernets)-1);
+			ecore_list_index_goto(exalt_eth_interfaces.ethernets, ecore_list_index(exalt_eth_interfaces.ethernets)-1);
 			ecore_list_remove_destroy(exalt_eth_interfaces.ethernets);
 		}
 		data = ecore_list_next(exalt_eth_interfaces.ethernets);
@@ -263,7 +263,7 @@ void exalt_eth_load_configuration()
 {
 	void *data;
 	exalt_ethernet* eth;
-	ecore_list_goto_first(exalt_eth_interfaces.ethernets);
+	ecore_list_first_goto(exalt_eth_interfaces.ethernets);
 	data = ecore_list_next(exalt_eth_interfaces.ethernets);
 	while(data)
 	{
@@ -647,7 +647,7 @@ Ecore_List* exalt_eth_get_list()
  */
 exalt_ethernet* exalt_eth_get_ethernet_bypos(int pos)
 {
-	return EXALT_ETHERNET(ecore_list_goto_index(exalt_eth_interfaces.ethernets,pos));
+	return EXALT_ETHERNET(ecore_list_index_goto(exalt_eth_interfaces.ethernets,pos));
 }
 
 
@@ -668,7 +668,7 @@ exalt_ethernet* exalt_eth_get_ethernet_byname(char* name)
 		return NULL;
 	}
 
- 	ecore_list_goto_first(exalt_eth_interfaces.ethernets);
+ 	ecore_list_first_goto(exalt_eth_interfaces.ethernets);
 	data = ecore_list_next(exalt_eth_interfaces.ethernets);
 	while(data)
 	{
@@ -1153,7 +1153,7 @@ void exalt_eth_printf()
 	void *data;
 	exalt_ethernet* eth;
 
-	ecore_list_goto_first(exalt_eth_interfaces.ethernets);
+	ecore_list_first_goto(exalt_eth_interfaces.ethernets);
 	data = ecore_list_next(exalt_eth_interfaces.ethernets);
 	while(data)
 	{

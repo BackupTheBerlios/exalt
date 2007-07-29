@@ -23,21 +23,20 @@ exalt.o exalt.o: exalt.c exalt.h config.h /usr/include/libintl.h \
   /usr/include/signal.h /usr/include/bits/signum.h \
   /usr/include/bits/siginfo.h /usr/include/bits/sigaction.h \
   /usr/include/bits/sigcontext.h /usr/include/asm/sigcontext.h \
-  /usr/include/linux/compiler.h /usr/include/bits/sigstack.h \
-  /usr/include/sys/ucontext.h /usr/include/bits/sigthread.h \
-  /usr/local/include/exalt/iwlib.h /usr/include/sys/ioctl.h \
-  /usr/include/bits/ioctls.h /usr/include/asm/ioctls.h \
-  /usr/include/asm/ioctl.h /usr/include/asm-generic/ioctl.h \
-  /usr/include/bits/ioctl-types.h /usr/include/sys/ttydefaults.h \
-  /usr/include/math.h /usr/include/bits/huge_val.h \
-  /usr/include/bits/huge_valf.h /usr/include/bits/huge_vall.h \
-  /usr/include/bits/inf.h /usr/include/bits/nan.h \
-  /usr/include/bits/mathdef.h /usr/include/bits/mathcalls.h \
-  /usr/include/bits/mathinline.h /usr/include/errno.h \
-  /usr/include/bits/errno.h /usr/include/linux/errno.h \
-  /usr/include/asm/errno.h /usr/include/asm-generic/errno.h \
-  /usr/include/asm-generic/errno-base.h /usr/include/fcntl.h \
-  /usr/include/bits/fcntl.h /usr/include/bits/uio.h \
+  /usr/include/bits/sigstack.h /usr/include/sys/ucontext.h \
+  /usr/include/bits/sigthread.h /usr/local/include/exalt/iwlib.h \
+  /usr/include/sys/ioctl.h /usr/include/bits/ioctls.h \
+  /usr/include/asm/ioctls.h /usr/include/asm/ioctl.h \
+  /usr/include/asm-generic/ioctl.h /usr/include/bits/ioctl-types.h \
+  /usr/include/sys/ttydefaults.h /usr/include/math.h \
+  /usr/include/bits/huge_val.h /usr/include/bits/huge_valf.h \
+  /usr/include/bits/huge_vall.h /usr/include/bits/inf.h \
+  /usr/include/bits/nan.h /usr/include/bits/mathdef.h \
+  /usr/include/bits/mathcalls.h /usr/include/bits/mathinline.h \
+  /usr/include/errno.h /usr/include/bits/errno.h \
+  /usr/include/linux/errno.h /usr/include/asm/errno.h \
+  /usr/include/asm-generic/errno.h /usr/include/asm-generic/errno-base.h \
+  /usr/include/fcntl.h /usr/include/bits/fcntl.h /usr/include/bits/uio.h \
   /usr/include/sys/stat.h /usr/include/bits/stat.h /usr/include/ctype.h \
   /usr/include/stdlib.h /usr/include/bits/waitflags.h \
   /usr/include/bits/waitstatus.h /usr/include/alloca.h \
@@ -58,14 +57,14 @@ exalt.o exalt.o: exalt.c exalt.h config.h /usr/include/libintl.h \
   /usr/include/bits/byteswap.h /usr/include/rpc/netdb.h \
   /usr/include/bits/netdb.h /usr/include/net/ethernet.h \
   /usr/include/linux/if_ether.h /usr/include/linux/types.h \
-  /usr/include/linux/posix_types.h /usr/include/linux/stddef.h \
-  /usr/include/asm/posix_types.h /usr/include/asm/types.h \
-  /usr/include/sys/time.h /usr/include/linux/version.h \
-  /usr/include/net/if_arp.h /usr/include/netinet/if_ether.h \
-  /usr/include/net/if.h /usr/local/include/exalt/wireless.h \
-  /usr/local/include/exalt/wpa_ctrl.h /usr/local/include/exalt/proc.h \
-  /usr/include/arpa/inet.h /usr/include/net/route.h \
-  /usr/local/include/exalt/exalt_command.h \
+  /usr/include/inttypes.h /usr/include/linux/posix_types.h \
+  /usr/include/linux/stddef.h /usr/include/asm/posix_types.h \
+  /usr/include/asm/types.h /usr/include/sys/time.h \
+  /usr/include/linux/version.h /usr/include/net/if_arp.h \
+  /usr/include/netinet/if_ether.h /usr/include/net/if.h \
+  /usr/local/include/exalt/wireless.h /usr/local/include/exalt/wpa_ctrl.h \
+  /usr/local/include/exalt/proc.h /usr/include/arpa/inet.h \
+  /usr/include/net/route.h /usr/local/include/exalt/exalt_command.h \
   /usr/local/include/exalt/exalt_dns.h \
   /usr/local/include/exalt/exalt_save_load.h /usr/include/Ecore_Config.h \
   /usr/include/Evas.h /usr/local/include/exalt/exalt_regexp.h \
@@ -92,7 +91,8 @@ exalt.o exalt.o: exalt.c exalt.h config.h /usr/include/libintl.h \
   /usr/include/etk/etk_entry.h /usr/include/etk/etk_filechooser_widget.h \
   /usr/include/etk/etk_fixed.h /usr/include/etk/etk_frame.h \
   /usr/include/etk/etk_iconbox.h /usr/include/etk/etk_image.h \
-  /usr/include/etk/etk_label.h /usr/include/etk/etk_menu.h \
+  /usr/include/etk/etk_label.h /usr/include/etk/etk_mdi_area.h \
+  /usr/include/etk/etk_mdi_window.h /usr/include/etk/etk_menu.h \
   /usr/include/etk/etk_menu_shell.h /usr/include/etk/etk_popup_window.h \
   /usr/include/etk/etk_menu_bar.h /usr/include/etk/etk_menu_item.h \
   /usr/include/etk/etk_message_dialog.h /usr/include/etk/etk_notebook.h \
@@ -205,8 +205,6 @@ config.h:
 /usr/include/bits/sigcontext.h:
 
 /usr/include/asm/sigcontext.h:
-
-/usr/include/linux/compiler.h:
 
 /usr/include/bits/sigstack.h:
 
@@ -344,6 +342,8 @@ config.h:
 
 /usr/include/linux/types.h:
 
+/usr/include/inttypes.h:
+
 /usr/include/linux/posix_types.h:
 
 /usr/include/linux/stddef.h:
@@ -477,6 +477,10 @@ main_window.h:
 /usr/include/etk/etk_image.h:
 
 /usr/include/etk/etk_label.h:
+
+/usr/include/etk/etk_mdi_area.h:
+
+/usr/include/etk/etk_mdi_window.h:
 
 /usr/include/etk/etk_menu.h:
 

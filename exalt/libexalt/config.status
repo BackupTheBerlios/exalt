@@ -556,7 +556,7 @@ s,@INSTALL_DATA@,|#_!!_#|${INSTALL} -m 644,g
 s,@am__isrc@,|#_!!_#|,g
 s,@CYGPATH_W@,|#_!!_#|echo,g
 s,@PACKAGE@,|#_!!_#|exalt,g
-s,@VERSION@,|#_!!_#|0.0.1,g
+s,@VERSION@,|#_!!_#|0.5,g
 s,@ACLOCAL@,|#_!!_#|${SHELL} /home/watchwolf/Projects/C/exalt/libexalt/missing --run aclocal-1.10,g
 s,@AUTOCONF@,|#_!!_#|${SHELL} /home/watchwolf/Projects/C/exalt/libexalt/missing --run autoconf,g
 s,@AUTOMAKE@,|#_!!_#|${SHELL} /home/watchwolf/Projects/C/exalt/libexalt/missing --run automake-1.10,g
@@ -584,6 +584,7 @@ s,@am__fastdepCC_FALSE@,|#_!!_#|#,g
 s,@CPP@,|#_!!_#|gcc -E,g
 s,@GREP@,|#_!!_#|/bin/grep,g
 s,@EGREP@,|#_!!_#|/bin/grep -E,g
+s,@SED@,|#_!!_#|/bin/sed,g
 s,@LN_S@,|#_!!_#|ln -s,g
 s,@ECHO@,|#_!!_#|echo,g
 s,@AR@,|#_!!_#|ar,g
@@ -594,10 +595,10 @@ s,@ac_ct_CXX@,|#_!!_#|g++,g
 s,@CXXDEPMODE@,|#_!!_#|depmode=gcc3,g
 s,@am__fastdepCXX_TRUE@,|#_!!_#|,g
 s,@am__fastdepCXX_FALSE@,|#_!!_#|#,g
-s,@CXXCPP@,|#_!!_#|g++ -E,g
 CEOF
 cat >"$tmp/subs-2.sed" <<\CEOF
 /@[a-zA-Z_][a-zA-Z_0-9]*@/!b end
+s,@CXXCPP@,|#_!!_#|g++ -E,g
 s,@F77@,|#_!!_#|gfortran,g
 s,@FFLAGS@,|#_!!_#|-g -O2,g
 s,@ac_ct_F77@,|#_!!_#|gfortran,g
@@ -872,7 +873,7 @@ s,^\([	 #]*\)[^	 ]*\([	 ]*PACKAGE_VERSION\)[	 (].*,\1define\2 "" ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*PACKAGE_STRING\)[	 (].*,\1define\2 "" ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*PACKAGE_BUGREPORT\)[	 (].*,\1define\2 "" ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*PACKAGE\)[	 (].*,\1define\2 "exalt" ,
-s,^\([	 #]*\)[^	 ]*\([	 ]*VERSION\)[	 (].*,\1define\2 "0.0.1" ,
+s,^\([	 #]*\)[^	 ]*\([	 ]*VERSION\)[	 (].*,\1define\2 "0.5" ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*STDC_HEADERS\)[	 (].*,\1define\2 1 ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_SYS_TYPES_H\)[	 (].*,\1define\2 1 ,
 s,^\([	 #]*\)[^	 ]*\([	 ]*HAVE_SYS_STAT_H\)[	 (].*,\1define\2 1 ,

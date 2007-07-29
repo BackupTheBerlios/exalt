@@ -2,7 +2,7 @@
 
 Summary: %{module_name} module for the Enlightenment window manager
 Name: e_modules-%{module_name}
-Version: 0.0.1
+Version: 0.5
 Release: 0.%(date '+%Y%m%d')
 License: GPL
 Group: User Interface/Desktops

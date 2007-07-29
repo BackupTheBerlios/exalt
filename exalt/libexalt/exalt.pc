@@ -8,6 +8,6 @@ datadir=${datarootdir}
 Name: exalt
 Description: Exalt network toolkit.
 Requires: 
-Version: 0.0.1
+Version: 0.5
 Libs: -L${libdir} -lexalt
 Cflags: -I${includedir} -I${includedir}/exalt

@@ -16,11 +16,11 @@ int main(int argc,char**argv)
             return 1;
         }
 
-	
+
 	setlocale( LC_ALL, "" );
       	bindtextdomain( "exalt", PACKAGE_LOCALE_DIR );
      	textdomain( "exalt" );
-	
+
 	exalt_eth_init();
 
  	argc--;
@@ -51,10 +51,10 @@ int main(int argc,char**argv)
 		if(argc) argc--;
  	 	argv++;
 	}
-	
+
 	//eth_printf();
 	win = mainwindow_create();
-	
+
 	exalt_eth_load();
 
  	if(opt_i)
@@ -88,12 +88,12 @@ int main(int argc,char**argv)
 					exalt_wireless_scan_wait(eth);
 					//we have to add all networks int the ETK list
 					l = exalt_wireless_get_networks_list(w);
-					ecore_list_goto_first(l);
+					ecore_list_first_goto(l);
 					data = ecore_list_next(l);
 					while(data)
 					{
  	 	 	 	 	 	wi = EXALT_WIRELESS_INFO(data);
- 	 	 	 	 	  	wirelesspanel_scan_networks_cb(wi, EXALT_WIRELESS_SCAN_CB_NEW,win->wireless_panel);	
+ 	 	 	 	 	  	wirelesspanel_scan_networks_cb(wi, EXALT_WIRELESS_SCAN_CB_NEW,win->wireless_panel);
 						data = ecore_list_next(l);
 					}
 					wi=exalt_wireless_get_networkinfo_by_essid(w,wireless);
